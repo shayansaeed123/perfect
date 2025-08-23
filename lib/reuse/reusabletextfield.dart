@@ -15,7 +15,9 @@ Widget reusableTextField(
    {
   TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
-}) {
+  Color fillColor = Colors.white,
+}
+) {
   return Container(
     // margin: EdgeInsets.only(bottom: 10),
     width: MediaQuery.of(context).size.width * 1,
@@ -44,7 +46,7 @@ Widget reusableTextField(
       
       decoration: InputDecoration(
         filled: true,
-        fillColor: colorController.textfieldBackgroundColor,
+        fillColor: fillColor,
         labelText: labelText,
         labelStyle: TextStyle(color: color,fontSize: 11.5),
         // prefixIcon: const Icon(Icons.password_outlined, color: Colors.white),

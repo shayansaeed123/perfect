@@ -14,6 +14,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorController.whiteColor,
       appBar: AppBar(
         backgroundColor: colorController.mainColor,
         title: Center(child: reusableText('Home',color: colorController.textColorLight,fontsize: 25,fontweight: FontWeight.bold)),

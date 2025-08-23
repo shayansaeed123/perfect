@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
+        
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: colorController.mainColor),
