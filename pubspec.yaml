@@ -43,6 +43,9 @@ dependencies:
   shared_preferences:
   http:  
   convex_bottom_bar: 
+  google_mlkit_text_recognition: 
+  image_picker: 
+  image_cropper:  
 
 dev_dependencies:
   flutter_test:

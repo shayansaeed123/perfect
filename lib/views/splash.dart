@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/loginnotifier.dart';
-import 'package:project/models/logincheck.dart';
 import 'package:project/views/accounts/login.dart';
-import 'package:project/views/dashboard/home.dart';
 import 'package:project/views/dashboard/navbar.dart';
 
 class Splash extends ConsumerStatefulWidget {

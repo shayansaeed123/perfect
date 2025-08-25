@@ -1,7 +1,4 @@
 
-
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:project/controllers/color_controller.dart';
 
@@ -31,3 +28,14 @@ Widget reusableBtn(
     ),
   );
 }
+
+Widget reusableIconBtn(BuildContext context, Function onValidTap,){
+
+  return Container(
+    width: MediaQuery.sizeOf(context).width * 0.1,
+    child: IconButton.filled(onPressed: (){onValidTap();}, 
+    icon: Icon(Icons.image_outlined,color: colorController.btnTextColor,),
+    color: colorController.btnColor,
+    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(colorController.btnColor)),),
+  );
+ }

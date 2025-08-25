@@ -12,6 +12,7 @@ class ColorController extends GetxController{
   Color btnTextColor = Color(0xFFf3bfa6);
   Color textColorDark = Color(0xFFf26927);
   Color textColorLight = Color(0xFFf3bfa6);
+  Color progressbarColor = Color(0xFFD6D85D);
   Color whiteColor = Colors.white;
   Color tileColor =  Color.fromARGB(209, 255, 255, 255);
   Color blackColor = Colors.black;

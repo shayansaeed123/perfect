@@ -29,20 +29,20 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _evaluationNo = TextEditingController();
   TextEditingController get evaluationNo => _evaluationNo;
 
-  final TextEditingController _cnicCon = TextEditingController();
-  TextEditingController get cnicCon => _cnicCon;
+  final TextEditingController _make = TextEditingController();
+  TextEditingController get make => _make;
 
-  final TextEditingController _bankCnicCon = TextEditingController();
-  TextEditingController get bankCnicCon => _bankCnicCon;
+  final TextEditingController _year = TextEditingController();
+  TextEditingController get year => _year;
 
-  final TextEditingController _rePassCon = TextEditingController();
-  TextEditingController get rePassCon => _rePassCon;
+  final TextEditingController _plateNo = TextEditingController();
+  TextEditingController get plateNo => _plateNo;
 
-  final TextEditingController _religionCon = TextEditingController();
-  TextEditingController get religionCon => _religionCon;
+  final TextEditingController _vin = TextEditingController();
+  TextEditingController get vin => _vin;
 
-  final TextEditingController _addressCon = TextEditingController();
-  TextEditingController get addressCon => _addressCon;
+  final TextEditingController _engineNo = TextEditingController();
+  TextEditingController get engineNo => _engineNo;
 
   final TextEditingController _ChangeOldPassword = TextEditingController();
   TextEditingController get ChangeOldPassword => _ChangeOldPassword;

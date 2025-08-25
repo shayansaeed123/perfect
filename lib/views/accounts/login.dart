@@ -9,7 +9,6 @@ import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
-import 'package:project/views/dashboard/home.dart';
 import 'package:project/views/dashboard/navbar.dart';
 
 class Login extends ConsumerStatefulWidget {

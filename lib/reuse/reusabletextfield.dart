@@ -16,11 +16,12 @@ Widget reusableTextField(
   TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
   Color fillColor = Colors.white,
+  double width = 1
 }
 ) {
   return Container(
     // margin: EdgeInsets.only(bottom: 10),
-    width: MediaQuery.of(context).size.width * 1,
+    width: MediaQuery.of(context).size.width * width,
     // height: MediaQuery.of(context).size.height * .060,
     child: TextFormField(
       controller: controller,
