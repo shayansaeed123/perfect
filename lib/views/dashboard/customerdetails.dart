@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/reuse/reusablebtn.dart';
@@ -24,21 +25,35 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
     return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
+              reusablaSizaBox(context, 0.02),
               reusableText('Customer Details',color:colorController.textColorDark,fontsize: 18,),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.requested, 'Requested For', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Evaluation No', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              reusablaSizaBox(context, 0.05),
               reusableBtn(context, 'Next', (){
                 ref.read(progressProvider.notifier).state = 1;
+                ref.read(carFormProvider.notifier).updateCustomerDetails(
+  requestedFor: reusabletextfieldcontroller.requested.text,
+  customerName: reusabletextfieldcontroller.customerName.text,
+  inspectionDate: reusabletextfieldcontroller.inspectiondate.text,
+  address: reusabletextfieldcontroller.address.text,
+  evaluationNo: reusabletextfieldcontroller.evaluationNo.text,
+  );
               },)
             ],
           );

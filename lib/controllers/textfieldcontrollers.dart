@@ -29,11 +29,11 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _evaluationNo = TextEditingController();
   TextEditingController get evaluationNo => _evaluationNo;
 
-  final TextEditingController _make = TextEditingController();
-  TextEditingController get make => _make;
+  final TextEditingController _option = TextEditingController();
+  TextEditingController get option => _option;
 
-  final TextEditingController _year = TextEditingController();
-  TextEditingController get year => _year;
+  final TextEditingController _trim = TextEditingController();
+  TextEditingController get trim => _trim;
 
   final TextEditingController _plateNo = TextEditingController();
   TextEditingController get plateNo => _plateNo;
@@ -44,8 +44,17 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _engineNo = TextEditingController();
   TextEditingController get engineNo => _engineNo;
 
-  final TextEditingController _ChangeOldPassword = TextEditingController();
-  TextEditingController get ChangeOldPassword => _ChangeOldPassword;
+  final TextEditingController _odometer = TextEditingController();
+  TextEditingController get odometer => _odometer;
+  
+  final TextEditingController _cylinders = TextEditingController();
+  TextEditingController get cylinders => _cylinders;
+
+  final TextEditingController _tranmission = TextEditingController();
+  TextEditingController get tranmission => _tranmission;
+
+  final TextEditingController _condition = TextEditingController();
+  TextEditingController get condition => _condition;
 
   final TextEditingController _ChangenewPassword = TextEditingController();
   TextEditingController get ChangenewPassword => _ChangenewPassword;

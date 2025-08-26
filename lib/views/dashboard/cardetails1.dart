@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/notifier/textimagenotifier.dart';
@@ -43,9 +44,11 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
     Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
+              reusablaSizaBox(context, 0.02),
               reusableText('Car Details',color:colorController.textColorDark,fontsize: 18,),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               // reusableTextField(context, reusabletextfieldcontroller.make, 'Make', colorController.textfieldColor, FocusNode(), (){}),
               makeAsync.when(
                 data: (make){
@@ -62,7 +65,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               ),
               // 🔹 Model Dropdown (depends on selectedMake)
               if (selectedMake != null)...[
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               ref.watch(modelProvider(selectedMake!.id)).when(
               data: (modelList) {
               return reusableDropdown(modelList,selectedModel,"Select Model",(item) => item.name,(value) {
@@ -80,7 +84,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                 loading: () => const CircularProgressIndicator(),
                 error: (err, _) => Text("Error: $err"),
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -90,7 +95,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   })
                 ],
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -100,7 +106,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   })
                 ],
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -110,7 +117,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   })
                 ],
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Color', colorController.textfieldColor, FocusNode(), (){}),
               colorAsync.when(
                 data: (color){
@@ -120,7 +128,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                 loading: () => const CircularProgressIndicator(),
                 error: (err, _) => Text("Error: $err"),
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Fule Type', colorController.textfieldColor, FocusNode(), (){}),
               fuelAsync.when(
                 data: (fuel){
@@ -130,9 +139,11 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                 loading: () => const CircularProgressIndicator(),
                 error: (err, _) => Text("Error: $err"),
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Option', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.option, 'Option', colorController.textfieldColor, FocusNode(), (){}),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              reusablaSizaBox(context, 0.05),
                Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -141,6 +152,17 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
             },width: 0.4),
             reusableBtn(context, 'Next', () {
               ref.read(progressProvider.notifier).state = 2;
+              ref.read(carFormProvider.notifier).updateCarDetails1(
+  make: selectedMake?.name,
+  model: selectedModel?.name,
+  year: selectedYear?.name,
+  plateNo: reusabletextfieldcontroller.plateNo.text,
+  vin: reusabletextfieldcontroller.vin.text,
+  engineNo: reusabletextfieldcontroller.engineNo.text,
+  color: selectedColor?.name,
+  fuelType: selectedfuel?.name,
+  option: reusabletextfieldcontroller.option.text,
+  );
             },width: 0.4),
           ],
         ),

@@ -39,3 +39,9 @@ Widget reusableIconBtn(BuildContext context, Function onValidTap,){
     style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(colorController.btnColor)),),
   );
  }
+
+ Widget reusablaSizaBox(BuildContext context, double size) {
+  return SizedBox(
+    height: MediaQuery.of(context).size.height * size,
+  );
+}

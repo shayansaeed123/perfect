@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
@@ -26,16 +27,21 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
   Widget build(BuildContext context) {
     final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     final typeAsync = ref.watch(dropdownProvider(const DropdownParams("type=1", "type_name")));
+    
     return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
+              reusablaSizaBox(context, 0.02),
               reusableText('Car Details',color:colorController.textColorDark,fontsize: 18,),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusableTextField(context, reusabletextfieldcontroller.make, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusableTextField(context, reusabletextfieldcontroller.year, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.trim, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){}),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               specsAsync.when(
                 data: (spec){
                   return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
@@ -44,7 +50,8 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                 loading: () => const CircularProgressIndicator(),
                 error: (err, _) => Text("Error: $err"),
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               typeAsync.when(
                 data: (type){
                   return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.name,(value) {
@@ -62,13 +69,17 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               //     })
               //   ],
               // ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Trasmission Type', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){}),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.tranmission, 'Trasmission Type', colorController.textfieldColor, FocusNode(), (){}),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              reusablaSizaBox(context, 0.05),
                Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -77,6 +88,15 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
             },width: 0.4),
             reusableBtn(context, 'Next', () {
               ref.read(progressProvider.notifier).state = 3;
+              ref.read(carFormProvider.notifier).updateCarDetails2(
+  trim: reusabletextfieldcontroller.trim.text,
+  odometer: reusabletextfieldcontroller.odometer.text,
+  specification: selectedSpec?.name,
+  bodyType: selectedType?.name,
+  cylinders: reusabletextfieldcontroller.cylinders.text,
+  transmission: reusabletextfieldcontroller.tranmission.text,
+  carCondition: reusabletextfieldcontroller.evaluationNo.text,
+  );
             },width: 0.4),
           ],
         ),
