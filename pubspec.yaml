@@ -47,6 +47,9 @@ dependencies:
   image_picker: 
   image_cropper:  
   dotted_border:
+  flutter_image_compress: 
+  provider: 
+  dio:
 
 dev_dependencies:
   flutter_test:

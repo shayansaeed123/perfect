@@ -77,7 +77,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               reusableTextField(context, reusabletextfieldcontroller.tranmission, 'Trasmission Type', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
+              reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
               reusablaSizaBox(context, 0.05),
                Row(

@@ -6,7 +6,7 @@ Widget reusableBtn(
   BuildContext context,
   String btnText,
   Function onValidTap,
-  {double width = 1}
+  {double width = 1,double height = .055}
 ) {
   return 
   GestureDetector(
@@ -16,7 +16,7 @@ Widget reusableBtn(
     child: 
     Container(
       width: MediaQuery.of(context).size.width * width,
-      height: MediaQuery.of(context).size.height * .055,
+      height: MediaQuery.of(context).size.height * height,
       decoration: BoxDecoration(
           color: colorController.btnColor,
           borderRadius: BorderRadius.circular(10)),

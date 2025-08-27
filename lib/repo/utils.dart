@@ -7,6 +7,10 @@ import 'package:project/reuse/reusabletext.dart';
 
 class Utils {
   static const String baseUrl = 'https://car.greenzoneliving.org/API/';
+  static const String imageUrl = 'https://car.greenzoneliving.org/API/uploads/api_image_image/';
+  static String imageUploadUrl = "${baseUrl}image.php";
+  static String formSubmitUrl = "${baseUrl}form_submit.php";
+  static String loginUrl = "${baseUrl}login.php";
 
   static void fieldFocusChange(
       BuildContext context, FocusNode current, FocusNode nextFocus) {

@@ -1,9 +1,5 @@
 
-
-import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/repo/utils.dart';
@@ -75,10 +71,10 @@ reusableSelectImage(BuildContext context,Function ontap,String image,String imgC
 Widget _displayImage(String imagePath, String imgCondition) {
     bool isNetwork = imagePath.startsWith('http');
     return isNetwork
-        ? Center(child: imagePath == '${Utils.baseUrl}' || imagePath == '' ? Image.asset(imgCondition,fit: BoxFit.contain,)
+        ? Center(child: imagePath == '${Utils.imageUrl}' || imagePath == '' ? Image.asset(imgCondition,fit: BoxFit.contain,)
                 : Image.network(imagePath,fit: BoxFit.contain,)
                   )
-        : imagePath == '${Utils.baseUrl}' || imagePath == '' ?  Image.asset(imgCondition,fit: BoxFit.contain,)
+        : imagePath == '${Utils.imageUrl}' || imagePath == '' ?  Image.asset(imgCondition,fit: BoxFit.contain,)
         :
          Image.asset(
           imagePath,

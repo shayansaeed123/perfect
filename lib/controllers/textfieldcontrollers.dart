@@ -56,8 +56,8 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _condition = TextEditingController();
   TextEditingController get condition => _condition;
 
-  final TextEditingController _ChangenewPassword = TextEditingController();
-  TextEditingController get ChangenewPassword => _ChangenewPassword;
+  final TextEditingController _carCondition = TextEditingController();
+  TextEditingController get carCondition => _carCondition;
 
   final TextEditingController _ChangecnfmPassword = TextEditingController();
   TextEditingController get ChangecnfmPassword => _ChangecnfmPassword;
