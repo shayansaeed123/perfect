@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
-import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusablecard.dart';
 import 'package:project/reuse/reusabletext.dart';
+import 'package:project/views/dashboard/invoicedetails.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -43,7 +43,7 @@ class _HomeState extends ConsumerState<Home> {
         body: asyncInvoices.when(
         data: (invoices) {
           if (invoices.isEmpty) {
-            return const Center(child: Text("No invoices found"));
+            return Center(child: reusableText('No Invoice Found',color: colorController.textColorDark,fontsize: 25));
           }
 
           return CustomScrollView(
@@ -69,7 +69,19 @@ class _HomeState extends ConsumerState<Home> {
                         invoice.address ?? '', 
                         invoice.model, 
                         invoice.year, 
-                        (){}),);
+                        (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return Invoicedetails(
+                              address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
+                              carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
+                              customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
+                              engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
+                              odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
+                              requestfor: invoice.requestedFor??'', specification: invoice.specification, 
+                              total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
+                              trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year);
+                          },));
+                        }),);
                     },
                     childCount: invoices.length,
                   ),

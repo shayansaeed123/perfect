@@ -44,7 +44,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               reusablaSizaBox(context, 0.03),
               specsAsync.when(
                 data: (spec){
-                  return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
+                  return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.id,(value) {
                   setState(() => selectedSpec = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
@@ -54,7 +54,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               reusablaSizaBox(context, 0.03),
               typeAsync.when(
                 data: (type){
-                  return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.name,(value) {
+                  return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.id,(value) {
                   setState(() => selectedType = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),

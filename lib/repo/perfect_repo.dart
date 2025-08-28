@@ -1,8 +1,10 @@
 
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:project/models/invoicemodel.dart';
 import 'package:project/repo/utils.dart';
 import 'package:http/http.dart' as http;
@@ -41,6 +43,16 @@ class PerfectRepo {
       return data.map((e) => Invoice.fromJson(e)).toList();
     } else {
       throw Exception("Failed to load invoices");
+    }
+  }
+
+  Future<bool> onWillPop() async {
+    if (Platform.isAndroid) {
+      // For Android, use moveTaskToBack to send the app to the background
+      SystemChannels.platform.invokeMethod('SystemNavigator.pop'); // Correct method call
+      return Future.value(false); // Prevent app from closing
+    } else {
+      return Future.value(false); // For iOS or other platforms, prevent app closure
     }
   }
 }

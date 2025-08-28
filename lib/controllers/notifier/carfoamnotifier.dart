@@ -177,7 +177,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     File? profileimage8,
   }) async {
     try {
-      var uri = Uri.parse("https://car.greenzoneliving.org/API/image.php");
+      var uri = Uri.parse("${Utils.imageUploadUrl}");
       var request = http.MultipartRequest("POST", uri);
 
       Future<void> addFile(String field, File? file) async {
@@ -221,7 +221,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     try {
       
       final response = await http.post(
-        Uri.parse("https://car.greenzoneliving.org/API/form_submit.php"),
+        Uri.parse("${Utils.formSubmitUrl}"),
         body: state.toJson(),
       );
 

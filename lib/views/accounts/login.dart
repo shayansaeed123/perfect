@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/loginnotifier.dart';
 import 'package:project/models/logincheck.dart';
+import 'package:project/repo/perfect_repo.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
@@ -25,6 +26,7 @@ class _LoginState extends ConsumerState<Login> {
   late FocusNode _passfocusNode;
   late FocusNode _buttonFocusNode;
   bool pass = true;
+  PerfectRepo repo = PerfectRepo();
 
   @override
   void initState() {
@@ -74,68 +76,72 @@ class _LoginState extends ConsumerState<Login> {
       });
     }
   });
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand, 
-        children: [
-         Image.asset(
-              'assets/images/logincar.png',
-              filterQuality: FilterQuality.high,
-              fit: BoxFit.cover, // ✅ fills full screen, cropping if needed
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          Align(
-            alignment: Alignment(0, 0.3),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.42,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                color: colorController.whiteColor
+    return WillPopScope(
+      onWillPop: repo.onWillPop,
+      child: Scaffold(
+        body: Stack(
+          fit: StackFit.expand, 
+          children: [
+           Image.asset(
+                'assets/images/logincar.png',
+                filterQuality: FilterQuality.high,
+                fit: BoxFit.cover, // ✅ fills full screen, cropping if needed
+                width: double.infinity,
+                height: double.infinity,
               ),
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
-              child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                reusableText('LOGIN',color: colorController.textfieldColor,fontsize: 28,fontweight: FontWeight.bold),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: reusableTextField(context, email, 'Email', colorController.textfieldColor, _emailfocusNode,
-                      () {
-                        // _onEmailChanged;
-                        _emailfocusNode.unfocus();
-                        FocusScope.of(context).requestFocus(_passfocusNode);
-                      }, ),
+            Align(
+              alignment: Alignment(0, 0.3),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.42,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  color: colorController.whiteColor
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: reusablePassField(context, password, 'Password', colorController.textfieldColor, _passfocusNode, () {
-                      _passfocusNode.unfocus();
-                      FocusScope.of(context).requestFocus(_buttonFocusNode);
-                                  },
-                                  pass,(){
-                                    setState(() {
-                                      pass = !pass;
-                                    });
-                                  })
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
-                reusableBtn(context, 'Sign in', (){
-                   ref.read(authProvider.notifier).login(
-                            email.text.trim(),
-                            password.text.trim(),
-                          );
-                          print('object');
-                },width: 0.8,),
-              ],
-            ),
-            ),
-          )
-        ],
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
+                child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  reusableText('LOGIN',color: colorController.textfieldColor,fontsize: 28,fontweight: FontWeight.bold),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: reusableTextField(context, email, 'Email', colorController.textfieldColor, _emailfocusNode,
+                        () {
+                          // _onEmailChanged;
+                          _emailfocusNode.unfocus();
+                          FocusScope.of(context).requestFocus(_passfocusNode);
+                        },fillColor: colorController.textfieldBackgroundColor
+                        ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: reusablePassField(context, password, 'Password', colorController.textfieldColor, _passfocusNode, () {
+                        _passfocusNode.unfocus();
+                        FocusScope.of(context).requestFocus(_buttonFocusNode);
+                                    },
+                                    pass,(){
+                                      setState(() {
+                                        pass = !pass;
+                                      });
+                                    })
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+                  reusableBtn(context, 'Sign in', (){
+                     ref.read(authProvider.notifier).login(
+                              email.text.trim(),
+                              password.text.trim(),
+                            );
+                            print('object');
+                  },width: 0.8,),
+                ],
+              ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

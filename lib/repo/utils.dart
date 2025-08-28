@@ -11,6 +11,7 @@ class Utils {
   static String imageUploadUrl = "${baseUrl}image.php";
   static String formSubmitUrl = "${baseUrl}form_submit.php";
   static String loginUrl = "${baseUrl}login.php";
+  static String invoiceListingUrl = "${baseUrl}invoice_listing.php";
 
   static void fieldFocusChange(
       BuildContext context, FocusNode current, FocusNode nextFocus) {

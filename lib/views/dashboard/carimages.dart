@@ -1,6 +1,3 @@
-
-
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -159,8 +156,8 @@ class _CarimagesState extends ConsumerState<Carimages> {
 }
   @override
   Widget build(BuildContext context) {
-    final loading = ref.watch(loadingProvider);
-    final form = ref.watch(carFormProvider);
+    // final loading = ref.watch(loadingProvider);
+    // final form = ref.watch(carFormProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
