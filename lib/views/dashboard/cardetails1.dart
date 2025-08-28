@@ -52,7 +52,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               // reusableTextField(context, reusabletextfieldcontroller.make, 'Make', colorController.textfieldColor, FocusNode(), (){}),
               makeAsync.when(
                 data: (make){
-                  return reusableDropdown(make, selectedMake, "Select Make", (item) => item.id,(value) {
+                  return reusableDropdown(make, selectedMake, "Select Make", (item) => item.name,(value) {
                   setState((){
                     setState(() {
                   selectedMake = value;
@@ -69,7 +69,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               reusablaSizaBox(context, 0.03),
               ref.watch(modelProvider(selectedMake!.id)).when(
               data: (modelList) {
-              return reusableDropdown(modelList,selectedModel,"Select Model",(item) => item.id,(value) {
+              return reusableDropdown(modelList,selectedModel,"Select Model",(item) => item.name,(value) {
               setState(() => selectedModel = value);
               },);},
               loading: () => const CircularProgressIndicator(),
@@ -78,7 +78,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               yearsAsync.when(
                 data: (year){
-                  return reusableDropdown(year, selectedYear, "Select Year", (item) => item.id,(value) {
+                  return reusableDropdown(year, selectedYear, "Select Year", (item) => item.name,(value) {
                   setState(() => selectedYear = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
@@ -122,7 +122,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Color', colorController.textfieldColor, FocusNode(), (){}),
               colorAsync.when(
                 data: (color){
-                  return reusableDropdown(color, selectedYear, "Select Color", (item) => item.id,(value) {
+                  return reusableDropdown(color, selectedYear, "Select Color", (item) => item.name,(value) {
                   setState(() => selectedColor = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
@@ -133,7 +133,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Fule Type', colorController.textfieldColor, FocusNode(), (){}),
               fuelAsync.when(
                 data: (fuel){
-                  return reusableDropdown(fuel, selectedYear, "Select Fuel Type", (item) => item.id,(value) {
+                  return reusableDropdown(fuel, selectedYear, "Select Fuel Type", (item) => item.name,(value) {
                   setState(() => selectedfuel = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
@@ -153,14 +153,14 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
             reusableBtn(context, 'Next', () {
               ref.read(progressProvider.notifier).state = 2;
               ref.read(carFormProvider.notifier).updateCarDetails1(
-  make: selectedMake?.name,
-  model: selectedModel?.name,
-  year: selectedYear?.name,
+  make: selectedMake?.id,
+  model: selectedModel?.id,
+  year: selectedYear?.id,
   plateNo: reusabletextfieldcontroller.plateNo.text,
   vin: reusabletextfieldcontroller.vin.text,
   engineNo: reusabletextfieldcontroller.engineNo.text,
-  color: selectedColor?.name,
-  fuelType: selectedfuel?.name,
+  color: selectedColor?.id,
+  fuelType: selectedfuel?.id,
   option: reusabletextfieldcontroller.option.text,
   );
             },width: 0.4),

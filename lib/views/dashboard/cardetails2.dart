@@ -44,7 +44,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               reusablaSizaBox(context, 0.03),
               specsAsync.when(
                 data: (spec){
-                  return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.id,(value) {
+                  return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
                   setState(() => selectedSpec = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
@@ -54,7 +54,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               reusablaSizaBox(context, 0.03),
               typeAsync.when(
                 data: (type){
-                  return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.id,(value) {
+                  return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.name,(value) {
                   setState(() => selectedType = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
@@ -91,8 +91,8 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               ref.read(carFormProvider.notifier).updateCarDetails2(
   trim: reusabletextfieldcontroller.trim.text,
   odometer: reusabletextfieldcontroller.odometer.text,
-  specification: selectedSpec?.name,
-  bodyType: selectedType?.name,
+  specification: selectedSpec?.id,
+  bodyType: selectedType?.id,
   cylinders: reusabletextfieldcontroller.cylinders.text,
   transmission: reusabletextfieldcontroller.tranmission.text,
   carCondition: reusabletextfieldcontroller.evaluationNo.text,

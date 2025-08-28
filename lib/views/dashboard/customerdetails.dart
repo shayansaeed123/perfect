@@ -8,6 +8,7 @@ import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/reuse/reusablebtn.dart';
+import 'package:project/reuse/reusabledate.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
 
@@ -19,6 +20,8 @@ class CustomerDetails extends ConsumerStatefulWidget {
 }
 
 class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
+  DateTime? selectedDate;
+  late DateTime lastDate = DateTime(1970, 1, 1);
   @override
   Widget build(BuildContext context) {
     // final progressPercent = ref.watch(progressPercentageProvider);
@@ -36,7 +39,13 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
+              reusableDate(context, lastDate, selectedDate, (DateTime timeofday){
+                                  setState(() {
+                                            selectedDate = timeofday;
+                                            print('date $selectedDate');
+                                          });
+                                }, Icon(Icons.calendar_month_outlined),'Inspection Date',),
+              // reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
@@ -50,7 +59,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                 ref.read(carFormProvider.notifier).updateCustomerDetails(
   requestedFor: reusabletextfieldcontroller.requested.text,
   customerName: reusabletextfieldcontroller.customerName.text,
-  inspectionDate: reusabletextfieldcontroller.inspectiondate.text,
+  inspectionDate: selectedDate.toString(),
   address: reusabletextfieldcontroller.address.text,
   evaluationNo: reusabletextfieldcontroller.evaluationNo.text,
   );
