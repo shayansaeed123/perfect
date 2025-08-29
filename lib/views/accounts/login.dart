@@ -106,7 +106,6 @@ class _LoginState extends ConsumerState<Login> {
                 ),
                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
                 child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   reusableText('LOGIN',color: colorController.textfieldColor,fontsize: 28,fontweight: FontWeight.bold),
