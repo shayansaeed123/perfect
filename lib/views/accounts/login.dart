@@ -59,13 +59,14 @@ class _LoginState extends ConsumerState<Login> {
   
   @override
   Widget build(BuildContext context) {
-    // final authState = ref.watch(authProvider);
+    final authState = ref.watch(authProvider);
     ref.listen<AuthState>(authProvider, (prev, next) {
     if (next.isLoggedIn && next.userId != null && next.userId!.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => const NavBar()),
+          (route) => false,
         );
       });
     }
@@ -73,6 +74,11 @@ class _LoginState extends ConsumerState<Login> {
     if (next.error != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Utils.snakbar(context, next.error!);
+      });
+    }
+    if (next.success != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Utils.snakbarSuccess(context, next.success!);
       });
     }
   });
@@ -134,12 +140,19 @@ class _LoginState extends ConsumerState<Login> {
                               email.text.trim(),
                               password.text.trim(),
                             );
-                            print('object');
                   },width: 0.8,),
                 ],
               ),
               ),
-            )
+            ),
+             /// 🔹 Center Loading Overlay
+        if (authState.isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.3),
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
           ],
         ),
       ),

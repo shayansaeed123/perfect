@@ -12,7 +12,7 @@ import 'package:project/views/dashboard/carimages.dart';
 import 'package:project/views/dashboard/customerdetails.dart';
 
 class AddCars extends ConsumerStatefulWidget {
-  const AddCars({super.key});
+  const AddCars({super.key,});
 
   @override
   ConsumerState<AddCars> createState() => _AddCarsState();

@@ -31,7 +31,7 @@ class PerfectRepo {
 
   Future<List<Invoice>> fetchInvoices({String enterby = "1"}) async {
     final response = await _dio.post(
-      "https://car.greenzoneliving.org/API/invoice_listing.php",
+      "${Utils.invoiceListingUrl}",
       data: {"enterby": enterby},
       options: Options(
         headers: {"Content-Type": "application/x-www-form-urlencoded"},

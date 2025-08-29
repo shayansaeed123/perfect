@@ -28,6 +28,7 @@ class CarFormData {
   String? cylinders;
   String? transmission;
   String? carCondition;
+  String? total;
 
   // Car Images (List of file paths or base64)
   String? profile_image1; // uploaded front URL ya base64
@@ -61,6 +62,7 @@ class CarFormData {
     this.cylinders,
     this.transmission,
     this.carCondition,
+    this.total,
     this.profile_image1,
     this.profile_image2,
     this.profile_image3,
@@ -93,6 +95,7 @@ class CarFormData {
     String? cylinders,
     String? transmission,
     String? carCondition,
+    String? total,
     String? profile_image1,
     String? profile_image2,
     String? profile_image3,
@@ -124,6 +127,7 @@ class CarFormData {
       cylinders: cylinders ?? this.cylinders,
       transmission: transmission ?? this.transmission,
       carCondition: carCondition ?? this.carCondition,
+      total: total ?? this.total,
       profile_image1: profile_image1 ?? this.profile_image1,
       profile_image2: profile_image2 ?? this.profile_image2,
       profile_image3: profile_image3 ?? this.profile_image3,
@@ -158,6 +162,7 @@ class CarFormData {
     "cylinders_no": cylinders ?? "",
     "transmission_type": transmission ?? "",
     "car_condition": carCondition ?? "",
+    "Total": total ?? "",
     "profile_image1": profile_image1 ?? "",
     "profile_image2": profile_image2 ?? "",
     "profile_image3": profile_image3 ?? "",
@@ -166,6 +171,14 @@ class CarFormData {
     "profile_image6": profile_image6 ?? "",
     "profile_image7": profile_image7 ?? "",
     "profile_image8": profile_image8 ?? "",
+    // "image1": profile_image1 ?? "",
+    // "image2": profile_image2 ?? "",
+    // "image3": profile_image3 ?? "",
+    // "image4": profile_image4 ?? "",
+    // "image5": profile_image5 ?? "",
+    // "image6": profile_image6 ?? "",
+    // "image7": profile_image7 ?? "",
+    // "image8": profile_image8 ?? "",
   };
 }
 }

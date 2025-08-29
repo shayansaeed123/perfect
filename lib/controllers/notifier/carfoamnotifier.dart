@@ -69,6 +69,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     String? cylinders,
     String? transmission,
     String? carCondition,
+    String? total,
   }) {
     state = state.copyWith(
       trim: trim,
@@ -78,9 +79,9 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
       cylinders: cylinders,
       transmission: transmission,
       carCondition: carCondition,
+      total: total,
     );
   }
-
   // ── Upload a single image to image.php and save returned URL/path
   Future<String?> _uploadImageToServer(File file, String fieldName) async {
     final request = http.MultipartRequest("POST", Uri.parse(Utils.imageUploadUrl));
@@ -101,127 +102,65 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     return null;
   }
 
-  /// Public method for UI to upload and store image URLs
-  // Future<bool> uploadCarImage({File? profileimage1, File? profileimage2, File? profileimage3, File? profileimage4, File? profileimage5, File? profileimage6, File? profileimage7, File? profileimage8}) async {
-  //   String? profile_image1 = state.profile_image1;
-  //   String? profile_image2 = state.profile_image2;
-  //   String? profile_image3 = state.profile_image3;
-  //   String? profile_image4 = state.profile_image4;
-  //   String? profile_image5 = state.profile_image5;
-  //   String? profile_image6 = state.profile_image6;
-  //   String? profile_image7 = state.profile_image7;
-  //   String? profile_image8 = state.profile_image8;
-
-  //   if (profileimage1 != null) {
-  //     final p = await _uploadImageToServer(profileimage1, "profile_image1");
-  //     if (p == null) return false;
-  //     profile_image1 = p;
-  //   }
-  //   if (profileimage2 != null) {
-  //     final p = await _uploadImageToServer(profileimage2, "car_back");
-  //     if (p == null) return false;
-  //     profile_image2 = p;
-  //   }
-  //   if (profileimage3 != null) {
-  //     final p = await _uploadImageToServer(profileimage3, "car_back");
-  //     if (p == null) return false;
-  //     profile_image3 = p;
-  //   }
-  //   if (profileimage4 != null) {
-  //     final p = await _uploadImageToServer(profileimage4, "car_back");
-  //     if (p == null) return false;
-  //     profile_image4 = p;
-  //   }
-  //   if (profileimage5 != null) {
-  //     final p = await _uploadImageToServer(profileimage5, "car_back");
-  //     if (p == null) return false;
-  //     profile_image5 = p;
-  //   }
-  //   if (profileimage6 != null) {
-  //     final p = await _uploadImageToServer(profileimage6, "car_back");
-  //     if (p == null) return false;
-  //     profile_image6 = p;
-  //   }
-  //   if (profileimage7 != null) {
-  //     final p = await _uploadImageToServer(profileimage7, "car_back");
-  //     if (p == null) return false;
-  //     profile_image7 = p;
-  //   }
-  //   if (profileimage8 != null) {
-  //     final p = await _uploadImageToServer(profileimage8, "car_back");
-  //     if (p == null) return false;
-  //     profile_image8 = p;
-  //   }
-
-  //   state = state.copyWith(
-  //     profile_image1: profile_image1,
-  //     profile_image2: profile_image2,
-  //     profile_image3: profile_image3,
-  //     profile_image4: profile_image4,
-  //     profile_image5: profile_image5,
-  //     profile_image6: profile_image6,
-  //     profile_image7: profile_image7,
-  //     profile_image8: profile_image8,
-  //   );
-  //   return true;
-  // }
-
-  Future<bool> uploadCarImage({
-    File? profileimage1,
-    File? profileimage2,
-    File? profileimage3,
-    File? profileimage4,
-    File? profileimage5,
-    File? profileimage6,
-    File? profileimage7,
-    File? profileimage8,
-  }) async {
-    try {
-      var uri = Uri.parse("${Utils.imageUploadUrl}");
-      var request = http.MultipartRequest("POST", uri);
-
-      Future<void> addFile(String field, File? file) async {
-        if (file != null) {
-          request.files.add(
-            await http.MultipartFile.fromPath(field, file.path),
-          );
-        }
-      }
-
-      await addFile("profile_image1", profileimage1);
-      await addFile("profile_image2", profileimage2);
-      await addFile("profile_image3", profileimage3);
-      await addFile("profile_image4", profileimage4);
-      await addFile("profile_image5", profileimage5);
-      await addFile("profile_image6", profileimage6);
-      await addFile("profile_image7", profileimage7);
-      await addFile("profile_image8", profileimage8);
-
-      var response = await request.send();
-
-      if (response.statusCode == 200) {
-        final responseString = await response.stream.bytesToString();
-      final responseData = json.decode(responseString);
-      debugPrint('Response Data: $responseData');
-        debugPrint("✅ Images uploaded successfully");
-        return true;
-      } else {
-        print('objectgfdsgdfhg ${response.toString()}');
-        debugPrint("❌ Upload failed: ${response.statusCode}");
-        return false;
-      }
-    } catch (e) {
-      debugPrint("UploadCarImage Error: $e");
-      return false;
+  /// 🔹 Update Image Paths in State
+  void updateCarImages(String imageType, String path) {
+    switch (imageType) {
+      case 'profile_image1': state = state.copyWith(profile_image1: path); break;
+      case 'profile_image2': state = state.copyWith(profile_image2: path); break;
+      case 'profile_image3': state = state.copyWith(profile_image3: path); break;
+      case 'profile_image4': state = state.copyWith(profile_image4: path); break;
+      case 'profile_image5': state = state.copyWith(profile_image5: path); break;
+      case 'profile_image6': state = state.copyWith(profile_image6: path); break;
+      case 'profile_image7': state = state.copyWith(profile_image7: path); break;
+      case 'profile_image8': state = state.copyWith(profile_image8: path); break;
     }
   }
 
-  /// Final API Call
+  /// ✅ Image Upload Function
+  Future<String?> uploadCarImage(File file, String fieldName) async {
+    try {
+      final request = http.MultipartRequest(
+        "POST",
+        Uri.parse(Utils.imageUploadUrl),
+      );
+
+      // ✅ send with correct field name
+      request.files.add(
+        await http.MultipartFile.fromPath(fieldName, file.path),
+      );
+
+      final response = await request.send();
+      final respStr = await response.stream.bytesToString();
+
+      debugPrint("📷 Upload Response: $respStr");
+
+      if (response.statusCode == 200) {
+      final data = jsonDecode(respStr);
+
+      // ✅ server response is { "profile_image1": "uploaded_url" }
+      if (data[fieldName] != null) {
+        final uploadedPath = data[fieldName];
+        updateCarImages(fieldName, uploadedPath);
+        return uploadedPath;
+      } else {
+        debugPrint("❌ Upload failed: $data");
+        return null;
+      }
+    } else {
+      debugPrint("❌ Upload failed ${response.statusCode}");
+      return null;
+    }
+    } catch (e) {
+      debugPrint("Upload Error: $e");
+      return null;
+    }
+  }
+
+  /// 🔹 Final Submit API
   Future<bool> submitCarForm() async {
     try {
-      
       final response = await http.post(
-        Uri.parse("${Utils.formSubmitUrl}"),
+        Uri.parse(Utils.formSubmitUrl),
         body: state.toJson(),
       );
 
@@ -237,4 +176,118 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
       return false;
     }
   }
+
+  void resetForm() {
+  state = CarFormData(
+    requestedFor: '',
+    customerName: '',
+    inspectionDate: '',
+    address: '',
+    evaluationNo: '',
+    make: '',
+    model: '',
+    year: '',
+    plateNo: '',
+    vin: '',
+    engineNo: '',
+    color: '',
+    fuelType: '',
+    option: '',
+    trim: '',
+    odometer: '',
+    specification: '',
+    bodyType: '',
+    cylinders: '',
+    transmission: '',
+    carCondition: '',
+    profile_image1: null,
+    profile_image2: null,
+    profile_image3: null,
+    profile_image4: null,
+    profile_image5: null,
+    profile_image6: null,
+    profile_image7: null,
+    profile_image8: null,
+  );
+}
+
+  // Future<bool> uploadCarImage({
+  //   File? profileimage1,
+  //   File? profileimage2,
+  //   File? profileimage3,
+  //   File? profileimage4,
+  //   File? profileimage5,
+  //   File? profileimage6,
+  //   File? profileimage7,
+  //   File? profileimage8,
+  // }) async {
+  //   try {
+  //     var uri = Uri.parse("${Utils.imageUploadUrl}");
+  //     var request = http.MultipartRequest("POST", uri);
+
+  //     Future<void> addFile(String field, File? file) async {
+  //       if (file != null) {
+  //         request.files.add(
+  //           await http.MultipartFile.fromPath(field, file.path),
+  //         );
+  //       }
+  //     }
+
+  //     await addFile("profile_image1", profileimage1);
+  //     await addFile("profile_image2", profileimage2);
+  //     await addFile("profile_image3", profileimage3);
+  //     await addFile("profile_image4", profileimage4);
+  //     await addFile("profile_image5", profileimage5);
+  //     await addFile("profile_image6", profileimage6);
+  //     await addFile("profile_image7", profileimage7);
+  //     await addFile("profile_image8", profileimage8);
+  //     // await addFile("image1", profileimage1);
+  //     // await addFile("image2", profileimage2);
+  //     // await addFile("image3", profileimage3);
+  //     // await addFile("image4", profileimage4);
+  //     // await addFile("image5", profileimage5);
+  //     // await addFile("image6", profileimage6);
+  //     // await addFile("image7", profileimage7);
+  //     // await addFile("image8", profileimage8);
+
+  //     var response = await request.send();
+
+  //     if (response.statusCode == 200) {
+  //       final responseString = await response.stream.bytesToString();
+  //     final responseData = json.decode(responseString);
+  //     debugPrint('Response Data: $responseData');
+  //       debugPrint("✅ Images uploaded successfully");
+  //       return true;
+  //     } else {
+  //       print('objectgfdsgdfhg ${response.toString()}');
+  //       debugPrint("❌ Upload failed: ${response.statusCode}");
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     debugPrint("UploadCarImage Error: $e");
+  //     return false;
+  //   }
+  // }
+
+  // /// Final API Call
+  // Future<bool> submitCarForm() async {
+  //   try {
+      
+  //     final response = await http.post(
+  //       Uri.parse("${Utils.formSubmitUrl}"),
+  //       body: state.toJson(),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       debugPrint("✅ Submit Response: ${response.body}");
+  //       return true;
+  //     } else {
+  //       debugPrint("❌ Failed: ${response.statusCode}");
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     debugPrint("SubmitCarForm Error: $e");
+  //     return false;
+  //   }
+  // }
 }

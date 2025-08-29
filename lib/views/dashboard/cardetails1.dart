@@ -10,6 +10,8 @@ import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/dropdownmodel.dart';
+import 'package:project/repo/utils.dart';
+import 'package:project/repo/validation.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
@@ -61,7 +63,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   });},);
                 },
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text("Error: $err"),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // 🔹 Model Dropdown (depends on selectedMake)
               if (selectedMake != null)...[
@@ -73,7 +75,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               setState(() => selectedModel = value);
               },);},
               loading: () => const CircularProgressIndicator(),
-              error: (err, _) => Text("Error: $err"),
+              error: (err, _) => const CircularProgressIndicator(),
               )],
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               yearsAsync.when(
@@ -82,7 +84,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   setState(() => selectedYear = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text("Error: $err"),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
@@ -126,7 +128,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   setState(() => selectedColor = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text("Error: $err"),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
@@ -137,7 +139,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   setState(() => selectedfuel = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text("Error: $err"),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
@@ -151,18 +153,51 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               ref.read(progressProvider.notifier).state = 0;
             },width: 0.4),
             reusableBtn(context, 'Next', () {
-              ref.read(progressProvider.notifier).state = 2;
+               final error = ref
+                  .read(carDetails1ValidationProvider.notifier)
+                  .validate(
+                    make: selectedMake?.id,
+                    model: selectedModel?.id,
+                    year: selectedYear?.id,
+                    plateNo: reusabletextfieldcontroller.plateNo.text.trim(),
+                    vin: reusabletextfieldcontroller.vin.text.trim(),
+                    engineNo: reusabletextfieldcontroller.engineNo.text.trim(),
+                    color: selectedColor?.id,
+                    fuelType: selectedfuel?.id,
+                    option: reusabletextfieldcontroller.option.text.trim(),
+                  );
+
+              if (error != null) {
+                Utils.snakbar(context, error);
+                return;
+              }
+
+              // ✅ Save Data
               ref.read(carFormProvider.notifier).updateCarDetails1(
-  make: selectedMake?.id,
-  model: selectedModel?.id,
-  year: selectedYear?.id,
-  plateNo: reusabletextfieldcontroller.plateNo.text,
-  vin: reusabletextfieldcontroller.vin.text,
-  engineNo: reusabletextfieldcontroller.engineNo.text,
-  color: selectedColor?.id,
-  fuelType: selectedfuel?.id,
-  option: reusabletextfieldcontroller.option.text,
-  );
+                    make: selectedMake?.id,
+                    model: selectedModel?.id,
+                    year: selectedYear?.id,
+                    plateNo: reusabletextfieldcontroller.plateNo.text,
+                    vin: reusabletextfieldcontroller.vin.text,
+                    engineNo: reusabletextfieldcontroller.engineNo.text,
+                    color: selectedColor?.id,
+                    fuelType: selectedfuel?.id,
+                    option: reusabletextfieldcontroller.option.text,
+                  );
+
+              ref.read(progressProvider.notifier).state = 2;
+  //             ref.read(progressProvider.notifier).state = 2;
+  //             ref.read(carFormProvider.notifier).updateCarDetails1(
+  // make: selectedMake?.id,
+  // model: selectedModel?.id,
+  // year: selectedYear?.id,
+  // plateNo: reusabletextfieldcontroller.plateNo.text,
+  // vin: reusabletextfieldcontroller.vin.text,
+  // engineNo: reusabletextfieldcontroller.engineNo.text,
+  // color: selectedColor?.id,
+  // fuelType: selectedfuel?.id,
+  // option: reusabletextfieldcontroller.option.text,
+  // );
             },width: 0.4),
           ],
         ),

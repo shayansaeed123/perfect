@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:project/controllers/color_controller.dart';
@@ -68,17 +70,49 @@ reusableSelectImage(BuildContext context,Function ontap,String image,String imgC
 }
 
 
+// Widget _displayImage(String imagePath, String imgCondition) {
+//     bool isNetwork = imagePath.startsWith('http');
+//     return isNetwork
+//         ? Center(child: imagePath == '${Utils.imageUrl}' || imagePath == '' ? Image.asset(imgCondition,fit: BoxFit.contain,)
+//                 : Image.network(imagePath,fit: BoxFit.contain,)
+//                   )
+//         : imagePath == '${Utils.imageUrl}' || imagePath == '' ?  Image.asset(imgCondition,fit: BoxFit.contain,)
+//         :
+//          Image.asset(
+//           imagePath,
+//             // File(imagePath),
+//             fit: BoxFit.cover,
+//           );
+//   }
 Widget _displayImage(String imagePath, String imgCondition) {
-    bool isNetwork = imagePath.startsWith('http');
-    return isNetwork
-        ? Center(child: imagePath == '${Utils.imageUrl}' || imagePath == '' ? Image.asset(imgCondition,fit: BoxFit.contain,)
-                : Image.network(imagePath,fit: BoxFit.contain,)
-                  )
-        : imagePath == '${Utils.imageUrl}' || imagePath == '' ?  Image.asset(imgCondition,fit: BoxFit.contain,)
-        :
-         Image.asset(
-          imagePath,
-            // File(imagePath),
-            fit: BoxFit.cover,
-          );
+  if (imagePath.isEmpty || imagePath == Utils.imageUrl) {
+    // Agar imagePath empty ho to placeholder asset dikhado
+    return Image.asset(imgCondition, fit: BoxFit.contain);
   }
+
+  // Agar network URL hai
+  if (imagePath.startsWith('http')) {
+    return Image.network(
+      imagePath,
+      fit: BoxFit.contain,
+      errorBuilder: (context, error, stackTrace) =>
+          Image.asset(imgCondition, fit: BoxFit.contain), // fallback
+    );
+  }
+
+  // Agar local file path hai
+  if (imagePath.startsWith('/data') || imagePath.startsWith('/storage')) {
+    return Image.file(
+      File(imagePath),
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) =>
+          Image.asset(imgCondition, fit: BoxFit.contain), // fallback
+    );
+  }
+
+  // Default case: asset image
+  return Image.asset(
+    imagePath,
+    fit: BoxFit.contain,
+  );
+}

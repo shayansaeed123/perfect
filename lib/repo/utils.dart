@@ -31,9 +31,9 @@ class Utils {
 
   static snakbarSuccess(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: colorController.yellowColor,
+      backgroundColor: colorController.progressbarColor,
       behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 6),
+      duration: Duration(seconds: 2),
       content: reusableText(message, color: colorController.btnColor),
     ));
   }

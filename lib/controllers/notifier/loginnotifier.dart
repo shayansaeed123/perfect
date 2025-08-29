@@ -36,10 +36,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   /// ✅ Login API call
   Future<void> login(String email, String password) async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: null, success: null);
 
     try {
       final result = await _service.login(email, password);
+      print("DEBUG Login Result: $result"); // ✅ keys check karo
 
       if (result["success"] == 1) {
         final userId = result["admin_id"] ?? "";
@@ -52,22 +53,28 @@ class AuthNotifier extends StateNotifier<AuthState> {
           isLoading: false,
           isLoggedIn: true,
           userId: userId,
+          success: result['message'],
+          error: null,
         );
       } else {
+        _pref.setUserLoginStatus(false);
+        _pref.set_user_id("");
         state = state.copyWith(
           isLoading: false,
           error: result["message"] ?? "Login failed",
+          success: null
         );
       }
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      _pref.setUserLoginStatus(false);
+      _pref.set_user_id("");
+      state = state.copyWith(isLoading: false, error: e.toString(),success: null);
     }
   }
 
   /// ✅ Logout
   Future<void> logout() async {
-    _pref.setUserLoginStatus(false);
-    _pref.set_user_id("");
+    _pref.logout();
     state = AuthState.initial();
   }
 

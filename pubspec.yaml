@@ -53,6 +53,7 @@ dependencies:
   change_app_package_name: 
   rename_app:
   intl: 
+  connectivity_plus: 
 
 dev_dependencies:
   flutter_test:

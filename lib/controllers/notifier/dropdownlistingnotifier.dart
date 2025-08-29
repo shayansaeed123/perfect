@@ -26,6 +26,7 @@ class DropdownParams {
 final dropdownProvider =
     FutureProvider.family<List<DropdownItem>, DropdownParams>((ref, params) async {
   final response = await http.get(Uri.parse('${Utils.baseUrl}masterapi.php?${params.url}'));
+  await Future.delayed(const Duration(seconds: 1)); // simulate network delay
 
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);

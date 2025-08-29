@@ -59,8 +59,8 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _carCondition = TextEditingController();
   TextEditingController get carCondition => _carCondition;
 
-  final TextEditingController _ChangecnfmPassword = TextEditingController();
-  TextEditingController get ChangecnfmPassword => _ChangecnfmPassword;
+  final TextEditingController _total = TextEditingController();
+  TextEditingController get total => _total;
 
   final TextEditingController _EditProfileName = TextEditingController();
   TextEditingController get EditProfileName => _EditProfileName;
@@ -141,7 +141,23 @@ final TextEditingController _title = TextEditingController();
   TextEditingController get furtherInfo => _furtherInfo;
 
 
+  // ✅ Ye method banado
+  void clearAll() {
+    requested.clear();
+    customerName.clear();
+    inspectiondate.clear();
+    address.clear();
+    evaluationNo.clear();
 
+    plateNo.clear();
+    vin.clear();
+    engineNo.clear();
+    option.clear();
+    trim.clear();
+    odometer.clear();
+    cylinders.clear();
+    tranmission.clear();
+  }
 
 }
 

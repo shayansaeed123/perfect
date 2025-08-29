@@ -8,6 +8,8 @@ import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/dropdownmodel.dart';
+import 'package:project/repo/utils.dart';
+import 'package:project/repo/validation.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
@@ -27,7 +29,6 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
   Widget build(BuildContext context) {
     final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     final typeAsync = ref.watch(dropdownProvider(const DropdownParams("type=1", "type_name")));
-    
     return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -48,7 +49,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   setState(() => selectedSpec = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text("Error: $err"),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
@@ -58,7 +59,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   setState(() => selectedType = value);},);
                 },
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text("Error: $err"),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -79,6 +80,8 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.total, 'Total', colorController.textfieldColor, FocusNode(), (){}),
               reusablaSizaBox(context, 0.05),
                Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,16 +90,48 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               ref.read(progressProvider.notifier).state = 1;
             },width: 0.4),
             reusableBtn(context, 'Next', () {
-              ref.read(progressProvider.notifier).state = 3;
+              final error = ref
+                  .read(carDetails2ValidationProvider.notifier)
+                  .validate(
+                    trim: reusabletextfieldcontroller.trim.text.trim(),
+                    odometer: reusabletextfieldcontroller.odometer.text.trim(),
+                    specification: selectedSpec?.id,
+                    bodyType: selectedType?.id,
+                    cylinders: reusabletextfieldcontroller.cylinders.text.trim(),
+                    transmission: reusabletextfieldcontroller.tranmission.text.trim(),
+                    carCondition: reusabletextfieldcontroller.evaluationNo.text.trim(),
+                    total: reusabletextfieldcontroller.total.text.trim(),
+                  );
+
+              if (error != null) {
+                Utils.snakbar(context, error);
+                return;
+              }
+
+              // ✅ Save Data to provider
               ref.read(carFormProvider.notifier).updateCarDetails2(
-  trim: reusabletextfieldcontroller.trim.text,
-  odometer: reusabletextfieldcontroller.odometer.text,
-  specification: selectedSpec?.id,
-  bodyType: selectedType?.id,
-  cylinders: reusabletextfieldcontroller.cylinders.text,
-  transmission: reusabletextfieldcontroller.tranmission.text,
-  carCondition: reusabletextfieldcontroller.evaluationNo.text,
-  );
+                    trim: reusabletextfieldcontroller.trim.text,
+                    odometer: reusabletextfieldcontroller.odometer.text,
+                    specification: selectedSpec?.id,
+                    bodyType: selectedType?.id,
+                    cylinders: reusabletextfieldcontroller.cylinders.text,
+                    transmission: reusabletextfieldcontroller.tranmission.text,
+                    carCondition: reusabletextfieldcontroller.evaluationNo.text,
+                    total: reusabletextfieldcontroller.total.text,
+                  );
+
+              ref.read(progressProvider.notifier).state = 3;
+  //             ref.read(progressProvider.notifier).state = 3;
+  //             ref.read(carFormProvider.notifier).updateCarDetails2(
+  // trim: reusabletextfieldcontroller.trim.text,
+  // odometer: reusabletextfieldcontroller.odometer.text,
+  // specification: selectedSpec?.id,
+  // bodyType: selectedType?.id,
+  // cylinders: reusabletextfieldcontroller.cylinders.text,
+  // transmission: reusabletextfieldcontroller.tranmission.text,
+  // carCondition: reusabletextfieldcontroller.evaluationNo.text,
+  // total: reusabletextfieldcontroller.total.text,
+  // );
             },width: 0.4),
           ],
         ),
