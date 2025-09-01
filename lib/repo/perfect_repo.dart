@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:project/database/my_shared.dart';
 import 'package:project/models/invoicemodel.dart';
 import 'package:project/repo/utils.dart';
 import 'package:http/http.dart' as http;
@@ -29,10 +30,11 @@ class PerfectRepo {
     }
   }
 
-  Future<List<Invoice>> fetchInvoices({String enterby = "1"}) async {
+  Future<List<Invoice>> fetchInvoices() async {
+    print(MySharedPrefrence().get_user_id().toString());
     final response = await _dio.post(
       "${Utils.invoiceListingUrl}",
-      data: {"enterby": enterby},
+      data: {"enterby": MySharedPrefrence().get_user_id().toString()},
       options: Options(
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
       ),
