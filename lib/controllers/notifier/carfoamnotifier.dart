@@ -21,6 +21,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
   // ── Customer
   void updateCustomerDetails({
     String? requestedFor,
+    String? bankName,
     String? customerName,
     String? inspectionDate,
     String? address,
@@ -28,6 +29,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
   }) {
     state = state.copyWith(
       requestedFor: requestedFor,
+      bankName: bankName,
       customerName: customerName,
       inspectionDate: inspectionDate,
       address: address,
@@ -64,22 +66,26 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
   void updateCarDetails2({
     String? trim,
     String? odometer,
+    String? odometerUnit,
     String? specification,
     String? bodyType,
     String? cylinders,
     String? transmission,
     String? carCondition,
     String? total,
+    String? enterby,
   }) {
     state = state.copyWith(
       trim: trim,
       odometer: odometer,
+      odometerUnit: odometerUnit,
       specification: specification,
       bodyType: bodyType,
       cylinders: cylinders,
       transmission: transmission,
       carCondition: carCondition,
       total: total,
+      enterby: enterby,
     );
   }
   // ── Upload a single image to image.php and save returned URL/path
@@ -184,6 +190,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     inspectionDate: '',
     address: '',
     evaluationNo: '',
+    bankName: '',
     make: '',
     model: '',
     year: '',
@@ -195,11 +202,14 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     option: '',
     trim: '',
     odometer: '',
+    odometerUnit: '',
     specification: '',
     bodyType: '',
     cylinders: '',
     transmission: '',
     carCondition: '',
+    total: '',
+    enterby: '',
     profile_image1: null,
     profile_image2: null,
     profile_image3: null,

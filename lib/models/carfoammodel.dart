@@ -8,6 +8,7 @@ class CarFormData {
   String? inspectionDate;
   String? address;
   String? evaluationNo;
+  String? bankName;
 
   // Car Details 1
   String? make;
@@ -23,12 +24,14 @@ class CarFormData {
   // Car Details 2
   String? trim;
   String? odometer;
+  String? odometerUnit;
   String? specification;
   String? bodyType;
   String? cylinders;
   String? transmission;
   String? carCondition;
   String? total;
+  String? enterby;
 
   // Car Images (List of file paths or base64)
   String? profile_image1; // uploaded front URL ya base64
@@ -46,6 +49,7 @@ class CarFormData {
     this.inspectionDate,
     this.address,
     this.evaluationNo,
+    this.bankName,
     this.make,
     this.model,
     this.year,
@@ -57,12 +61,14 @@ class CarFormData {
     this.option,
     this.trim,
     this.odometer,
+    this.odometerUnit,
     this.specification,
     this.bodyType,
     this.cylinders,
     this.transmission,
     this.carCondition,
     this.total,
+    this.enterby,
     this.profile_image1,
     this.profile_image2,
     this.profile_image3,
@@ -79,6 +85,7 @@ class CarFormData {
     String? inspectionDate,
     String? address,
     String? evaluationNo,
+    String? bankName,
     String? make,
     String? model,
     String? year,
@@ -90,12 +97,14 @@ class CarFormData {
     String? option,
     String? trim,
     String? odometer,
+    String? odometerUnit,
     String? specification,
     String? bodyType,
     String? cylinders,
     String? transmission,
     String? carCondition,
     String? total,
+    String? enterby,
     String? profile_image1,
     String? profile_image2,
     String? profile_image3,
@@ -111,6 +120,7 @@ class CarFormData {
       inspectionDate: inspectionDate ?? this.inspectionDate,
       address: address ?? this.address,
       evaluationNo: evaluationNo ?? this.evaluationNo,
+      bankName: bankName ?? this.bankName,
       make: make ?? this.make,
       model: model ?? this.model,
       year: year ?? this.year,
@@ -122,12 +132,14 @@ class CarFormData {
       option: option ?? this.option,
       trim: trim ?? this.trim,
       odometer: odometer ?? this.odometer,
+      odometerUnit: odometerUnit ?? this.odometerUnit,
       specification: specification ?? this.specification,
       bodyType: bodyType ?? this.bodyType,
       cylinders: cylinders ?? this.cylinders,
       transmission: transmission ?? this.transmission,
       carCondition: carCondition ?? this.carCondition,
       total: total ?? this.total,
+      enterby: enterby ?? this.enterby,
       profile_image1: profile_image1 ?? this.profile_image1,
       profile_image2: profile_image2 ?? this.profile_image2,
       profile_image3: profile_image3 ?? this.profile_image3,
@@ -141,11 +153,12 @@ class CarFormData {
 
   Map<String, dynamic> toJson() {
   return {
+    "BankName": bankName ?? "",
     "requested_for": requestedFor ?? "",
     "customer_name": customerName ?? "",
     "Invoice_Date": inspectionDate ?? "",
     "address": address ?? "",
-    "evaluationNo": evaluationNo ?? "",
+    "ApplicationNo": evaluationNo ?? "",
     "Make": make ?? "",
     "Model": model ?? "",
     "Year": year ?? "",
@@ -157,12 +170,14 @@ class CarFormData {
     "options": option ?? "",
     "trim": trim ?? "",
     "Odometer": odometer ?? "",
+    "OdometerUnit": odometerUnit ?? "",
     "specification": specification ?? "",
     "type": bodyType ?? "",
     "cylinders_no": cylinders ?? "",
     "transmission_type": transmission ?? "",
     "car_condition": carCondition ?? "",
     "Total": total ?? "",
+    "enterby": enterby ?? "",
     "profile_image1": profile_image1 ?? "",
     "profile_image2": profile_image2 ?? "",
     "profile_image3": profile_image3 ?? "",

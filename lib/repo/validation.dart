@@ -12,13 +12,17 @@ class CustomerValidationNotifier extends StateNotifier<CustomerValidationState> 
 
   String? validate({
     required String requestedFor,
+    required String? bankName,
     required String customerName,
     required String inspectionDate,
     required String address,
     required String evaluationNo,
   }) {
     if (requestedFor.isEmpty) {
-      state = CustomerValidationState(errorMessage: "⚠️ Requested For is required");
+      state = CustomerValidationState(errorMessage: "⚠️ Requested For is bank person email");
+      return state.errorMessage;
+    } else if (bankName == null || bankName.isEmpty) {
+      state = CustomerValidationState(errorMessage: "⚠️ Bank Name is required");
       return state.errorMessage;
     } else if (customerName.isEmpty) {
       state = CustomerValidationState(errorMessage: "⚠️ Customer Name is required");
@@ -91,7 +95,7 @@ class CarDetails1ValidationNotifier
       state = CarDetails1ValidationState(errorMessage: "⚠️ Fuel Type is required");
       return state.errorMessage;
     } else if (option.isEmpty) {
-      state = CarDetails1ValidationState(errorMessage: "⚠️ Option is required");
+      state = CarDetails1ValidationState(errorMessage: "⚠️ Second Color is required");
       return state.errorMessage;
     }
 
@@ -118,16 +122,16 @@ class CarDetails2ValidationNotifier
   CarDetails2ValidationNotifier() : super(CarDetails2ValidationState());
 
   String? validate({
-    required String trim,
+    required String? trim,
     required String odometer,
     required String? specification,
     required String? bodyType,
     required String cylinders,
-    required String transmission,
+    required String? transmission,
     required String carCondition,
     required String total,
   }) {
-    if (trim.isEmpty) {
+    if (trim == null || trim.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Trim is required");
       return state.errorMessage;
     } else if (odometer.isEmpty) {
@@ -142,7 +146,7 @@ class CarDetails2ValidationNotifier
     } else if (cylinders.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Cylinders is required");
       return state.errorMessage;
-    } else if (transmission.isEmpty) {
+    } else if (transmission == null || transmission.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Transmission is required");
       return state.errorMessage;
     } else if (carCondition.isEmpty) {

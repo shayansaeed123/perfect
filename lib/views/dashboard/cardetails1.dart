@@ -143,7 +143,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.option, 'Option', colorController.textfieldColor, FocusNode(), (){}),
+              reusableTextField(context, reusabletextfieldcontroller.option, 'Second Color', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
               reusablaSizaBox(context, 0.05),
                Row(

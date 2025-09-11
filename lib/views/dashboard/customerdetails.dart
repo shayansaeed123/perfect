@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
+import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
+import 'package:project/models/dropdownmodel.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/repo/validation.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabledate.dart';
+import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
 
@@ -24,16 +27,27 @@ class CustomerDetails extends ConsumerStatefulWidget {
 class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
   DateTime? selectedDate;
   late DateTime lastDate = DateTime(1970, 1, 1);
+  DropdownItem? selectedBanks;
   @override
   Widget build(BuildContext context) {
     // final progressPercent = ref.watch(progressPercentageProvider);
+    final banksAsync = ref.watch(dropdownProvider(const DropdownParams("BankName=1", "banks_name")));
     return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               reusablaSizaBox(context, 0.02),
               reusableText('Customer Details',color:colorController.textColorDark,fontsize: 18,),
               reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.requested, 'Requested For', colorController.textfieldColor, FocusNode(), (){}),
+              reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
+              reusablaSizaBox(context, 0.03),
+              banksAsync.when(
+                data: (banks){
+                  return reusableDropdown(banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
+                  setState(() => selectedBanks = value);},);
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (err, _) => const CircularProgressIndicator(),
+              ),
               reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
@@ -62,12 +76,14 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
           final address = reusabletextfieldcontroller.address.text.trim();
           final evaluationNo =
               reusabletextfieldcontroller.evaluationNo.text.trim();
+              // final selectbank = selectedBanks?.id;
 
           // ✅ Validate
           final error = ref
               .read(customerValidationProvider.notifier)
               .validate(
                 requestedFor: requestedFor,
+                bankName: selectedBanks?.id,
                 customerName: customerName,
                 inspectionDate: inspectionDateStr,
                 address: address,
@@ -81,6 +97,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
           // ✅ Save in provider only if valid
           ref.read(carFormProvider.notifier).updateCustomerDetails(
                 requestedFor: requestedFor,
+                bankName: selectedBanks?.id,
                 customerName: customerName,
                 inspectionDate: inspectionDateStr,
                 address: address,
