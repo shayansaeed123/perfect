@@ -8,7 +8,6 @@ import 'package:project/reuse/reusabletext.dart';
 
 reusableCard(BuildContext context,String ApplicationNo,String invoiceDate,String reqFor,
 String Address,String model,String year,Function ontap,){
-   // Har card ke liye alag controller
   final ScrollController innerController = ScrollController();
   return Container(
             height: MediaQuery.sizeOf(context).height * 0.18,
@@ -29,7 +28,7 @@ String Address,String model,String year,Function ontap,){
         color: Colors.black.withOpacity(0.3),
         spreadRadius: 0.5,
         blurRadius: 8,
-        offset: Offset(4, 6), // shadow ka direction
+        offset: Offset(4, 6), 
       ),
     ],
             ),
