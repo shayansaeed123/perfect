@@ -45,7 +45,8 @@ class _HomeState extends ConsumerState<Home> {
           if (invoices.isEmpty) {
             return Center(child: reusableText('No Invoice Found',color: colorController.textColorDark,fontsize: 25));
           }
-
+          // 🔽 Sort invoices in descending order by invoiceDate
+          invoices.sort((a, b) => b.invoiceDate.compareTo(a.invoiceDate));
           return CustomScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             slivers: [

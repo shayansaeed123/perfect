@@ -63,12 +63,12 @@ class CarDetails1ValidationNotifier
     required String? make,
     required String? model,
     required String? year,
+    required String? trim,
     required String plateNo,
+    required String odometer,
     required String vin,
+    required String? specification,
     required String engineNo,
-    required String? color,
-    required String? fuelType,
-    required String option,
   }) {
     if (make == null || make.isEmpty) {
       state = CarDetails1ValidationState(errorMessage: "⚠️ Make is required");
@@ -79,23 +79,23 @@ class CarDetails1ValidationNotifier
     } else if (year == null || year.isEmpty) {
       state = CarDetails1ValidationState(errorMessage: "⚠️ Year is required");
       return state.errorMessage;
+    } else if (trim == null || trim.isEmpty) {
+      state = CarDetails1ValidationState(errorMessage: "⚠️ Trim is required");
+      return state.errorMessage;
     } else if (plateNo.isEmpty) {
       state = CarDetails1ValidationState(errorMessage: "⚠️ Plate No is required");
+      return state.errorMessage;
+    } else if (odometer.isEmpty) {
+      state = CarDetails1ValidationState(errorMessage: "⚠️ Odometer is required");
       return state.errorMessage;
     } else if (vin.isEmpty) {
       state = CarDetails1ValidationState(errorMessage: "⚠️ VIN is required");
       return state.errorMessage;
+    } else if (specification == null || specification.isEmpty) {
+      state = CarDetails1ValidationState(errorMessage: "⚠️ Specification is required");
+      return state.errorMessage;
     } else if (engineNo.isEmpty) {
       state = CarDetails1ValidationState(errorMessage: "⚠️ Engine No is required");
-      return state.errorMessage;
-    } else if (color == null || color.isEmpty) {
-      state = CarDetails1ValidationState(errorMessage: "⚠️ Color is required");
-      return state.errorMessage;
-    } else if (fuelType == null || fuelType.isEmpty) {
-      state = CarDetails1ValidationState(errorMessage: "⚠️ Fuel Type is required");
-      return state.errorMessage;
-    } else if (option.isEmpty) {
-      state = CarDetails1ValidationState(errorMessage: "⚠️ Second Color is required");
       return state.errorMessage;
     }
 
@@ -122,34 +122,34 @@ class CarDetails2ValidationNotifier
   CarDetails2ValidationNotifier() : super(CarDetails2ValidationState());
 
   String? validate({
-    required String? trim,
-    required String odometer,
-    required String? specification,
     required String? bodyType,
+    required String? color,
     required String cylinders,
+    required String? fuelType,
     required String? transmission,
+    required String option,
     required String carCondition,
     required String total,
   }) {
-    if (trim == null || trim.isEmpty) {
-      state = CarDetails2ValidationState(errorMessage: "⚠️ Trim is required");
-      return state.errorMessage;
-    } else if (odometer.isEmpty) {
-      state = CarDetails2ValidationState(errorMessage: "⚠️ Odometer is required");
-      return state.errorMessage;
-    } else if (specification == null || specification.isEmpty) {
-      state = CarDetails2ValidationState(errorMessage: "⚠️ Specification is required");
-      return state.errorMessage;
-    } else if (bodyType == null || bodyType.isEmpty) {
+      if (bodyType == null || bodyType.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Body Type is required");
+      return state.errorMessage;
+    } else if (color == null || color.isEmpty) {
+      state = CarDetails2ValidationState(errorMessage: "⚠️ Color is required");
       return state.errorMessage;
     } else if (cylinders.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Cylinders is required");
       return state.errorMessage;
+    } else if (fuelType == null || fuelType.isEmpty) {
+      state = CarDetails2ValidationState(errorMessage: "⚠️ Fuel Type is required");
+      return state.errorMessage;
     } else if (transmission == null || transmission.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Transmission is required");
       return state.errorMessage;
-    } else if (carCondition.isEmpty) {
+    } else if (option.isEmpty) {
+      state = CarDetails2ValidationState(errorMessage: "⚠️ Second Color is required");
+      return state.errorMessage;
+    }  else if (carCondition.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Car Condition is required");
       return state.errorMessage;
     } else if (total.isEmpty) {

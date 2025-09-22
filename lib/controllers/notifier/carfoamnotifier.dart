@@ -42,47 +42,50 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     String? make,
     String? model,
     String? year,
+    String? trim,
     String? plateNo,
+    String? odometer,
+    String? odometerUnit,
     String? vin,
+    String? specification,
     String? engineNo,
-    String? color,
-    String? fuelType,
-    String? option,
   }) {
     state = state.copyWith(
       make: make,
       model: model,
       year: year,
+      trim: trim,
       plateNo: plateNo,
+      odometer: odometer,
+      odometerUnit: odometerUnit,
       vin: vin,
+      specification: specification,
       engineNo: engineNo,
-      color: color,
-      fuelType: fuelType,
-      option: option,
     );
   }
 
   // ── Car 2
   void updateCarDetails2({
-    String? trim,
-    String? odometer,
-    String? odometerUnit,
-    String? specification,
+    
+    
+    
     String? bodyType,
+    String? color,
     String? cylinders,
+    String? fuelType,
     String? transmission,
+    String? option,
     String? carCondition,
     String? total,
     String? enterby,
   }) {
     state = state.copyWith(
-      trim: trim,
-      odometer: odometer,
-      odometerUnit: odometerUnit,
-      specification: specification,
       bodyType: bodyType,
+      color: color,
       cylinders: cylinders,
+      fuelType: fuelType,
       transmission: transmission,
+      option: option,
       carCondition: carCondition,
       total: total,
       enterby: enterby,

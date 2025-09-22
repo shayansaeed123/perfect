@@ -25,16 +25,18 @@ class CarDetails2 extends ConsumerStatefulWidget {
 }
 
 class _CarDetails2State extends ConsumerState<CarDetails2> {
-  DropdownItem? selectedSpec;
+  
   DropdownItem? selectedType;
-  DropdownItem? selectedTrim;
+  DropdownItem? selectedfuel;
+  DropdownItem? selectedColor;
   DropdownItem? selectTransmission;
-  String selectUnit = 'KM';
+  
   @override
   Widget build(BuildContext context) {
-    final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
+    
     final typeAsync = ref.watch(dropdownProvider(const DropdownParams("type=1", "type_name")));
-    final trimAsync = ref.watch(dropdownProvider(const DropdownParams("trim=1", "trim_name")));
+    final fuelAsync = ref.watch(dropdownProvider(const DropdownParams("fuel=1", "fuel_name")));
+    final colorAsync = ref.watch(dropdownProvider(const DropdownParams("Color=1", "color_name")));
     final transmissionAsync = ref.watch(dropdownProvider(const DropdownParams("transmission_type=1", "transmission_typer_name")));
     return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,52 +44,6 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
               reusablaSizaBox(context, 0.02),
               reusableText('Car Details',color:colorController.textColorDark,fontsize: 18,),
-              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.03),
-              trimAsync.when(
-                data: (trim){
-                  return reusableDropdown(trim, selectedTrim, "Select Trim", (item) => item.name,(value) {
-                  setState(() => selectedTrim = value);},);
-                },
-                loading: () => const CircularProgressIndicator(),
-                error: (err, _) => const CircularProgressIndicator(),
-              ),
-              // reusableTextField(context, reusabletextfieldcontroller.trim, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
-              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){}),
-              reusablaSizaBox(context, 0.03),
-              reusableText('Odometer Unit',color: colorController.textColorDark,fontsize: 12.5),
-              reusablaSizaBox(context, 0.01),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(child:  reusableRadioButton("KM", "KM", selectUnit, (value) {
-                if (value != null) {
-                setState(() {
-                  selectUnit = value;
-                });
-              }
-              },),),
-              Expanded(child:  reusableRadioButton("Miles", "Miles", selectUnit, (value) {
-                if (value != null) {
-                setState(() {
-                  selectUnit = value;
-                });
-              }
-              },),),
-                ],
-              ),
-              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.01),
-              specsAsync.when(
-                data: (spec){
-                  return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
-                  setState(() => selectedSpec = value);},);
-                },
-                loading: () => const CircularProgressIndicator(),
-                error: (err, _) => const CircularProgressIndicator(),
-              ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
               typeAsync.when(
@@ -98,6 +54,20 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                 loading: () => const CircularProgressIndicator(),
                 error: (err, _) => const CircularProgressIndicator(),
               ),
+              // reusableTextField(context, reusabletextfieldcontroller.trim, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+               colorAsync.when(
+                data: (color){
+                  return reusableDropdown(color, selectedColor, "Select Color", (item) => item.name,(value) {
+                  setState(() => selectedColor = value);},);
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (err, _) => const CircularProgressIndicator(),
+              ),
+              // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.phone),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceAround,
               //   children: [
@@ -109,7 +79,14 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               // ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){}),
+              fuelAsync.when(
+                data: (fuel){
+                  return reusableDropdown(fuel, selectedfuel, "Select Fuel Type", (item) => item.name,(value) {
+                  setState(() => selectedfuel = value);},);
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (err, _) => const CircularProgressIndicator(),
+              ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
               transmissionAsync.when(
@@ -120,13 +97,15 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                 loading: () => const CircularProgressIndicator(),
                 error: (err, _) => const CircularProgressIndicator(),
               ),
+              reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.option, 'Second Color', colorController.textfieldColor, FocusNode(), (){}),
               // reusableTextField(context, reusabletextfieldcontroller.tranmission, 'Trasmission Type', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
               reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.total, 'Total', colorController.textfieldColor, FocusNode(), (){}),
+              reusableTextField(context, reusabletextfieldcontroller.total, 'Total', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number),
               reusablaSizaBox(context, 0.05),
                Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,12 +117,12 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
               final error = ref
                   .read(carDetails2ValidationProvider.notifier)
                   .validate(
-                    trim: selectedTrim?.id,
-                    odometer: reusabletextfieldcontroller.odometer.text.trim(),
-                    specification: selectedSpec?.id,
                     bodyType: selectedType?.id,
+                    color: selectedColor?.id,
                     cylinders: reusabletextfieldcontroller.cylinders.text.trim(),
+                    fuelType: selectedfuel?.id,
                     transmission: selectTransmission?.id,
+                    option: reusabletextfieldcontroller.option.text.trim(),
                     carCondition: reusabletextfieldcontroller.evaluationNo.text.trim(),
                     total: reusabletextfieldcontroller.total.text.trim(),
                   );
@@ -155,13 +134,12 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
 
               // ✅ Save Data to provider
               ref.read(carFormProvider.notifier).updateCarDetails2(
-                    trim: selectedTrim?.id,
-                    odometer: reusabletextfieldcontroller.odometer.text,
-                    odometerUnit: selectUnit.toString(),
-                    specification: selectedSpec?.id,
                     bodyType: selectedType?.id,
+                    color: selectedColor?.id,
                     cylinders: reusabletextfieldcontroller.cylinders.text,
+                    fuelType: selectedfuel?.id,
                     transmission: selectTransmission?.id,
+                    option: reusabletextfieldcontroller.option.text,
                     carCondition: reusabletextfieldcontroller.evaluationNo.text,
                     total: reusabletextfieldcontroller.total.text,
                     enterby: MySharedPrefrence().get_user_id(),

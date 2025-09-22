@@ -14,6 +14,7 @@ import 'package:project/repo/utils.dart';
 import 'package:project/repo/validation.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabledropdown.dart';
+import 'package:project/reuse/reusableradiobutton.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
 
@@ -28,8 +29,10 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
   DropdownItem? selectedMake;
   DropdownItem? selectedModel;
   DropdownItem? selectedYear;
-  DropdownItem? selectedfuel;
-  DropdownItem? selectedColor;
+  
+  DropdownItem? selectedTrim;
+  DropdownItem? selectedSpec;
+  String selectUnit = 'KM';
   @override
   Widget build(BuildContext context) {
     final imageTextState = ref.watch(imageTextProvider);
@@ -40,8 +43,8 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
         // 🔹 Stable params (no new Map every build)
     final yearsAsync = ref.watch(dropdownProvider(const DropdownParams("Year=1", "year_name")));
     final makeAsync = ref.watch(dropdownProvider(const DropdownParams("Make=1", "make_name")));
-    final fuelAsync = ref.watch(dropdownProvider(const DropdownParams("fuel=1", "fuel_name")));
-    final colorAsync = ref.watch(dropdownProvider(const DropdownParams("Color=1", "color_name")));
+    final trimAsync = ref.watch(dropdownProvider(const DropdownParams("trim=1", "trim_name")));
+    final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     return 
     Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,6 +91,15 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
+              trimAsync.when(
+                data: (trim){
+                  return reusableDropdown(trim, selectedTrim, "Select Trim", (item) => item.name,(value) {
+                  setState(() => selectedTrim = value);},);
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (err, _) => const CircularProgressIndicator(),
+              ),
+              reusablaSizaBox(context, 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -99,6 +111,30 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
+              reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number),
+              reusablaSizaBox(context, 0.03),
+              reusableText('Odometer Unit',color: colorController.textColorDark,fontsize: 12.5),
+              reusablaSizaBox(context, 0.01),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(child:  reusableRadioButton("KM", "KM", selectUnit, (value) {
+                if (value != null) {
+                setState(() {
+                  selectUnit = value;
+                });
+              }
+              },),),
+              Expanded(child:  reusableRadioButton("Miles", "Miles", selectUnit, (value) {
+                if (value != null) {
+                setState(() {
+                  selectUnit = value;
+                });
+              }
+              },),),
+                ],
+              ),
+              reusablaSizaBox(context, 0.1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -107,6 +143,15 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     ref.read(imageTextProvider.notifier).pickImageAndExtractText();
                   })
                 ],
+              ),
+              reusablaSizaBox(context, 0.03),
+              specsAsync.when(
+                data: (spec){
+                  return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
+                  setState(() => selectedSpec = value);},);
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (err, _) => const CircularProgressIndicator(),
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
@@ -122,28 +167,9 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               reusablaSizaBox(context, 0.03),
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Color', colorController.textfieldColor, FocusNode(), (){}),
-              colorAsync.when(
-                data: (color){
-                  return reusableDropdown(color, selectedYear, "Select Color", (item) => item.name,(value) {
-                  setState(() => selectedColor = value);},);
-                },
-                loading: () => const CircularProgressIndicator(),
-                error: (err, _) => const CircularProgressIndicator(),
-              ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.03),
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Fule Type', colorController.textfieldColor, FocusNode(), (){}),
-              fuelAsync.when(
-                data: (fuel){
-                  return reusableDropdown(fuel, selectedYear, "Select Fuel Type", (item) => item.name,(value) {
-                  setState(() => selectedfuel = value);},);
-                },
-                loading: () => const CircularProgressIndicator(),
-                error: (err, _) => const CircularProgressIndicator(),
-              ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.option, 'Second Color', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
               reusablaSizaBox(context, 0.05),
                Row(
@@ -159,12 +185,12 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     make: selectedMake?.id,
                     model: selectedModel?.id,
                     year: selectedYear?.id,
+                    trim: selectedTrim?.id,
                     plateNo: reusabletextfieldcontroller.plateNo.text.trim(),
+                    odometer: reusabletextfieldcontroller.odometer.text.trim(),
                     vin: reusabletextfieldcontroller.vin.text.trim(),
+                    specification: selectedSpec?.id,
                     engineNo: reusabletextfieldcontroller.engineNo.text.trim(),
-                    color: selectedColor?.id,
-                    fuelType: selectedfuel?.id,
-                    option: reusabletextfieldcontroller.option.text.trim(),
                   );
 
               if (error != null) {
@@ -177,12 +203,13 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     make: selectedMake?.id,
                     model: selectedModel?.id,
                     year: selectedYear?.id,
+                    trim: selectedTrim?.id,
                     plateNo: reusabletextfieldcontroller.plateNo.text,
+                    odometer: reusabletextfieldcontroller.odometer.text,
+                    odometerUnit: selectUnit.toString(),
                     vin: reusabletextfieldcontroller.vin.text,
+                    specification: selectedSpec?.id,
                     engineNo: reusabletextfieldcontroller.engineNo.text,
-                    color: selectedColor?.id,
-                    fuelType: selectedfuel?.id,
-                    option: reusabletextfieldcontroller.option.text,
                   );
 
               ref.read(progressProvider.notifier).state = 2;

@@ -14,21 +14,24 @@ class CarFormData {
   String? make;
   String? model;
   String? year;
-  String? plateNo;
-  String? vin;
-  String? engineNo;
-  String? color;
-  String? fuelType;
-  String? option;
-
-  // Car Details 2
   String? trim;
+  String? plateNo;
   String? odometer;
   String? odometerUnit;
+  String? vin;
   String? specification;
+  String? engineNo;
+  
+  
+  
+
+  // Car Details 2
   String? bodyType;
+  String? color;
   String? cylinders;
+  String? fuelType;
   String? transmission;
+  String? option;
   String? carCondition;
   String? total;
   String? enterby;
