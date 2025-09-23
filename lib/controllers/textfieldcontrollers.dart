@@ -62,6 +62,9 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _total = TextEditingController();
   TextEditingController get total => _total;
 
+  final TextEditingController _search = TextEditingController();
+  TextEditingController get search => _search;
+
   final TextEditingController _EditProfileName = TextEditingController();
   TextEditingController get EditProfileName => _EditProfileName;
 

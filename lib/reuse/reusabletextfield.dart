@@ -16,7 +16,8 @@ Widget reusableTextField(
   TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
   Color fillColor = Colors.white,
-  double width = 1
+  double width = 1,
+  ValueChanged<String>? onChanged,
 }
 ) {
   return Container(
@@ -44,7 +45,7 @@ Widget reusableTextField(
                             
                           
       obscureText: obscureText,
-      
+      onChanged: onChanged,
       decoration: InputDecoration(
         filled: true,
         fillColor: fillColor,

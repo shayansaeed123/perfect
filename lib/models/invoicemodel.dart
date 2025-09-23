@@ -113,3 +113,43 @@ class Invoice {
     };
   }
 }
+
+
+class InvoiceFilter {
+  final String dateRange;
+  final String text;
+  final String actionStatus;
+  final String enterBy;
+
+  InvoiceFilter({
+    required this.dateRange,
+    required this.text,
+    required this.actionStatus,
+    required this.enterBy,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "daterange": dateRange,
+      "text": text,
+      "action_status": actionStatus,
+      "enterby": enterBy,
+    };
+  }
+
+  InvoiceFilter copyWith({
+    String? dateRange,
+    String? text,
+    String? actionStatus,
+    String? enterBy,
+  }) {
+    return InvoiceFilter(
+      dateRange: dateRange ?? this.dateRange,
+      text: text ?? this.text,
+      actionStatus: actionStatus ?? this.actionStatus,
+      enterBy: enterBy ?? this.enterBy,
+    );
+  }
+}
+
+

@@ -80,7 +80,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               loading: () => const CircularProgressIndicator(),
               error: (err, _) => const CircularProgressIndicator(),
               )],
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+              reusablaSizaBox(context, 0.03),
               yearsAsync.when(
                 data: (year){
                   return reusableDropdown(year, selectedYear, "Select Year", (item) => item.name,(value) {
@@ -134,7 +134,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
               },),),
                 ],
               ),
-              reusablaSizaBox(context, 0.1),
+              // reusablaSizaBox(context, 0.1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -165,7 +165,6 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                 ],
               ),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.03),
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Color', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
               // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Fule Type', colorController.textfieldColor, FocusNode(), (){}),
