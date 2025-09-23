@@ -28,15 +28,11 @@ final invoiceRepositoryProvider = Provider<PerfectRepo>((ref) {
 final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
   final repo = ref.read(invoiceRepositoryProvider);
 
-  // 👇 filter ko watch karo
   final filter = ref.watch(invoiceFilterProvider);
 
-  // 🔥 1. Jaise hi filter change hoga -> ye stream dobara rebuild hogi
-  // aur yahan turant API call chalegi
   final invoices = await repo.fetchInvoices(filter);
   yield invoices;
 
-  // 🔥 2. Fir har 10 second refresh karega
   while (true) {
     await Future.delayed(const Duration(seconds: 10));
     try {
