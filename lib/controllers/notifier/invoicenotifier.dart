@@ -10,20 +10,6 @@ final invoiceRepositoryProvider = Provider<PerfectRepo>((ref) {
   return PerfectRepo();
 });
 
-// final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
-//   final repo = ref.read(invoiceRepositoryProvider);
-
-//   while (true) {
-//     try {
-//       final invoices = await repo.fetchInvoices();
-//       yield invoices;
-//     } catch (e) {
-//       yield [];
-//     }
-//     await Future.delayed(const Duration(seconds: 10)); // auto refresh
-//   }
-// });
-
 
 final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
   final repo = ref.read(invoiceRepositoryProvider);
