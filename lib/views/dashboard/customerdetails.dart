@@ -63,8 +63,8 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               reusablaSizaBox(context, 0.03),
               reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-              reusablaSizaBox(context, 0.03),
-              reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Evaluation No', colorController.textfieldColor, FocusNode(), (){}),
+              // reusablaSizaBox(context, 0.03),
+              // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Evaluation No', colorController.textfieldColor, FocusNode(), (){}),
               // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
               reusablaSizaBox(context, 0.05),
               reusableBtn(context, 'Next', (){
@@ -87,7 +87,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                 customerName: customerName,
                 inspectionDate: inspectionDateStr,
                 address: address,
-                evaluationNo: evaluationNo,
+                // evaluationNo: evaluationNo,
               );
 
           if (error != null) {
@@ -101,7 +101,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                 customerName: customerName,
                 inspectionDate: inspectionDateStr,
                 address: address,
-                evaluationNo: evaluationNo,
+                // evaluationNo: evaluationNo,
               );
 
           ref.read(progressProvider.notifier).state = 1;

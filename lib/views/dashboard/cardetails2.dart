@@ -123,7 +123,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                     fuelType: selectedfuel?.id,
                     transmission: selectTransmission?.id,
                     option: reusabletextfieldcontroller.option.text.trim(),
-                    carCondition: reusabletextfieldcontroller.evaluationNo.text.trim(),
+                    carCondition: reusabletextfieldcontroller.carCondition.text.trim(),
                     total: reusabletextfieldcontroller.total.text.trim(),
                   );
 
