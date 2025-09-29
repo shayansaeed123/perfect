@@ -12,17 +12,17 @@ String Address,String model,String year,Function ontap,){
   return Container(
             height: MediaQuery.sizeOf(context).height * 0.18,
             decoration: BoxDecoration(
-              border: Border.all(color: colorController.mainColor,style: BorderStyle.solid,width: 5),
+              border: Border.all(color: colorController.mainColor,style: BorderStyle.solid,width: 3),
               borderRadius: BorderRadius.all(Radius.circular(12.0)),
-              color: colorController.textColorLight,
-              gradient: LinearGradient(
-      colors: [
-        colorController.mainColor,
-        colorController.textColorLight,
-      ],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    ),
+              color: colorController.whiteColor,
+    //           gradient: LinearGradient(
+    //   colors: [
+    //     colorController.mainColor,
+    //     colorController.textColorLight,
+    //   ],
+    //   begin: Alignment.topCenter,
+    //   end: Alignment.bottomCenter,
+    // ),
     boxShadow: [
       BoxShadow(
         color: Colors.black.withOpacity(0.3),
@@ -44,27 +44,27 @@ String Address,String model,String year,Function ontap,){
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(child: reusableText('Application No : $ApplicationNo',color: colorController.whiteColor,fontsize: 15,)),
+                        Expanded(child: reusableText('Application No : $ApplicationNo',color: colorController.textColorDark,fontsize: 15,)),
                         SizedBox(width: MediaQuery.sizeOf(context).width * 0.03,),
-                        Expanded(child: reusableText('Invoice Date : $invoiceDate',color: colorController.whiteColor,fontsize: 15,)),
+                        Expanded(child: reusableText('Invoice Date : $invoiceDate',color: colorController.textColorDark,fontsize: 15,)),
                       ],
                     ),
                     reusablaSizaBox(context, 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(child: reusableText('Requested For : $reqFor',color: colorController.whiteColor,fontsize: 15,)),
+                        Expanded(child: reusableText('Requested For : $reqFor',color: colorController.textColorDark,fontsize: 15,)),
                         SizedBox(width: MediaQuery.sizeOf(context).width * 0.03,),
-                        Expanded(child: reusableText('Address : $Address',color: colorController.whiteColor,fontsize: 15,)),
+                        Expanded(child: reusableText('Address : $Address',color: colorController.textColorDark,fontsize: 15,)),
                       ],
                     ),
                     reusablaSizaBox(context, 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(child: reusableText('Model : $model',color: colorController.whiteColor,fontsize: 15,)),
+                        Expanded(child: reusableText('Model : $model',color: colorController.textColorDark,fontsize: 15,)),
                         SizedBox(width: MediaQuery.sizeOf(context).width * 0.03,),
-                        Expanded(child: reusableText('Year : $year',color: colorController.whiteColor,fontsize: 15,)),
+                        Expanded(child: reusableText('Year : $year',color: colorController.textColorDark,fontsize: 15,)),
                       ],
                     ),
                     reusablaSizaBox(context, 0.01),

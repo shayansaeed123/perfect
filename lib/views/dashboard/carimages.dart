@@ -322,6 +322,18 @@ class _CarimagesState extends ConsumerState<Carimages> {
     final carForm = ref.watch(carFormProvider);
     return Stack(
       children: [
+        Center(
+        child: Transform.rotate(
+          angle: -0.8, // radians me (≈ -30 degree)
+          child: Opacity(
+            opacity: 0.1, // halka watermark jesa
+            child: Image.asset(
+              "assets/images/logo.png",
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+      ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

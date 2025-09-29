@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -23,22 +24,34 @@ class ImageTextNotifier extends StateNotifier<ImageTextState> {
         state = state.copyWith(isLoading: false);
         return;
       }
-
+       await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+       
       final CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: image.path,
         uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: colorController.mainColor,
-            toolbarWidgetColor: colorController.whiteColor,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            title: 'Crop Image',
-          ),
-        ],
+    AndroidUiSettings(
+      toolbarTitle: 'Crop Image',
+      toolbarColor: colorController.mainColor,
+      toolbarWidgetColor: colorController.whiteColor,
+      lockAspectRatio: false,
+      initAspectRatio: CropAspectRatioPreset.original,
+      // add padding / margin if supported
+      cropFrameStrokeWidth: 3,
+      cropGridStrokeWidth: 2,
+      // maybe force toolbar height
+      hideBottomControls: false,
+      // possibly hiddenControls: false, showCropGrid: true etc
+    ),
+    IOSUiSettings(
+      title: 'Crop Image',
+      // iOS specific tweaks
+    ),
+  ],
       );
 
+       // Restore system UI overlays
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge); 
+    
       if (croppedFile == null) {
         state = state.copyWith(isLoading: false);
         return;

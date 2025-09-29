@@ -52,145 +52,166 @@ class _HomeState extends ConsumerState<Home> {
         appBar: AppBar(
           backgroundColor: colorController.mainColor,
           title: Center(
-              child: reusableText('Home',
+              child: 
+              reusableText('Home',
                   color: colorController.textColorLight,
                   fontsize: 25,
-                  fontweight: FontWeight.bold)),
+                  fontweight: FontWeight.bold)
+                  ),
         ),
-        body: Padding(
-          padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.02,),
-          child: Column(
+        body: Container(
+          child: Stack(
             children: [
-              reusablaSizaBox(context, 0.01),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: statusAsync.when(
-                    data: (status){
-                      return reusableDropdown(status, selectedStatus, "Status", (item) => item.name,(value) {
-                      // setState(() => selectedStatus = value);
-                      ref.read(invoiceFilterProvider.notifier).state =
-        ref.read(invoiceFilterProvider).copyWith(actionStatus: value?.id ?? "");
-                      },);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                                  ),
-                  ),
-                SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-                Expanded(
-                  child: userAsync.when(
-                    data: (user){
-                      return reusableDropdown(user, selectedUser, "User", (item) => item.name,(value) {
-                      // setState(() => selectedUser = value);
-                      ref.read(invoiceFilterProvider.notifier).setEnterBy(value!.id.toString());
-                      },);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
-                ),
-                ],
-              ),
-              reusablaSizaBox(context, 0.015),
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                                    onTap: () => repo.selectDateRange(context,ref),
-                                    child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.017,),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: colorController.btnColor),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            filter.dateRange.isEmpty
-                ? "Select Date Range"
-                : filter.dateRange, // 👈 default aj ki date show hogi
-            style: TextStyle(
-              fontSize: 12.5,
-              color: colorController.btnColor,
+              Center(
+        child: Transform.rotate(
+          angle: -0.8, // radians me (≈ -30 degree)
+          child: Opacity(
+            opacity: 0.1, // halka watermark jesa
+            child: Image.asset(
+              "assets/images/logo.png",
+              fit: BoxFit.contain,
             ),
           ),
         ),
-        Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
-      ],
-    ),
-                                    ),
-                              ),
-                  ),
-                  SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-                  Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
-                    ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
-                  },))
-                ],
-              ),
-              reusablaSizaBox(context, 0.015),
-              Expanded(
-                child: asyncInvoices.when(
-                data: (invoices) {
-                  if (invoices.isEmpty) {
-                    return Center(child: reusableText('No Invoice Found',color: colorController.textColorDark,fontsize: 25));
-                  }
-                  // 🔽 Sort invoices in descending order by invoiceDate
-                  invoices.sort((a, b) => b.invoiceDate.compareTo(a.invoiceDate));
-                  return CustomScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    slivers: [
-                       SliverAppBar(
-                        floating: true,
-                        snap: true,
-                        title: Center(child: reusableText('Invoices',fontsize: 22,fontweight: FontWeight.bold)),
-                      ),
-                      
-                      SliverPadding(
-                        padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.000,),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              final invoice = invoices[index];
-                              return Padding(
-                                padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.007,),
-                                child: reusableCard(
-                                context, 
-                                invoice.applicationNo, 
-                                invoice.invoiceDate, 
-                                invoice.requestedFor ?? '', 
-                                invoice.address ?? '', 
-                                invoice.model, 
-                                invoice.year, 
-                                (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                    return Invoicedetails(
-                                      address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
-                                      carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
-                                      customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
-                                      engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
-                                      odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
-                                      requestfor: invoice.requestedFor??'', specification: invoice.specification, 
-                                      total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
-                                      trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year);
-                                  },));
-                                }),
-                                );
-                            },
-                            childCount: invoices.length,
-                          ),
+      ),
+              Padding(
+                padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.02,),
+                child: Column(
+                  children: [
+                    reusablaSizaBox(context, 0.01),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: statusAsync.when(
+                          data: (status){
+                            return reusableDropdown(status, selectedStatus, "Status", (item) => item.name,(value) {
+                            // setState(() => selectedStatus = value);
+                            ref.read(invoiceFilterProvider.notifier).state =
+              ref.read(invoiceFilterProvider).copyWith(actionStatus: value?.id ?? "");
+                            },);
+                          },
+                          loading: () => Center(child: const CircularProgressIndicator()),
+                          error: (err, _) => const CircularProgressIndicator(),
+                                        ),
                         ),
-                      ),
+                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+                      Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
+                          ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
+                        },))
+                      // Expanded(
+                      //   child: userAsync.when(
+                      //     data: (user){
+                      //       return reusableDropdown(user, selectedUser, "User", (item) => item.name,(value) {
+                      //       // setState(() => selectedUser = value);
+                      //       ref.read(invoiceFilterProvider.notifier).setEnterBy(value!.id.toString());
+                      //       },);
+                      //     },
+                      //     loading: () => const CircularProgressIndicator(),
+                      //     error: (err, _) => const CircularProgressIndicator(),
+                      //   ),
+                      // ),
+                      ],
+                    ),
+                    reusablaSizaBox(context, 0.015),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                                          onTap: () => repo.selectDateRange(context,ref),
+                                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.017,),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: colorController.btnColor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+              Expanded(
+                child: Text(
+                  filter.dateRange.isEmpty
+                      ? "Select Date Range"
+                      : filter.dateRange, // 👈 default aj ki date show hogi
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: colorController.btnColor,
+                  ),
+                ),
+              ),
+              Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
                     ],
-                  );
-                },
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
-                error: (err, _) => Center(child: Text("Error: $err")),
-                      ),
+                  ),
+                                          ),
+                                    ),
+                        ),
+                        // SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+                        
+                      ],
+                    ),
+                    reusablaSizaBox(context, 0.015),
+                    Expanded(
+                      child: asyncInvoices.when(
+                      data: (invoices) {
+                        if (invoices.isEmpty) {
+                          return Center(child: reusableText('No Invoice Found',color: colorController.textColorDark,fontsize: 25));
+                        }
+                        // 🔽 Sort invoices in descending order by invoiceDate
+                        invoices.sort((a, b) => b.invoiceDate.compareTo(a.invoiceDate));
+                        return CustomScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          slivers: [
+                             SliverAppBar(
+                              floating: true,
+                              snap: true,
+                              title: Center(child: reusableText('Invoices',fontsize: 22,fontweight: FontWeight.bold)),
+                            ),
+                            
+                            SliverPadding(
+                              padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.000,),
+                              sliver: SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    final invoice = invoices[index];
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.01,),
+                                      child: reusableCard(
+                                      context, 
+                                      invoice.applicationNo, 
+                                      invoice.invoiceDate, 
+                                      invoice.requestedFor ?? '',
+                                      invoice.address ?? '',
+                                      invoice.model, 
+                                      invoice.year, 
+                                      (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                          return Invoicedetails(
+                                            address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
+                                            carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
+                                            customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
+                                            engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
+                                            odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
+                                            requestfor: invoice.requestedFor??'', specification: invoice.specification, 
+                                            total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
+                                            trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year);
+                                        },));
+                                      }),
+                                      );
+                                  },
+                                  childCount: invoices.length,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      error: (err, _) => Center(child: Text("Error: $err")),
+                            ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
