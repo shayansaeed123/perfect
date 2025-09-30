@@ -64,7 +64,6 @@ class _SplashState extends ConsumerState<Splash> {
           //   fit: BoxFit.fill,
           //   repeat: true,
           // ),
-
           /// 🔹 Center Image
           Center(
             child: Image.asset(
