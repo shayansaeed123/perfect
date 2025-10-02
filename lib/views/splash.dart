@@ -56,7 +56,7 @@ class _SplashState extends ConsumerState<Splash> {
       body: authState.isLoading
             ? const CircularProgressIndicator()
             : Stack(
-        fit: StackFit.expand, 
+        fit: StackFit.expand,
         children: [
           /// 🔹 Background Lottie Animation
           // Lottie.asset(
