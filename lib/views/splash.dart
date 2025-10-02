@@ -58,13 +58,6 @@ class _SplashState extends ConsumerState<Splash> {
             : Stack(
         fit: StackFit.expand,
         children: [
-          /// 🔹 Background Lottie Animation
-          // Lottie.asset(
-          //   'assets/images/splashanim.json', 
-          //   fit: BoxFit.fill,
-          //   repeat: true,
-          // ),
-          /// 🔹 Center Image
           Center(
             child: Image.asset(
               'assets/images/logo.png',
