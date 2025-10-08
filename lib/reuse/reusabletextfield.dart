@@ -32,16 +32,6 @@ Widget reusableTextField(
       onFieldSubmitted: (value) {
                               onsubmit();
                             },
-      // validator: (value) {
-      //   // if (validate_or_not) {
-      //     if (value!.isEmpty) {
-      //       return Utils.snakbar(context, message);
-      //     }
-      //     // return null;
-      //   // }
-        
-      //   return null;
-      // },
                             
                           
       obscureText: obscureText,
