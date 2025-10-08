@@ -70,23 +70,9 @@ reusableSelectImage(BuildContext context,Function ontap,String image,String imgC
 }
 
 
-// Widget _displayImage(String imagePath, String imgCondition) {
-//     bool isNetwork = imagePath.startsWith('http');
-//     return isNetwork
-//         ? Center(child: imagePath == '${Utils.imageUrl}' || imagePath == '' ? Image.asset(imgCondition,fit: BoxFit.contain,)
-//                 : Image.network(imagePath,fit: BoxFit.contain,)
-//                   )
-//         : imagePath == '${Utils.imageUrl}' || imagePath == '' ?  Image.asset(imgCondition,fit: BoxFit.contain,)
-//         :
-//          Image.asset(
-//           imagePath,
-//             // File(imagePath),
-//             fit: BoxFit.cover,
-//           );
-//   }
+
 Widget _displayImage(String imagePath, String imgCondition) {
   if (imagePath.isEmpty || imagePath == Utils.imageUrl) {
-    // Agar imagePath empty ho to placeholder asset dikhado
     return Image.asset(imgCondition, fit: BoxFit.contain);
   }
 

@@ -15,14 +15,6 @@ String Address,String model,String year,Function ontap,){
               border: Border.all(color: colorController.mainColor,style: BorderStyle.solid,width: 3),
               borderRadius: BorderRadius.all(Radius.circular(12.0)),
               color: colorController.whiteColor,
-    //           gradient: LinearGradient(
-    //   colors: [
-    //     colorController.mainColor,
-    //     colorController.textColorLight,
-    //   ],
-    //   begin: Alignment.topCenter,
-    //   end: Alignment.bottomCenter,
-    // ),
     boxShadow: [
       BoxShadow(
         color: Colors.black.withOpacity(0.3),
