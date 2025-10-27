@@ -87,14 +87,6 @@ Widget reusablePassField(
       onFieldSubmitted: (value) {
         onsubmit();
       },
-      // validator: (value) {
-      //   // if (validate_or_not==true) {
-      //     if (value!.isEmpty) {
-      //       return Utils.snakbar(context, message);
-      //     }
-      //     return null;
-      //   // }
-      // },
       obscureText: obscureText,
       decoration: InputDecoration(
         suffixIcon: IconButton(
