@@ -21,9 +21,7 @@ Widget reusableTextField(
 }
 ) {
   return Container(
-    // margin: EdgeInsets.only(bottom: 10),
     width: MediaQuery.of(context).size.width * width,
-    // height: MediaQuery.of(context).size.height * .060,
     child: TextFormField(
       controller: controller,
       keyboardType: keyboardType,
