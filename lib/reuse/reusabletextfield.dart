@@ -12,13 +12,13 @@ Widget reusableTextField(
   Function onsubmit,
   // bool validate_or_not,
   // String message,
-   {
+  {
   TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
   Color fillColor = Colors.white,
   double width = 1,
   ValueChanged<String>? onChanged,
-}
+ }
 ) {
   return Container(
     width: MediaQuery.of(context).size.width * width,
