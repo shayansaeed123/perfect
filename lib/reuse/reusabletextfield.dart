@@ -121,3 +121,35 @@ Widget reusablePassField(
     ),
   );
 }
+
+
+ReadOnlyField(String label, String value,
+      {Color? backgroundColor, Color? textColor}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 120,
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              decoration: BoxDecoration(
+                color: backgroundColor ?? Colors.grey[200],
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                value,
+                style: TextStyle(color: textColor ?? Colors.black87),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }

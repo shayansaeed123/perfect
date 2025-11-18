@@ -11,6 +11,7 @@ import 'package:project/reuse/reusablecard.dart';
 import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
+import 'package:project/views/dashboard/carevalutiondetails.dart';
 import 'package:project/views/dashboard/invoicedetails.dart';
 
 // 🔹 Provider to store selected date range
@@ -195,7 +196,11 @@ class _HomeState extends ConsumerState<Home> {
                                             total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
                                             trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year);
                                         },));
-                                      }),
+                                      },
+                                      (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(),));
+                                      }
+                                      ),
                                       );
                                   },
                                   childCount: invoices.length,

@@ -7,10 +7,10 @@ import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 
 reusableCard(BuildContext context,String ApplicationNo,String invoiceDate,String reqFor,
-String Address,String model,String year,Function ontap,){
+String Address,String model,String year,Function ontap,Function ontapEvaluation){
   final ScrollController innerController = ScrollController();
   return Container(
-            height: MediaQuery.sizeOf(context).height * 0.18,
+            height: MediaQuery.sizeOf(context).height * 0.23,
             decoration: BoxDecoration(
               border: Border.all(color: colorController.mainColor,style: BorderStyle.solid,width: 3),
               borderRadius: BorderRadius.all(Radius.circular(12.0)),
@@ -62,7 +62,11 @@ String Address,String model,String year,Function ontap,){
                     reusablaSizaBox(context, 0.01),
                     reusableBtn(context, 'All Details', (){
                       ontap();
-                    },width: 0.45,height: 0.035)
+                    },width: 0.45,height: 0.035),
+                    reusablaSizaBox(context, 0.01),
+                    reusableBtn(context, 'View', (){
+                      ontapEvaluation();
+                    },width: 0.45,height: 0.035),
                   ],
                 ),
               ),
