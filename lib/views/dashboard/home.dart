@@ -198,7 +198,16 @@ class _HomeState extends ConsumerState<Home> {
                                         },));
                                       },
                                       (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(),));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(
+                                          applicationNo: invoice.applicationNo, 
+                                          bank: invoice.bankName ?? '', 
+                                          statusName: invoice.status_name ?? '', 
+                                          customerName: invoice.customerName ?? '', 
+                                          make: invoice.make, 
+                                          model: invoice.model, 
+                                          year: invoice.year, 
+                                          total: invoice.total, 
+                                          paymentUrl: invoice.code),));
                                       }
                                       ),
                                       );

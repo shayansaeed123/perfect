@@ -8,26 +8,32 @@ import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Carevalutiondetails extends ConsumerStatefulWidget {
-  const Carevalutiondetails({super.key});
+class Carevalutiondetails extends StatelessWidget {
+  final String applicationNo;
+  final String bank;
+  final String statusName;
+  final String customerName;
+  final String year;
+  final String make;
+  final String model;
+  final String total;
+  final String paymentUrl;
+  Carevalutiondetails({super.key,required this.applicationNo, required this.bank,required this.statusName,
+  required this.customerName,required this.make, required this.model, required this.year, required this.total, required this.paymentUrl
+  });
 
-  @override
-  ConsumerState<Carevalutiondetails> createState() => _CarevalutiondetailsState();
-}
+  //  final Map<String, dynamic> data = {
+  //   "evaluationNo": "5013",
+  //   "bank": "Emirates Islamic Bank",
+  //   "paymentStatus": "Payment Pending",
+  //   "customerName": "sumair laiq",
+  //   "make": "airstream",
+  //   "model": "interstate",
+  //   "year": "2025",
+  //   "total": "500",
+  //   "paymentUrl": "https://car.greenzoneliving.org/paynow.php?invoiceids=172C6NN415",
+  // };
 
-class _CarevalutiondetailsState extends ConsumerState<Carevalutiondetails> {
-
-   final Map<String, dynamic> data = {
-    "evaluationNo": "5013",
-    "bank": "Emirates Islamic Bank",
-    "paymentStatus": "Payment Pending",
-    "customerName": "sumair laiq",
-    "make": "airstream",
-    "model": "interstate",
-    "year": "2025",
-    "total": "500",
-    "paymentUrl": "https://car.greenzoneliving.org/paynow.php?invoiceids=172C6NN415",
-  };
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,20 +57,20 @@ class _CarevalutiondetailsState extends ConsumerState<Carevalutiondetails> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                ReadOnlyField("Evaluation No:", data["evaluationNo"]),
-                ReadOnlyField("Bank:", data["bank"]),
+                ReadOnlyField("Evaluation No:", applicationNo),
+                ReadOnlyField("Bank:", bank),
                 ReadOnlyField(
                   "Payment Status:",
-                  data["paymentStatus"],
+                  statusName,
                   backgroundColor: Colors.redAccent.withOpacity(0.5),
                   textColor: Colors.red[900],
                 ),
-                ReadOnlyField("Customer Name:", data["customerName"]),
-                ReadOnlyField("Make:", data["make"]),
-                ReadOnlyField("Model:", data["model"]),
-                ReadOnlyField("Year:", data["year"]),
-                ReadOnlyField("Total:", data["total"]),
-                ReadOnlyField("Payment Url:", data["paymentUrl"]),
+                ReadOnlyField("Customer Name:", customerName),
+                ReadOnlyField("Make:", make),
+                ReadOnlyField("Model:", model),
+                ReadOnlyField("Year:", year),
+                ReadOnlyField("Total:", total),
+                ReadOnlyField("Payment Url:", "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -72,7 +78,7 @@ class _CarevalutiondetailsState extends ConsumerState<Carevalutiondetails> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                       onPressed: () {
-                        Clipboard.setData(ClipboardData(text: data["paymentUrl"]));
+                        Clipboard.setData(ClipboardData(text: "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"));
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Link copied to clipboard")),
                         );
@@ -82,7 +88,7 @@ class _CarevalutiondetailsState extends ConsumerState<Carevalutiondetails> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
                       onPressed: () async {
-                        final url = Uri.parse(data["paymentUrl"]);
+                        final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url, mode: LaunchMode.externalApplication);
                         } else {

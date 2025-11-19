@@ -24,6 +24,8 @@ class Invoice {
   final String trim;
   final String specification;
   final String enterBy;
+  final String? status_name;
+  final String? bankName;
 
   Invoice({
     required this.id,
@@ -51,6 +53,8 @@ class Invoice {
     required this.trim,
     required this.specification,
     required this.enterBy,
+    this.status_name,
+    this.bankName,
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) {
@@ -80,6 +84,8 @@ class Invoice {
       trim: json['trim'] ?? '',
       specification: json['specification'] ?? '',
       enterBy: json['enterby'] ?? '',
+      status_name: json['status_name'],
+      bankName: json['BankName'],
     );
   }
 
@@ -110,6 +116,8 @@ class Invoice {
       "trim": trim,
       "specification": specification,
       "enterby": enterBy,
+      "status_name": status_name,
+      "BankName": bankName,
     };
   }
 }
