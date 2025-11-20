@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/carfoammodel.dart';
+import 'package:project/models/invoicemodel.dart';
 import 'package:project/repo/utils.dart';
 
 /// Global form state
@@ -16,7 +18,20 @@ final carFormProvider =
 final loadingProvider = StateProvider<bool>((ref) => false);
 
 class CarFormNotifier extends StateNotifier<CarFormData> {
+    bool isEdit = false;
   CarFormNotifier() : super(CarFormData());
+
+    /// Load existing invoice data (edit mode)
+  void loadInvoiceData(CarFormData data) {
+    isEdit = true;
+    state = data;
+  }
+
+  /// Clear for new invoice
+  void clearForm() {
+    isEdit = false;
+    state = CarFormData();
+  }
 
   // ── Customer
   void updateCustomerDetails({
@@ -186,6 +201,21 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     }
   }
 
+   /// UPDATE API (Edit Mode)
+  Future<bool> updateCarForm() async {
+    try {
+      final response = await http.post(
+        Uri.parse("https://car.greenzoneliving.org/API/edit_invoice.php"),
+        body: state.toJson(),
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      debugPrint("UpdateCarForm ERROR: $e");
+      return false;
+    }
+  }
+
   void resetForm() {
   state = CarFormData(
     requestedFor: '',
@@ -221,9 +251,93 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     profile_image6: null,
     profile_image7: null,
     profile_image8: null,
-  );
-}
+  );}
 
+ 
+
+/// Update functions for each field
+  // void updateCustomerName(String? value) =>
+  //     state = state.copyWith(customerName: value);
+  // void updateRequestedFor(String? value) =>
+  //     state = state.copyWith(requestedFor: value);
+  // void updateAddress(String? value) => state = state.copyWith(address: value);
+
+  // void updateMake(String? value) => state = state.copyWith(make: value);
+  // void updateModel(String? value) => state = state.copyWith(model: value);
+  // void updateYear(String? value) => state = state.copyWith(year: value);
+  // void updateTrim(String? value) => state = state.copyWith(trim: value);
+  // void updateSpec(String? value) => state = state.copyWith(specification: value);
+  // void updateOdometerUnit(String value) =>
+  //     state = state.copyWith(odometerUnit: value);
+
+  // void updatePlateNo(String? value) => state = state.copyWith(plateNo: value);
+  // void updateVin(String? value) => state = state.copyWith(vin: value);
+  // void updateEngineNo(String? value) => state = state.copyWith(engineNo: value);
+  // void updateCylinders(String? value) => state = state.copyWith(cylinders: value);
+  // void updateCarCondition(String? value) =>
+  //     state = state.copyWith(carCondition: value);
+
+  // /// Update images
+  // void updateImage(String key, String path) {
+  //   switch (key) {
+  //     case 'profile_image1':
+  //       state = state.copyWith(profile_image1: path);
+  //       break;
+  //     case 'profile_image2':
+  //       state = state.copyWith(profile_image2: path);
+  //       break;
+  //     case 'profile_image3':
+  //       state = state.copyWith(profile_image3: path);
+  //       break;
+  //     case 'profile_image4':
+  //       state = state.copyWith(profile_image4: path);
+  //       break;
+  //     case 'profile_image5':
+  //       state = state.copyWith(profile_image5: path);
+  //       break;
+  //     case 'profile_image6':
+  //       state = state.copyWith(profile_image6: path);
+  //       break;
+  //     case 'profile_image7':
+  //       state = state.copyWith(profile_image7: path);
+  //       break;
+  //     case 'profile_image8':
+  //       state = state.copyWith(profile_image8: path);
+  //       break;
+  //   }
+  // }
+//   Future<void> loadInvoiceForEdit(String id) async {
+//       final response = await http.get(
+//         Uri.parse("https://car.greenzoneliving.org/API/get_invoice.php?id=$id"),
+//       );
+
+//       if (response.statusCode == 200) {
+//         final jsonData = jsonDecode(response.body);
+
+//         final invoice = Invoice.fromJson(jsonData);
+
+//         // Fill form provider state
+//         state = invoice.data;
+
+//         // Fill all controllers
+//         _fillControllers(invoice.data);
+//       }
+//     }
+
+
+// void _fillControllers(CarFormData data) {
+//   reusabletextfieldcontroller.requested.text = data.requestedFor ?? "";
+//   reusabletextfieldcontroller.customerName.text = data.customerName ?? "";
+//   reusabletextfieldcontroller.address.text = data.address ?? "";
+//   reusabletextfieldcontroller.plateNo.text = data.plateNo ?? "";
+//   reusabletextfieldcontroller.odometer.text = data.odometer ?? "";
+//   reusabletextfieldcontroller.vin.text = data.vin ?? "";
+//   reusabletextfieldcontroller.engineNo.text = data.engineNo ?? "";
+//   reusabletextfieldcontroller.option.text = data.option ?? "";
+//   reusabletextfieldcontroller.cylinders.text = data.cylinders ?? "";
+//   reusabletextfieldcontroller.carCondition.text = data.carCondition ?? "";
+//   reusabletextfieldcontroller.total.text = data.total ?? "";
+// }
   // Future<bool> uploadCarImage({
   //   File? profileimage1,
   //   File? profileimage2,

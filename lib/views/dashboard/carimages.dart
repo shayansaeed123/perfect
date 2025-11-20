@@ -164,109 +164,211 @@ class _CarimagesState extends ConsumerState<Carimages> {
             reusablaSizaBox(context, 0.02),
             reusableText('Car Images',color:colorController.textColorDark,fontsize: 18,),
             // reusablaSizaBox(context, 0.03),
+            // reusableimagewidget(
+            //       context,
+            //       'Car Image (Front)',
+            //       'Car Image (Back)',
+            //       '',
+            //       profile_image1?.path ?? 'assets/images/addimgplaceholder.png',
+            //       profile_image2?.path ?? 'assets/images/addimgplaceholder.png',
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Car Front Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image1'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image1'),
+            //         );
+            //       },
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Car Back Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image2'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image2'),
+            //         );
+            //       },
+            //       'assets/images/addimgplaceholder.png',
+            //     ),
             reusableimagewidget(
-                  context,
-                  'Car Image (Front)',
-                  'Car Image (Back)',
-                  '',
-                  profile_image1?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image2?.path ?? 'assets/images/addimgplaceholder.png',
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Car Front Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image1'),
-                      () => _pickImage(ImageSource.camera, 'profile_image1'),
-                    );
-                  },
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Car Back Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image2'),
-                      () => _pickImage(ImageSource.camera, 'profile_image2'),
-                    );
-                  },
-                  'assets/images/addimgplaceholder.png',
-                ),
+      context,
+      'Car Image (Front)',
+      'Car Image (Back)',
+      '',
+      profile_image1?.path ?? ref.read(carFormProvider).profile_image1 ?? 'assets/images/addimgplaceholder.png',
+      profile_image2?.path ?? ref.read(carFormProvider).profile_image2 ?? 'assets/images/addimgplaceholder.png',
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Car Front Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image1'),
+          () => _pickImage(ImageSource.camera, 'profile_image1'),
+        );
+      },
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Car Back Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image2'),
+          () => _pickImage(ImageSource.camera, 'profile_image2'),
+        );
+      },
+      'assets/images/addimgplaceholder.png',
+    ),
                 // reusablaSizaBox(context, 0.03),
+            // reusableimagewidget(
+            //       context,
+            //       'Clustermeter Image',
+            //       'Interior Image',
+            //       '',
+            //       profile_image3?.path ?? 'assets/images/addimgplaceholder.png',
+            //       profile_image4?.path ?? 'assets/images/addimgplaceholder.png',
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Clustermeter Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image3'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image3'),
+            //         );
+            //       },
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Interior Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image4'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image4'),
+            //         );
+            //       },
+            //       'assets/images/addimgplaceholder.png',
+            //     ),
             reusableimagewidget(
-                  context,
-                  'Clustermeter Image',
-                  'Interior Image',
-                  '',
-                  profile_image3?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image4?.path ?? 'assets/images/addimgplaceholder.png',
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Clustermeter Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image3'),
-                      () => _pickImage(ImageSource.camera, 'profile_image3'),
-                    );
-                  },
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Interior Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image4'),
-                      () => _pickImage(ImageSource.camera, 'profile_image4'),
-                    );
-                  },
-                  'assets/images/addimgplaceholder.png',
-                ),
+      context,
+      'Clustermeter Image',
+      'Interior Image',
+      '',
+      profile_image3?.path ?? ref.read(carFormProvider).profile_image3 ?? 'assets/images/addimgplaceholder.png',
+      profile_image4?.path ?? ref.read(carFormProvider).profile_image4 ?? 'assets/images/addimgplaceholder.png',
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Clustermeter Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image3'),
+          () => _pickImage(ImageSource.camera, 'profile_image3'),
+        );
+      },
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Interior Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image4'),
+          () => _pickImage(ImageSource.camera, 'profile_image4'),
+        );
+      },
+      'assets/images/addimgplaceholder.png',
+    ),
                 // reusablaSizaBox(context, 0.03),
-            reusableimagewidget(
-                  context,
-                  'Chassis/VIN Plate',
-                  'MULKIYA/POSSESSION',
-                  '',
-                  profile_image5?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image6?.path ?? 'assets/images/addimgplaceholder.png',
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Chassis/VIN Plate Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image5'),
-                      () => _pickImage(ImageSource.camera, 'profile_image5'),
-                    );
-                  },
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose MULKIYA/POSSESSION Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image6'),
-                      () => _pickImage(ImageSource.camera, 'profile_image6'),
-                    );
-                  },
-                  'assets/images/addimgplaceholder.png',
-                ),
-                // reusablaSizaBox(context, 0.03),
-            reusableimagewidget(
-                  context,
-                  'Car Image (Left)',
-                  'Car Image (Right)',
-                  '',
-                  profile_image7?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image8?.path ?? 'assets/images/addimgplaceholder.png',
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Car Left Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image7'),
-                      () => _pickImage(ImageSource.camera, 'profile_image7'),
-                    );
-                  },
-                  () {
-                    reuablebottomsheet(
-                      context,
-                      "Choose Car Right Image",
-                      () => _pickImage(ImageSource.gallery, 'profile_image8'),
-                      () => _pickImage(ImageSource.camera, 'profile_image8'),
-                    );
-                  },
-                  'assets/images/addimgplaceholder.png',
-                ),
+                 reusableimagewidget(
+      context,
+      'Chassis/VIN Plate',
+      'MULKIYA/POSSESSION',
+      '',
+      profile_image5?.path ?? ref.read(carFormProvider).profile_image5 ?? 'assets/images/addimgplaceholder.png',
+      profile_image6?.path ?? ref.read(carFormProvider).profile_image6 ?? 'assets/images/addimgplaceholder.png',
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Chassis/VIN Plate Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image5'),
+          () => _pickImage(ImageSource.camera, 'profile_image5'),
+        );
+      },
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose MULKIYA/POSSESSION Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image6'),
+          () => _pickImage(ImageSource.camera, 'profile_image6'),
+        );
+      },
+      'assets/images/addimgplaceholder.png',
+    ),
+
+    // 🔹 Left & Right
+    reusableimagewidget(
+      context,
+      'Car Image (Left)',
+      'Car Image (Right)',
+      '',
+      profile_image7?.path ?? ref.read(carFormProvider).profile_image7 ?? 'assets/images/addimgplaceholder.png',
+      profile_image8?.path ?? ref.read(carFormProvider).profile_image8 ?? 'assets/images/addimgplaceholder.png',
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Car Left Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image7'),
+          () => _pickImage(ImageSource.camera, 'profile_image7'),
+        );
+      },
+      () {
+        reuablebottomsheet(
+          context,
+          "Choose Car Right Image",
+          () => _pickImage(ImageSource.gallery, 'profile_image8'),
+          () => _pickImage(ImageSource.camera, 'profile_image8'),
+        );
+      },
+      'assets/images/addimgplaceholder.png',
+    ),
+            // reusableimagewidget(
+            //       context,
+            //       'Chassis/VIN Plate',
+            //       'MULKIYA/POSSESSION',
+            //       '',
+            //       profile_image5?.path ?? 'assets/images/addimgplaceholder.png',
+            //       profile_image6?.path ?? 'assets/images/addimgplaceholder.png',
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Chassis/VIN Plate Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image5'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image5'),
+            //         );
+            //       },
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose MULKIYA/POSSESSION Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image6'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image6'),
+            //         );
+            //       },
+            //       'assets/images/addimgplaceholder.png',
+            //     ),
+            //     // reusablaSizaBox(context, 0.03),
+            // reusableimagewidget(
+            //       context,
+            //       'Car Image (Left)',
+            //       'Car Image (Right)',
+            //       '',
+            //       profile_image7?.path ?? 'assets/images/addimgplaceholder.png',
+            //       profile_image8?.path ?? 'assets/images/addimgplaceholder.png',
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Car Left Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image7'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image7'),
+            //         );
+            //       },
+            //       () {
+            //         reuablebottomsheet(
+            //           context,
+            //           "Choose Car Right Image",
+            //           () => _pickImage(ImageSource.gallery, 'profile_image8'),
+            //           () => _pickImage(ImageSource.camera, 'profile_image8'),
+            //         );
+            //       },
+            //       'assets/images/addimgplaceholder.png',
+            //     ),
                 reusablaSizaBox(context, 0.05),
                 Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

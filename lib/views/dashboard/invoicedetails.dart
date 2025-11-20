@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
+import 'package:project/views/dashboard/addCars.dart';
+import 'package:project/views/dashboard/editinvoice.dart';
 
 class Invoicedetails extends StatelessWidget {
   final String applicationNo;
+  final String id;
   final String address;
   final String trim;
   final String model;
@@ -33,7 +36,8 @@ class Invoicedetails extends StatelessWidget {
   required this.customerName,required this.cylinder,required this.engineNo,required this.fuel,
   required this.model,required this.odometer,required this.option,required this.platno,required this.make,
   required this.requestfor,required this.specification,required this.total,required this.tranmissiontype,
-  required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate
+  required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate,
+  required this.id,
   });
 
   @override
@@ -119,6 +123,15 @@ class Invoicedetails extends StatelessWidget {
                   reusableText('Specification: $specification',color: colorController.textColorLight,fontweight: FontWeight.bold),
                   reusablaSizaBox(context, 0.015),
                   reusableText('Total: $total',color: colorController.textColorLight,fontweight: FontWeight.bold),
+                  reusablaSizaBox(context, 0.015),
+                  reusableBtn(context, 'Edit', (){
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AddCars(editId: id),
+                      ),
+                    );
+                  },width: 0.8),
                   reusablaSizaBox(context, 0.02),
                 ],
               ),

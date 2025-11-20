@@ -1,10 +1,13 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:project/database/my_shared.dart';
 import 'package:project/models/invoicemodel.dart';
 import 'package:project/repo/perfect_repo.dart';
+import 'package:http/http.dart' as http;
 
 final invoiceRepositoryProvider = Provider<PerfectRepo>((ref) {
   return PerfectRepo();
@@ -30,6 +33,15 @@ final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
   }
 });
 
+
+final editInvoiceProvider = FutureProvider.family<Invoice, String>((ref, id) async {
+  final response = await http.get(
+    Uri.parse("https://car.greenzoneliving.org/API/get_invoice.php?id=$id"),
+  );
+
+  final jsonData = jsonDecode(response.body);
+  return Invoice.fromJson(jsonData);
+});
 
 
 

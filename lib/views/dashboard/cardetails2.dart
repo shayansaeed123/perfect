@@ -30,6 +30,15 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
   DropdownItem? selectedfuel;
   DropdownItem? selectedColor;
   DropdownItem? selectTransmission;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    final form = ref.read(carFormProvider);
+  });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -60,25 +69,71 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   reusableText('Car Details',color:colorController.textColorDark,fontsize: 18,),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
-                  typeAsync.when(
-                    data: (type){
-                      return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.name,(value) {
-                      setState(() => selectedType = value);},);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
-                  // reusableTextField(context, reusabletextfieldcontroller.trim, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
-                  // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
-                   colorAsync.when(
-                    data: (color){
-                      return reusableDropdown(color, selectedColor, "Select Color", (item) => item.name,(value) {
-                      setState(() => selectedColor = value);},);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
+                  // typeAsync.when(
+                  //   data: (type){
+                  //     return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.name,(value) {
+                  //     setState(() => selectedType = value);},);
+                  //   },
+                  //   loading: () => const CircularProgressIndicator(),
+                  //   error: (err, _) => const CircularProgressIndicator(),
+                  // ),
+                  // // reusableTextField(context, reusabletextfieldcontroller.trim, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
+                  // // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+                  // reusablaSizaBox(context, 0.03),
+                  //  colorAsync.when(
+                  //   data: (color){
+                  //     return reusableDropdown(color, selectedColor, "Select Color", (item) => item.name,(value) {
+                  //     setState(() => selectedColor = value);},);
+                  //   },
+                  //   loading: () => const CircularProgressIndicator(),
+                  //   error: (err, _) => const CircularProgressIndicator(),
+                  // ),
+                  // 🔹 Body Type
+    typeAsync.when(
+      data: (typeList) {
+        if (selectedType == null && ref.read(carFormProvider).bodyType != null) {
+          final formTypeId = ref.read(carFormProvider).bodyType!;
+          selectedType = typeList.firstWhere(
+            (item) => item.id == formTypeId,
+            orElse: () => DropdownItem(id: formTypeId, name: "Unknown"),
+          );
+          WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+        }
+        return reusableDropdown(
+          typeList,
+          selectedType,
+          "Select Body Type",
+          (item) => item.name,
+          (value) => setState(() => selectedType = value),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (err, _) => const CircularProgressIndicator(),
+    ),
+    reusablaSizaBox(context, 0.03),
+
+    // 🔹 Color
+    colorAsync.when(
+      data: (colorList) {
+        if (selectedColor == null && ref.read(carFormProvider).color != null) {
+          final formColorId = ref.read(carFormProvider).color!;
+          selectedColor = colorList.firstWhere(
+            (item) => item.id == formColorId,
+            orElse: () => DropdownItem(id: formColorId, name: "Unknown"),
+          );
+          WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+        }
+        return reusableDropdown(
+          colorList,
+          selectedColor,
+          "Select Color",
+          (item) => item.name,
+          (value) => setState(() => selectedColor = value),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (err, _) => const CircularProgressIndicator(),
+    ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
                   reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.phone),
@@ -93,24 +148,70 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   // ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
-                  fuelAsync.when(
-                    data: (fuel){
-                      return reusableDropdown(fuel, selectedfuel, "Select Fuel Type", (item) => item.name,(value) {
-                      setState(() => selectedfuel = value);},);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
-                  // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
-                  transmissionAsync.when(
-                    data: (transmission){
-                      return reusableDropdown(transmission, selectTransmission, "Select Transmission type", (item) => item.name,(value) {
-                      setState(() => selectTransmission = value);},);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
+                  // fuelAsync.when(
+                  //   data: (fuel){
+                  //     return reusableDropdown(fuel, selectedfuel, "Select Fuel Type", (item) => item.name,(value) {
+                  //     setState(() => selectedfuel = value);},);
+                  //   },
+                  //   loading: () => const CircularProgressIndicator(),
+                  //   error: (err, _) => const CircularProgressIndicator(),
+                  // ),
+                  // // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
+                  // reusablaSizaBox(context, 0.03),
+                  // transmissionAsync.when(
+                  //   data: (transmission){
+                  //     return reusableDropdown(transmission, selectTransmission, "Select Transmission type", (item) => item.name,(value) {
+                  //     setState(() => selectTransmission = value);},);
+                  //   },
+                  //   loading: () => const CircularProgressIndicator(),
+                  //   error: (err, _) => const CircularProgressIndicator(),
+                  // ),
+                  // 🔹 Fuel Type
+    fuelAsync.when(
+      data: (fuelList) {
+        if (selectedfuel == null && ref.read(carFormProvider).fuelType != null) {
+          final formFuelId = ref.read(carFormProvider).fuelType!;
+          selectedfuel = fuelList.firstWhere(
+            (item) => item.id == formFuelId,
+            orElse: () => DropdownItem(id: formFuelId, name: "Unknown"),
+          );
+          WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+        }
+        return reusableDropdown(
+          fuelList,
+          selectedfuel,
+          "Select Fuel Type",
+          (item) => item.name,
+          (value) => setState(() => selectedfuel = value),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (err, _) => const CircularProgressIndicator(),
+    ),
+    reusablaSizaBox(context, 0.03),
+
+    // 🔹 Transmission
+    transmissionAsync.when(
+      data: (transList) {
+        if (selectTransmission == null && ref.read(carFormProvider).transmission != null) {
+          final formTransId = ref.read(carFormProvider).transmission!;
+          selectTransmission = transList.firstWhere(
+            (item) => item.id == formTransId,
+            orElse: () => DropdownItem(id: formTransId, name: "Unknown"),
+          );
+          WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+        }
+        return reusableDropdown(
+          transList,
+          selectTransmission,
+          "Select Transmission",
+          (item) => item.name,
+          (value) => setState(() => selectTransmission = value),
+        );
+      },
+      loading: () => const CircularProgressIndicator(),
+      error: (err, _) => const CircularProgressIndicator(),
+    ),
                   reusablaSizaBox(context, 0.03),
                   reusableTextField(context, reusabletextfieldcontroller.option, 'Second Color', colorController.textfieldColor, FocusNode(), (){}),
                   // reusableTextField(context, reusabletextfieldcontroller.tranmission, 'Trasmission Type', colorController.textfieldColor, FocusNode(), (){}),
