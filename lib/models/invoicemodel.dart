@@ -28,7 +28,6 @@ class Invoice {
   final String enterBy;
   final String? status_name;
   final String? bankName;
-  CarFormData data;
 
   Invoice({
     required this.id,
@@ -58,7 +57,6 @@ class Invoice {
     required this.enterBy,
     this.status_name,
     this.bankName,
-    required this.data
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) {
@@ -90,44 +88,6 @@ class Invoice {
       enterBy: json['enterby'] ?? '',
       status_name: json['status_name'],
       bankName: json['BankName'],
-
-      data: CarFormData(
-        requestedFor: json["requested_for"],
-        customerName: json["customer_name"],
-        inspectionDate: json["Invoice_Date"],
-        address: json["address"],
-        bankName: json["BankName"],
-
-        make: json["Make"],
-        model: json["Model"],
-        year: json["Year"],
-        trim: json["trim"],
-        plateNo: json["PlateNumber"],
-        odometer: json["Odometer"],
-        odometerUnit: json["OdometerUnit"],
-        vin: json["vin_no"],
-        specification: json["specification"],
-        engineNo: json["EngineNumber"],
-
-        bodyType: json["type"],
-        color: json["Color"],
-        cylinders: json["cylinders_no"],
-        fuelType: json["fuel"],
-        transmission: json["transmission_type"],
-        option: json["options"],
-        carCondition: json["car_condition"],
-        total: json["Total"],
-        enterby: json["enterby"],
-
-        profile_image1: json["image1"],
-        profile_image2: json["image2"],
-        profile_image3: json["image3"],
-        profile_image4: json["image4"],
-        profile_image5: json["image5"],
-        profile_image6: json["image6"],
-        profile_image7: json["image7"],
-        profile_image8: json["image8"],
-      ),
     );
   }
 

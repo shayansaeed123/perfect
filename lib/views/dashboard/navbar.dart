@@ -62,12 +62,6 @@ class NavBar extends ConsumerWidget {
         initialActiveIndex: selectedIndex,
         onTap: (index) {
           ref.read(bottomNavProvider.notifier).state = index;
-
-          if (index == 1) {
-            // Add button
-            ref.read(carFormProvider.notifier).clearForm();
-            reusabletextfieldcontroller.clearAll();
-          }
         },
       ),
     );

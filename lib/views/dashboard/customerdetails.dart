@@ -29,49 +29,17 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
   late DateTime lastDate = DateTime(1970, 1, 1);
   DropdownItem? selectedBanks;
 
-  @override
-void initState() {
-  super.initState();
-
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    final form = ref.read(carFormProvider); // ✅ use read, not watch
-    // ⭐ FIX BANK (Dropdown item match)
-    final banksList = ref.read(dropdownProvider(
-      const DropdownParams("BankName=1", "banks_name"),
-    )).value;
-
-    if (banksList != null && form.bankName != null) {
-      selectedBanks = banksList.firstWhere(
-        (item) => item.id == form.bankName,
-        orElse: () => DropdownItem(id: form.bankName!, name: "Unknown"),
-      );
-      setState(() {});
-    }
-  });
-}
-
-bool _datePrefilled = false;
-
 
   @override
   Widget build(BuildContext context) {
-
-     final form = ref.watch(carFormProvider);
-
-  // Prefill selectedDate only once, when provider has data
-  if (!_datePrefilled && form.inspectionDate != null) {
-    try {
-      selectedDate = DateTime.parse(form.inspectionDate!);
-      _datePrefilled = true;
-      print('Prefilled date: $selectedDate');
-    } catch (e) {
-      print("Invalid date format: ${form.inspectionDate}");
-    }
-  }
     // final progressPercent = ref.watch(progressPercentageProvider);
     final banksAsync = ref.watch(dropdownProvider(const DropdownParams("BankName=1", "banks_name")));
+     final form = ref.watch(carFormProvider);
 
-   
+    // convert provider date string to DateTime
+    DateTime? selectedDate = form.inspectionDate != null && form.inspectionDate!.isNotEmpty
+        ? DateTime.tryParse(form.inspectionDate!)
+        : null;
     return Stack(
       children: [
         Center(
@@ -94,39 +62,52 @@ bool _datePrefilled = false;
                   reusablaSizaBox(context, 0.03),
                   reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
                   reusablaSizaBox(context, 0.03),
-                  // banksAsync.when(
-                  //   data: (banks){
-                  //     return reusableDropdown(banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
-                  //     setState(() => selectedBanks = value);},);
-                  //   },
-                  //   loading: () => const CircularProgressIndicator(),
-                  //   error: (err, _) => const CircularProgressIndicator(),
-                  // ),
-
                   banksAsync.when(
-  data: (banks) {
-    if (selectedBanks == null && ref.read(carFormProvider).bankName != null) {
-      final formBankId = ref.read(carFormProvider).bankName!;
-      selectedBanks = banks.firstWhere(
-        (item) => item.id == formBankId,
-        orElse: () => DropdownItem(id: formBankId, name: "Unknown"),
-      );
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {}); // <-- ensures dropdown rebuilds with selected value
-      });
-    }
+                    data: (banks){
+                      if (form.bankName != null && form.bankName!.isNotEmpty) {
+                        selectedBanks = banks.firstWhere(
+                          (b) => b.id.toString() == form.bankName.toString(),
+                          orElse: () => DropdownItem(id: "", name: "Select Bank"),
+                        );
+                      } else {
+                        selectedBanks = DropdownItem(id: "", name: "Select Bank");
+                      }
+                      return reusableDropdown(banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
+                      // setState(() => selectedBanks = value);
+                      ref.read(carFormProvider.notifier).updateBank(value!.id);
+                      },);
+                    },
+                    loading: () => const CircularProgressIndicator(),
+                    error: (err, _) => const CircularProgressIndicator(),
+                  ),
+//                    banksAsync.when(
+//   data: (banks) {
+//     DropdownItem? selectedBank;
 
-    return reusableDropdown(
-      banks,
-      selectedBanks,
-      "Select Bank",
-      (item) => item.name,
-      (value) => setState(() => selectedBanks = value),
-    );
-  },
-  loading: () => const CircularProgressIndicator(),
-  error: (err, _) => const Text("Error loading banks"),
-),
+//     if (form.bankName != null && form.bankName!.isNotEmpty) {
+//       selectedBank = banks.firstWhere(
+//         (b) => b.id.toString() == form.bankName.toString(),
+//         orElse: () => DropdownItem(id: "", name: "Select Bank"),
+//       );
+//     } else {
+//       selectedBank = DropdownItem(id: "", name: "Select Bank");
+//     }
+
+//     return reusableDropdown(
+//       banks,
+//       selectedBank,
+//       "Select Bank",
+//       (item) => item.name,
+//       (value) {
+//         // Save only ID
+//         ref.read(carFormProvider.notifier).updateBank(value!.id);
+//       },
+//     );
+//   },
+//   loading: () => CircularProgressIndicator(),
+//   error: (err, _) => Text("Error loading banks"),
+// ),
+
                   reusablaSizaBox(context, 0.03),
                   reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
@@ -136,6 +117,7 @@ bool _datePrefilled = false;
                                                 selectedDate = timeofday;
                                                 print('date $selectedDate');
                                               });
+                                              ref.read(carFormProvider.notifier).updateDate(timeofday.toIso8601String());
                                     }, Icon(Icons.calendar_month_outlined),'Inspection Date',),
                   // reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),

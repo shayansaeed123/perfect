@@ -189,14 +189,6 @@ class CarFormData {
     "profile_image6": profile_image6 ?? "",
     "profile_image7": profile_image7 ?? "",
     "profile_image8": profile_image8 ?? "",
-    // "image1": profile_image1 ?? "",
-    // "image2": profile_image2 ?? "",
-    // "image3": profile_image3 ?? "",
-    // "image4": profile_image4 ?? "",
-    // "image5": profile_image5 ?? "",
-    // "image6": profile_image6 ?? "",
-    // "image7": profile_image7 ?? "",
-    // "image8": profile_image8 ?? "",
   };
 }
 }

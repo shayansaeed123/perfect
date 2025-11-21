@@ -13,6 +13,9 @@ final invoiceRepositoryProvider = Provider<PerfectRepo>((ref) {
   return PerfectRepo();
 });
 
+/// Holds current invoice id being edited. Null => create mode.
+final editInvoiceIdProvider = StateProvider<String?>((ref) => null);
+
 
 final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
   final repo = ref.read(invoiceRepositoryProvider);
@@ -31,16 +34,6 @@ final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
       yield [];
     }
   }
-});
-
-
-final editInvoiceProvider = FutureProvider.family<Invoice, String>((ref, id) async {
-  final response = await http.get(
-    Uri.parse("https://car.greenzoneliving.org/API/get_invoice.php?id=$id"),
-  );
-
-  final jsonData = jsonDecode(response.body);
-  return Invoice.fromJson(jsonData);
 });
 
 

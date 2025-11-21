@@ -5,7 +5,6 @@ import 'package:project/controllers/color_controller.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/views/dashboard/addCars.dart';
-import 'package:project/views/dashboard/editinvoice.dart';
 
 class Invoicedetails extends StatelessWidget {
   final String applicationNo;

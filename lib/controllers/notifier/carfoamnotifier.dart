@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/carfoammodel.dart';
 import 'package:project/models/invoicemodel.dart';
+import 'package:project/repo/services/invoice_services.dart';
 import 'package:project/repo/utils.dart';
 
 /// Global form state
@@ -18,20 +20,7 @@ final carFormProvider =
 final loadingProvider = StateProvider<bool>((ref) => false);
 
 class CarFormNotifier extends StateNotifier<CarFormData> {
-    bool isEdit = false;
   CarFormNotifier() : super(CarFormData());
-
-    /// Load existing invoice data (edit mode)
-  void loadInvoiceData(CarFormData data) {
-    isEdit = true;
-    state = data;
-  }
-
-  /// Clear for new invoice
-  void clearForm() {
-    isEdit = false;
-    state = CarFormData();
-  }
 
   // ── Customer
   void updateCustomerDetails({
@@ -201,20 +190,6 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     }
   }
 
-   /// UPDATE API (Edit Mode)
-  Future<bool> updateCarForm() async {
-    try {
-      final response = await http.post(
-        Uri.parse("https://car.greenzoneliving.org/API/edit_invoice.php"),
-        body: state.toJson(),
-      );
-
-      return response.statusCode == 200;
-    } catch (e) {
-      debugPrint("UpdateCarForm ERROR: $e");
-      return false;
-    }
-  }
 
   void resetForm() {
   state = CarFormData(
@@ -253,8 +228,115 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     profile_image8: null,
   );}
 
- 
+  void updateBank(String bank) {
+    state = state.copyWith(bankName: bank);
+  }
 
+    void updateDate(String date) {
+    state = state.copyWith(inspectionDate: date);
+  }
+
+  void updateMake(String make) {
+    state = state.copyWith(make: make);
+  }
+
+  void updateModel(String model) {
+    state = state.copyWith(model: model);
+  }
+
+  void updateYear(String year) {
+    state = state.copyWith(year: year);
+  }
+
+  void updateTrim(String trim) {
+    state = state.copyWith(trim: trim);
+  }
+
+  void updateSpec(String specification) {
+    state = state.copyWith(specification: specification);
+  }
+
+  void updateBodytype(String bodyType) {
+    state = state.copyWith(bodyType: bodyType);
+  }
+
+  void updateColor(String color) {
+    state = state.copyWith(color: color);
+  }
+
+   void updateFuelType(String fuel){
+    state = state.copyWith(fuelType: fuel);
+  }
+
+   void updateTransmission(String tranmission){
+    state = state.copyWith(transmission: tranmission);
+  }
+
+void prefillFromInvoice(Invoice inv) {
+  // ---- Provider State Prefill (Dropdowns + Textfields) ----
+  state = state.copyWith(
+    requestedFor: inv.requestedFor,
+    bankName: inv.bankName,
+    customerName: inv.customerName,
+    inspectionDate: inv.invoiceDate,
+    address: inv.address,
+
+    make: inv.make,
+    model: inv.model,
+    year: inv.year,
+    trim: inv.trim,
+    specification: inv.specification,
+
+    plateNo: inv.plateNumber,
+    vin: inv.vinNo,
+    engineNo: inv.engineNumber,
+    odometer: inv.odometer,
+
+    bodyType: inv.type,
+    color: inv.color,
+    cylinders: inv.cylindersNo,
+    fuelType: inv.fuel,
+    transmission: inv.transmissionType,
+    option: inv.options,
+    carCondition: inv.carCondition,
+    total: inv.total,
+
+    profile_image1: inv.toJson()['image1'],
+    profile_image2: inv.toJson()['image2'],
+    profile_image3: inv.toJson()['image3'],
+    profile_image4: inv.toJson()['image4'],
+    profile_image5: inv.toJson()['image5'],
+    profile_image6: inv.toJson()['image6'],
+    profile_image7: inv.toJson()['image7'],
+    profile_image8: inv.toJson()['image8'],
+  );
+
+  // ---- ONLY TEXT FIELDS SET HERE ----
+  reusabletextfieldcontroller.requested.text = inv.requestedFor ?? '';
+  reusabletextfieldcontroller.customerName.text = inv.customerName ?? '';
+  reusabletextfieldcontroller.address.text = inv.address ?? '';
+  reusabletextfieldcontroller.plateNo.text = inv.plateNumber ?? '';
+  reusabletextfieldcontroller.vin.text = inv.vinNo ?? '';
+  reusabletextfieldcontroller.engineNo.text = inv.engineNumber ?? '';
+  reusabletextfieldcontroller.odometer.text = inv.odometer ?? '';
+  reusabletextfieldcontroller.cylinders.text = inv.cylindersNo ?? '';
+  reusabletextfieldcontroller.option.text = inv.options ?? '';
+  reusabletextfieldcontroller.carCondition.text = inv.carCondition ?? '';
+  reusabletextfieldcontroller.total.text = inv.total ?? '';
+}
+
+
+  /// Call edit API using InvoiceService.
+  Future<bool> updateInvoice(WidgetRef ref) async {
+    final invoiceId = ref.read(editInvoiceIdProvider);
+    if (invoiceId == null) return false;
+
+    final service = InvoiceService();
+    final body = state.toJson();
+    // Add any other required fields for edit API
+    final ok = await service.updateInvoice(invoiceId, body);
+    return ok;
+  }
 /// Update functions for each field
   // void updateCustomerName(String? value) =>
   //     state = state.copyWith(customerName: value);
