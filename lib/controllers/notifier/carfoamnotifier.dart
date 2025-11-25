@@ -301,14 +301,14 @@ void prefillFromInvoice(Invoice inv) {
     carCondition: inv.carCondition,
     total: inv.total,
 
-    profile_image1: inv.toJson()['image1'],
-    profile_image2: inv.toJson()['image2'],
-    profile_image3: inv.toJson()['image3'],
-    profile_image4: inv.toJson()['image4'],
-    profile_image5: inv.toJson()['image5'],
-    profile_image6: inv.toJson()['image6'],
-    profile_image7: inv.toJson()['image7'],
-    profile_image8: inv.toJson()['image8'],
+    profile_image1: inv.image1,
+    profile_image2: inv.image2,
+    profile_image3: inv.image3,
+    profile_image4: inv.image4,
+    profile_image5: inv.image5,
+    profile_image6: inv.image6,
+    profile_image7: inv.image7,
+    profile_image8: inv.image8,
   );
 
   // ---- ONLY TEXT FIELDS SET HERE ----
@@ -323,6 +323,8 @@ void prefillFromInvoice(Invoice inv) {
   reusabletextfieldcontroller.option.text = inv.options ?? '';
   reusabletextfieldcontroller.carCondition.text = inv.carCondition ?? '';
   reusabletextfieldcontroller.total.text = inv.total ?? '';
+
+  print("🔥 PREFILLED IMAGE1 = ${inv.toJson()['image1']}");
 }
 
 

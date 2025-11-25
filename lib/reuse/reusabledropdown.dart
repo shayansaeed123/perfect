@@ -12,6 +12,7 @@ reusableDropdown<T>(
   Function(T?) onChanged,
   ){
     return DropdownButtonFormField<T>(
+      isExpanded: true,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: colorController.mainColor,fontSize: 12.5),

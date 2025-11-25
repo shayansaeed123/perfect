@@ -145,9 +145,7 @@ class _CarimagesState extends ConsumerState<Carimages> {
     return "assets/images/addimgplaceholder.png";
   }
 
-  if (image is File) {
-    return image.path;
-  }
+  if (image is File) return image.path;
 
   if (image is String && image.startsWith("http")) {
     return image; // URL
@@ -155,6 +153,7 @@ class _CarimagesState extends ConsumerState<Carimages> {
 
   return "assets/images/addimgplaceholder.png";
 }
+
 
 
 
@@ -190,10 +189,10 @@ class _CarimagesState extends ConsumerState<Carimages> {
                   'Car Image (Front)',
                   'Car Image (Back)',
                   '',
-                  profile_image1?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image2?.path ?? 'assets/images/addimgplaceholder.png',
-                  // getImagePath(profile_image1 ?? form.profile_image1),
-                  // getImagePath(profile_image2 ?? form.profile_image2),
+                  // profile_image1?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image2?.path ?? 'assets/images/addimgplaceholder.png',
+                  getImagePath(profile_image1 ?? form.profile_image1),
+                  getImagePath(profile_image2 ?? form.profile_image2),
                   () {
                     reuablebottomsheet(
                       context,
@@ -218,8 +217,10 @@ class _CarimagesState extends ConsumerState<Carimages> {
                   'Clustermeter Image',
                   'Interior Image',
                   '',
-                  profile_image3?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image4?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image3?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image4?.path ?? 'assets/images/addimgplaceholder.png',
+                  getImagePath(profile_image3 ?? form.profile_image3),
+                  getImagePath(profile_image4 ?? form.profile_image4),
                   () {
                     reuablebottomsheet(
                       context,
@@ -243,8 +244,10 @@ class _CarimagesState extends ConsumerState<Carimages> {
                   'Chassis/VIN Plate',
                   'MULKIYA/POSSESSION',
                   '',
-                  profile_image5?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image6?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image5?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image6?.path ?? 'assets/images/addimgplaceholder.png',
+                  getImagePath(profile_image5 ?? form.profile_image5),
+                  getImagePath(profile_image6 ?? form.profile_image6),
                   () {
                     reuablebottomsheet(
                       context,
@@ -269,8 +272,10 @@ class _CarimagesState extends ConsumerState<Carimages> {
                   'Car Image (Left)',
                   'Car Image (Right)',
                   '',
-                  profile_image7?.path ?? 'assets/images/addimgplaceholder.png',
-                  profile_image8?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image7?.path ?? 'assets/images/addimgplaceholder.png',
+                  // profile_image8?.path ?? 'assets/images/addimgplaceholder.png',
+                  getImagePath(profile_image7 ?? form.profile_image7),
+                  getImagePath(profile_image8 ?? form.profile_image8),
                   () {
                     reuablebottomsheet(
                       context,
