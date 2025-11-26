@@ -16,6 +16,7 @@ class CustomerValidationNotifier extends StateNotifier<CustomerValidationState> 
     required String customerName,
     required String inspectionDate,
     required String address,
+    required String customerEmail
     // required String evaluationNo,
   }) {
     if (requestedFor.isEmpty) {
@@ -33,7 +34,9 @@ class CustomerValidationNotifier extends StateNotifier<CustomerValidationState> 
     } else if (address.isEmpty) {
       state = CustomerValidationState(errorMessage: "⚠️ Address is required");
       return state.errorMessage;
-    } 
+    } else if (customerEmail.isEmpty){
+      state = CustomerValidationState(errorMessage: "Customer Email is requried");
+    }
     // else if (evaluationNo.isEmpty) {
     //   state = CustomerValidationState(errorMessage: "⚠️ Evaluation No is required");
     //   return state.errorMessage;

@@ -10,6 +10,9 @@ reusableDropdown<T>(
   String label,
   String Function(T) getLabel,
   Function(T?) onChanged,
+  {
+    bool enabled = true,
+  }
   ){
     return DropdownButtonFormField<T>(
       isExpanded: true,
@@ -38,6 +41,6 @@ reusableDropdown<T>(
           child: reusableText(getLabel(item), fontsize: 12.5),
         );
       }).toList(),
-      onChanged: onChanged,
+      onChanged: enabled ? onChanged : null,
     );
   }

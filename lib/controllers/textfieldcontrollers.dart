@@ -138,6 +138,8 @@ final TextEditingController _title = TextEditingController();
   final TextEditingController _wallet = TextEditingController();
   TextEditingController get wallet => _wallet;
 
+  final TextEditingController _customerEmail = TextEditingController();
+  TextEditingController get customerEmail => _customerEmail;
 
 
 
@@ -161,6 +163,9 @@ final TextEditingController _title = TextEditingController();
     odometer.clear();
     cylinders.clear();
     tranmission.clear();
+    customerEmail.clear();
+    total.clear();
+    
   }
 
 }

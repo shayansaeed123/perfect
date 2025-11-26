@@ -11,6 +11,9 @@ Widget reusableDate(
   Function(DateTime) selectdateontap,
   Widget icon,
   String hint,
+  {
+  bool enabled = true,
+}
 ) {
   final controller = TextEditingController(
     text: selectedTime == null
@@ -19,7 +22,7 @@ Widget reusableDate(
   );
 
   return InkWell(
-    onTap: () async {
+    onTap: enabled ? () async {
       final DateTime initialDate =
           (selectedTime != null && !selectedTime.isBefore(lastDate))
               ? selectedTime
@@ -48,11 +51,12 @@ Widget reusableDate(
       if (picked != null) {
         selectdateontap(picked);
       }
-    },
+    } : null,
     child: IgnorePointer(
+      // ignoring: !enabled,
       child: TextFormField(
         controller: controller,
-        style: TextStyle(fontSize: 12.0,color: colorController.blackColor,),
+        style: TextStyle(fontSize: 12.0,color: enabled ? colorController.blackColor : colorController.grayTextColor,),
         decoration: InputDecoration(
           filled: true,
           fillColor: colorController.whiteColor,

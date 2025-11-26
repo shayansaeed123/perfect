@@ -28,6 +28,7 @@ class Invoice {
   final String enterBy;
   final String? status_name;
   final String? bankName;
+  final String? customer_email;
   String? image1;
   String? image2;
   String? image3;
@@ -65,6 +66,7 @@ class Invoice {
     required this.enterBy,
     this.status_name,
     this.bankName,
+    required this.customer_email,
     this.image1,
     this.image2,
     this.image3,
@@ -104,6 +106,7 @@ class Invoice {
       enterBy: json['enterby'] ?? '',
       status_name: json['status_name'],
       bankName: json['BankName'],
+      customer_email: json['customer_email'],
       image1: json['image1'],
       image2: json['image2'],
       image3: json['image3'],
@@ -144,6 +147,7 @@ class Invoice {
       "enterby": enterBy,
       "status_name": status_name,
       "BankName": bankName,
+      "customer_email": customer_email,
       "image1": image1,
     "image2": image2,
     "image3": image3,

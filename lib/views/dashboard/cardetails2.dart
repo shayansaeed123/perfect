@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
+import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
@@ -40,6 +41,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
     final colorAsync = ref.watch(dropdownProvider(const DropdownParams("Color=1", "color_name")));
     final transmissionAsync = ref.watch(dropdownProvider(const DropdownParams("transmission_type=1", "transmission_typer_name")));
     final form = ref.watch(carFormProvider);
+    final editId = ref.watch(editInvoiceIdProvider);
     return Stack(
       children: [
         Center(
@@ -154,7 +156,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.03),
-                  reusableTextField(context, reusabletextfieldcontroller.total, 'Total', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number),
+                  reusableTextField(context, reusabletextfieldcontroller.total, 'Total', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
                   reusablaSizaBox(context, 0.05),
                    Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

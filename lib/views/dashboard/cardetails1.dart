@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
+import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
@@ -47,6 +48,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
     final trimAsync = ref.watch(dropdownProvider(const DropdownParams("trim=1", "trim_name")));
     final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     final form = ref.watch(carFormProvider);
+    final editId = ref.watch(editInvoiceIdProvider);
     return 
     Stack(
       children: [
@@ -88,7 +90,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       selectedModel = null; // reset model when make changes
                       });
                       ref.read(carFormProvider.notifier).updateMake(value!.id);
-                      });},);
+                      });},enabled: editId == null);
                     },
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
@@ -108,7 +110,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   return reusableDropdown(modelList,selectedModel,"Select Model",(item) => item.name,(value) {
                   setState(() => selectedModel = value);
                   ref.read(carFormProvider.notifier).updateModel(value!.id);
-                  },);},
+                  },enabled: editId == null);},
                   loading: () => const CircularProgressIndicator(),
                   error: (err, _) => const CircularProgressIndicator(),
                   )],
@@ -124,7 +126,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       return reusableDropdown(year, selectedYear, "Select Year", (item) => item.name,(value) {
                       setState(() => selectedYear = value);
                        ref.read(carFormProvider.notifier).updateYear(value!.id);
-                      },);
+                      },enabled: editId == null);
                     },
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
@@ -142,7 +144,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       return reusableDropdown(trim, selectedTrim, "Select Trim", (item) => item.name,(value) {
                       setState(() => selectedTrim = value);
                       ref.read(carFormProvider.notifier).updateTrim(value!.id);
-                      },);
+                      },enabled: editId == null);
                     },
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
@@ -159,7 +161,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
-                  reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number),
+                  reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number,enabled: editId == null,),
                   reusablaSizaBox(context, 0.03),
                   reusableText('Odometer Unit',color: colorController.textColorDark,fontsize: 12.5),
                   reusablaSizaBox(context, 0.01),
@@ -205,7 +207,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       return reusableDropdown(spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
                       setState(() => selectedSpec = value);
                       ref.read(carFormProvider.notifier).updateSpec(value!.id);
-                      },);
+                      },enabled: editId == null);
                     },
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),

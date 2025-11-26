@@ -18,6 +18,7 @@ Widget reusableTextField(
   Color fillColor = Colors.white,
   double width = 1,
   ValueChanged<String>? onChanged,
+  bool enabled = true,
  }
 ) {
   return Container(
@@ -27,16 +28,17 @@ Widget reusableTextField(
       keyboardType: keyboardType,
       style: TextStyle(fontSize: 12.5),
       focusNode: focusnode,
+      enabled: enabled,
       onFieldSubmitted: (value) {
-                              onsubmit();
+                         if (enabled) onsubmit();
                             },
                             
                           
       obscureText: obscureText,
-      onChanged: onChanged,
+      onChanged: enabled ? onChanged : null,
       decoration: InputDecoration(
         filled: true,
-        fillColor: fillColor,
+        fillColor: enabled ? fillColor : Colors.grey.shade200,
         labelText: labelText,
         labelStyle: TextStyle(color: color,fontSize: 11.5),
         // prefixIcon: const Icon(Icons.password_outlined, color: Colors.white),
@@ -44,15 +46,21 @@ Widget reusableTextField(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-                color: colorController.textfieldBorderColorBefore, width: 1.5)),
+                color: enabled
+                ? colorController.textfieldBorderColorBefore
+                : Colors.grey, width: 1.5)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-                color: colorController.textfieldBorderColorBefore, width: 1.5)),
+                color: enabled
+                ? colorController.textfieldBorderColorBefore
+                : Colors.grey, width: 1.5)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-                color: colorController.textfieldBorderColorAfter, width: 1.5)),
+                color: enabled
+                ? colorController.textfieldBorderColorAfter
+                : Colors.grey, width: 1.5)),
         errorBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
         contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),

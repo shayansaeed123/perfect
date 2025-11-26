@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
+import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/dropdownmodel.dart';
@@ -40,6 +41,8 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
     DateTime? selectedDate = form.inspectionDate != null && form.inspectionDate!.isNotEmpty
         ? DateTime.tryParse(form.inspectionDate!)
         : null;
+
+        final editId = ref.watch(editInvoiceIdProvider);
     return Stack(
       children: [
         Center(
@@ -75,7 +78,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                       return reusableDropdown(banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
                       // setState(() => selectedBanks = value);
                       ref.read(carFormProvider.notifier).updateBank(value!.id);
-                      },);
+                      },enabled: editId == null);
                     },
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
@@ -112,13 +115,16 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                   reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
+                  reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Custormer Email', colorController.textfieldColor, FocusNode(), (){}),
+                  reusablaSizaBox(context, 0.03),
                   reusableDate(context, lastDate, selectedDate, (DateTime timeofday){
                                       setState(() {
                                                 selectedDate = timeofday;
                                                 print('date $selectedDate');
                                               });
                                               ref.read(carFormProvider.notifier).updateDate(timeofday.toIso8601String());
-                                    }, Icon(Icons.calendar_month_outlined),'Inspection Date',),
+                                    }, Icon(Icons.calendar_month_outlined),'Inspection Date',
+                                    enabled: editId == null,),
                   // reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
@@ -133,6 +139,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                   reusabletextfieldcontroller.requested.text.trim();
               final customerName =
                   reusabletextfieldcontroller.customerName.text.trim();
+                  final customerEmail = reusabletextfieldcontroller.customerEmail.text.trim();
               final inspectionDateStr = selectedDate?.toString() ?? "";
               final address = reusabletextfieldcontroller.address.text.trim();
               final evaluationNo =
@@ -148,6 +155,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,
                     address: address,
+                    customerEmail: customerEmail,
                     // evaluationNo: evaluationNo,
                   );
         
@@ -162,6 +170,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,
                     address: address,
+                    customerEmail: customerEmail,
                     // evaluationNo: evaluationNo,
                   );
         
