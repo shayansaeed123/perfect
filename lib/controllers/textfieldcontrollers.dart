@@ -63,6 +63,9 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _total = TextEditingController();
   TextEditingController get total => _total;
 
+  final TextEditingController _totalValue = TextEditingController();
+  TextEditingController get totalValue => _totalValue;
+
   final TextEditingController _search = TextEditingController();
   TextEditingController get search => _search;
 
@@ -165,6 +168,7 @@ final TextEditingController _title = TextEditingController();
     tranmission.clear();
     customerEmail.clear();
     total.clear();
+    totalValue.clear();
     
   }
 

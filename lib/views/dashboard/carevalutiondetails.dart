@@ -18,9 +18,11 @@ class Carevalutiondetails extends StatelessWidget {
   final String make;
   final String model;
   final String total;
+  final String totalValue;
   final String paymentUrl;
   Carevalutiondetails({super.key,required this.applicationNo, required this.bank,required this.statusName,
-  required this.customerName,required this.make, required this.model, required this.year, required this.total, required this.paymentUrl
+  required this.customerName,required this.make, required this.model, required this.year, required this.total, required this.totalValue,
+  required this.paymentUrl,
   });
 
   //  final Map<String, dynamic> data = {
@@ -70,7 +72,8 @@ class Carevalutiondetails extends StatelessWidget {
                 ReadOnlyField("Make:", make),
                 ReadOnlyField("Model:", model),
                 ReadOnlyField("Year:", year),
-                ReadOnlyField("Total:", total),
+                ReadOnlyField("Certificate Charges:", total),
+                ReadOnlyField("Total Value:", totalValue),
                 ReadOnlyField("Payment Url:", "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"),
                 const SizedBox(height: 20),
                 Row(
@@ -87,17 +90,31 @@ class Carevalutiondetails extends StatelessWidget {
                     SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
                     Expanded(
                       child: reusableBtn(context, 'Open Link', ()async{
-                        final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
-                          if (await canLaunchUrl(url)) {
-                            await launchUrl(
-                              url,
-                              mode: LaunchMode.externalApplication, // opens Chrome / external browser
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Could not launch URL")),
-                            );
-                          }
+                        // final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
+                        //   if (await canLaunchUrl(url)) {
+                        //     await launchUrl(
+                        //       url,
+                        //       mode: LaunchMode.externalApplication, // opens Chrome / external browser
+                        //     );
+                        //   } else {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       const SnackBar(content: Text("Could not launch URL")),
+                        //     );
+                        //   }
+                                                final Uri url = Uri.parse(
+                          "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl",
+                        );
+
+                        bool launched = await launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+
+                        if (!launched) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Could not launch URL")),
+                          );
+                        }
                       }),
                     ),
 //                     ElevatedButton(

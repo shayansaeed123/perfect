@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
@@ -11,6 +12,7 @@ import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/database/my_shared.dart';
 import 'package:project/models/dropdownmodel.dart';
+import 'package:project/repo/input_formatter.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/repo/validation.dart';
 import 'package:project/reuse/reusablebtn.dart';
@@ -102,18 +104,22 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
     
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
-                  reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.phone),
+                  reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    MaxNumberInputFormatter(24),  // user cannot type more than 24
+                  ],),
                   reusablaSizaBox(context, 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      reusableTextField(context, reusabletextfieldcontroller.plateNo, 'Plate No', colorController.textfieldColor, FocusNode(), (){},width: 0.73),
-                      reusableIconBtn(context, (){
-                        ref.read(imageTextProvider.notifier).pickImageAndExtractText();
-                      })
-                    ],
-                  ),
-                  reusablaSizaBox(context, 0.03),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                  //     reusableTextField(context, reusabletextfieldcontroller.plateNo, 'Plate No', colorController.textfieldColor, FocusNode(), (){},width: 0.73),
+                  //     reusableIconBtn(context, (){
+                  //       ref.read(imageTextProvider.notifier).pickImageAndExtractText();
+                  //     })
+                  //   ],
+                  // ),
+                  // reusablaSizaBox(context, 0.03),
                   fuelAsync.when(
                     data: (fuel){
                       if (form.fuelType != null && form.fuelType!.isNotEmpty) {
@@ -156,7 +162,9 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.03),
-                  reusableTextField(context, reusabletextfieldcontroller.total, 'Total', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
+                  reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
+                  reusablaSizaBox(context, 0.03),
+                  reusableTextField(context, reusabletextfieldcontroller.totalValue, 'Total Value', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
                   reusablaSizaBox(context, 0.05),
                    Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,6 +184,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         option: reusabletextfieldcontroller.option.text.trim(),
                         carCondition: reusabletextfieldcontroller.carCondition.text.trim(),
                         total: reusabletextfieldcontroller.total.text.trim(),
+                        totalValue: reusabletextfieldcontroller.totalValue.text.trim(),
                       );
         
                   if (error != null) {
@@ -193,6 +202,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         option: reusabletextfieldcontroller.option.text,
                         carCondition: reusabletextfieldcontroller.evaluationNo.text,
                         total: reusabletextfieldcontroller.total.text,
+                        totalVAlue: reusabletextfieldcontroller.totalValue.text,
                         enterby: MySharedPrefrence().get_user_id(),
                       );
         

@@ -30,13 +30,14 @@ class Invoicedetails extends StatelessWidget {
   final String option;
   final String invoiceDate;
   final String make;
+  final String totalValue;
   const Invoicedetails({super.key,
   required this.address,required this.applicationNo,required this.carCondition,required this.color,
   required this.customerName,required this.cylinder,required this.engineNo,required this.fuel,
   required this.model,required this.odometer,required this.option,required this.platno,required this.make,
   required this.requestfor,required this.specification,required this.total,required this.tranmissiontype,
   required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate,
-  required this.id,
+  required this.id, required this.totalValue,
   });
 
   @override
@@ -121,7 +122,9 @@ class Invoicedetails extends StatelessWidget {
                   reusablaSizaBox(context, 0.015),
                   reusableText('Specification: $specification',color: colorController.textColorLight,fontweight: FontWeight.bold),
                   reusablaSizaBox(context, 0.015),
-                  reusableText('Total: $total',color: colorController.textColorLight,fontweight: FontWeight.bold),
+                  reusableText('Certificate Charges: $total',color: colorController.textColorLight,fontweight: FontWeight.bold),
+                  reusablaSizaBox(context, 0.015),
+                  reusableText('Total Value: $totalValue',color: colorController.textColorLight,fontweight: FontWeight.bold),
                   reusablaSizaBox(context, 0.015),
                   reusableBtn(context, 'Edit', (){
                       Navigator.push(

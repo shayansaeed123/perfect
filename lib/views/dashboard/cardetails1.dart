@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
@@ -161,7 +162,11 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.03),
-                  reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number,enabled: editId == null,),
+                  reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number,enabled: editId == null,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,     // Only numbers allowed
+                    LengthLimitingTextInputFormatter(6),        // Max 6 digits
+                  ],),
                   reusablaSizaBox(context, 0.03),
                   reusableText('Odometer Unit',color: colorController.textColorDark,fontsize: 12.5),
                   reusablaSizaBox(context, 0.01),
@@ -189,7 +194,11 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      reusableTextField(context, reusabletextfieldcontroller.vin, 'Vin', colorController.textfieldColor, FocusNode(), (){},width: 0.73),
+                      reusableTextField(context, reusabletextfieldcontroller.vin, 'Vin', colorController.textfieldColor, FocusNode(), (){},width: 0.73,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
+                        LengthLimitingTextInputFormatter(20),
+                      ]),
                       reusableIconBtn(context, (){
                         ref.read(imageTextProvider.notifier).pickImageAndExtractText();
                       })
@@ -217,7 +226,11 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      reusableTextField(context, reusabletextfieldcontroller.engineNo, 'Engine No', colorController.textfieldColor, FocusNode(), (){},width: 0.73),
+                      reusableTextField(context, reusabletextfieldcontroller.engineNo, 'Engine No', colorController.textfieldColor, FocusNode(), (){},width: 0.73,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
+                        LengthLimitingTextInputFormatter(20),
+                      ]),
                       reusableIconBtn(context, (){
                         ref.read(imageTextProvider.notifier).pickImageAndExtractText();
                       })

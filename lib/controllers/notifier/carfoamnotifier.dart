@@ -83,6 +83,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     String? option,
     String? carCondition,
     String? total,
+    String? totalVAlue,
     String? enterby,
   }) {
     state = state.copyWith(
@@ -94,6 +95,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
       option: option,
       carCondition: carCondition,
       total: total,
+      totalValue: totalVAlue,
       enterby: enterby,
     );
   }
@@ -219,6 +221,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     transmission: '',
     carCondition: '',
     total: '',
+    totalValue: '',
     enterby: '',
     customerEmail: '',
     profile_image1: null,
@@ -304,6 +307,7 @@ void prefillFromInvoice(Invoice inv) {
     option: inv.options,
     carCondition: inv.carCondition,
     total: inv.total,
+    totalValue: inv.totalValue,
 
     profile_image1: inv.image1,
     profile_image2: inv.image2,
@@ -328,6 +332,7 @@ void prefillFromInvoice(Invoice inv) {
   reusabletextfieldcontroller.carCondition.text = inv.carCondition ?? '';
   reusabletextfieldcontroller.total.text = inv.total ?? '';
   reusabletextfieldcontroller.customerEmail.text = inv.customer_email ?? '';
+  reusabletextfieldcontroller.totalValue.text = inv.totalValue ?? '';
 
   print("🔥 PREFILLED IMAGE1 = ${inv.toJson()['image1']}");
 }

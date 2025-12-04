@@ -194,7 +194,8 @@ class _HomeState extends ConsumerState<Home> {
                                             odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
                                             requestfor: invoice.requestedFor??'', specification: invoice.specification, 
                                             total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
-                                            trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,);
+                                            trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
+                                            totalValue: invoice.totalValue,);
                                         },));
                                       },
                                       (){
@@ -207,7 +208,9 @@ class _HomeState extends ConsumerState<Home> {
                                           model: invoice.model, 
                                           year: invoice.year, 
                                           total: invoice.total, 
-                                          paymentUrl: invoice.code),));
+                                          paymentUrl: invoice.code,
+                                          totalValue: invoice.totalValue,
+                                          ),));
                                       }
                                       ),
                                       );

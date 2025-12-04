@@ -12,6 +12,8 @@ class Utils {
   static String formSubmitUrl = "${baseUrl}form_submit.php";
   static String loginUrl = "${baseUrl}login.php";
   static String invoiceListingUrl = "${baseUrl}invoice_listing.php";
+  static String getInvoice = '${baseUrl}get_invoice.php?id=';
+  static String editInvoice = '${baseUrl}edit_invoice.php';
 
   static void fieldFocusChange(
       BuildContext context, FocusNode current, FocusNode nextFocus) {
@@ -58,4 +60,5 @@ class Utils {
       duration: Duration(seconds: 3),
     );
   }
+  
 }

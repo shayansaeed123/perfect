@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/controllers/color_controller.dart';
 
 Widget reusableTextField(
@@ -19,6 +20,7 @@ Widget reusableTextField(
   double width = 1,
   ValueChanged<String>? onChanged,
   bool enabled = true,
+  List<TextInputFormatter>? inputFormatters,
  }
 ) {
   return Container(
@@ -29,6 +31,7 @@ Widget reusableTextField(
       style: TextStyle(fontSize: 12.5),
       focusNode: focusnode,
       enabled: enabled,
+      inputFormatters: enabled ? inputFormatters : null,
       onFieldSubmitted: (value) {
                          if (enabled) onsubmit();
                             },

@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project/models/invoicemodel.dart';
+import 'package:project/repo/utils.dart';
 
 class InvoiceService {
-  static const String base = 'https://car.greenzoneliving.org/API';
-  static const String getInvoice = '$base/get_invoice.php?id=';
-  static const String editInvoice = '$base/edit_invoice.php';
+  
 
   /// Fetch invoice by id. Returns an Invoice or throws.
   Future<Invoice> fetchInvoiceById(String id) async {
-    final uri = Uri.parse('$getInvoice$id'); // API expects get_invoice.php?id=
+    final uri = Uri.parse('${Utils.getInvoice}$id'); // API expects get_invoice.php?id=
     final resp = await http.get(uri).timeout(const Duration(seconds: 20));
     if (resp.statusCode != 200) {
       throw Exception('Failed to fetch invoice ${resp.statusCode}');
@@ -41,7 +40,7 @@ class InvoiceService {
   /// Send update request. body should contain fields expected by edit_invoice.php.
   /// Returns true on success, false otherwise.
   Future<bool> updateInvoice(String id, Map<String, dynamic> body) async {
-    final uri = Uri.parse(editInvoice);
+    final uri = Uri.parse('${Utils.editInvoice}');
     // ensure id is present as "id" param (API expects "id")
     final Map<String, dynamic> postBody = Map.from(body);
     postBody['id'] = id;

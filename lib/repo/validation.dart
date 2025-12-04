@@ -134,6 +134,7 @@ class CarDetails2ValidationNotifier
     required String option,
     required String carCondition,
     required String total,
+    required String totalValue,
   }) {
       if (bodyType == null || bodyType.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Body Type is required");
@@ -157,7 +158,10 @@ class CarDetails2ValidationNotifier
       state = CarDetails2ValidationState(errorMessage: "⚠️ Car Condition is required");
       return state.errorMessage;
     } else if (total.isEmpty) {
-      state = CarDetails2ValidationState(errorMessage: "⚠️ Total is required");
+      state = CarDetails2ValidationState(errorMessage: "⚠️ Certificate Charges is required");
+      return state.errorMessage;
+    } else if (totalValue.isEmpty) {
+      state = CarDetails2ValidationState(errorMessage: "⚠️ Total Value is required");
       return state.errorMessage;
     }
 

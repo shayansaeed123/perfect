@@ -15,6 +15,7 @@ class Invoice {
   final String plateNumber;
   final String engineNumber;
   final String total;
+  final String totalValue;
   final String color;
   final String? customerName;
   final String? address;
@@ -53,6 +54,7 @@ class Invoice {
     required this.plateNumber,
     required this.engineNumber,
     required this.total,
+    required this.totalValue,
     required this.color,
     this.customerName,
     this.address,
@@ -93,6 +95,7 @@ class Invoice {
       plateNumber: json['PlateNumber'] ?? '',
       engineNumber: json['EngineNumber'] ?? '',
       total: json['Total'] ?? '',
+      totalValue: json['TotalValue'] ?? '',
       color: json['Color'] ?? '',
       customerName: json['customer_name'],
       address: json['address'],
@@ -134,6 +137,7 @@ class Invoice {
       "PlateNumber": plateNumber,
       "EngineNumber": engineNumber,
       "Total": total,
+      "TotalValue": totalValue,
       "Color": color,
       "customer_name": customerName,
       "address": address,
