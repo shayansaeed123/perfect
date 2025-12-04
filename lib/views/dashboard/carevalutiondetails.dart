@@ -90,17 +90,6 @@ class Carevalutiondetails extends StatelessWidget {
                     SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
                     Expanded(
                       child: reusableBtn(context, 'Open Link', ()async{
-                        // final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
-                        //   if (await canLaunchUrl(url)) {
-                        //     await launchUrl(
-                        //       url,
-                        //       mode: LaunchMode.externalApplication, // opens Chrome / external browser
-                        //     );
-                        //   } else {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       const SnackBar(content: Text("Could not launch URL")),
-                        //     );
-                        //   }
                                                 final Uri url = Uri.parse(
                           "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl",
                         );
