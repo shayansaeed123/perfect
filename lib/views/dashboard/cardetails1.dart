@@ -50,6 +50,9 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
     final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     final form = ref.watch(carFormProvider);
     final editId = ref.watch(editInvoiceIdProvider);
+    if (form.odometerUnit != null && form.odometerUnit!.isNotEmpty) {
+      selectUnit = form.odometerUnit!;   // <-- API wali value set
+    }
     return 
     Stack(
       children: [
@@ -178,6 +181,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     setState(() {
                       selectUnit = value;
                     });
+                    ref.read(carFormProvider.notifier).updateOdometerUnit(value);
                   }
                   },),),
                   Expanded(child:  reusableRadioButton("Miles", "Miles", selectUnit, (value) {
@@ -185,6 +189,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     setState(() {
                       selectUnit = value;
                     });
+                    ref.read(carFormProvider.notifier).updateOdometerUnit(value);
                   }
                   },),),
                     ],

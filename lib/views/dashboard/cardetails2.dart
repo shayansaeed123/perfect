@@ -200,7 +200,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         fuelType: selectedfuel?.id,
                         transmission: selectTransmission?.id,
                         option: reusabletextfieldcontroller.option.text,
-                        carCondition: reusabletextfieldcontroller.evaluationNo.text,
+                        carCondition: reusabletextfieldcontroller.carCondition.text,
                         total: reusabletextfieldcontroller.total.text,
                         totalVAlue: reusabletextfieldcontroller.totalValue.text,
                         enterby: MySharedPrefrence().get_user_id(),

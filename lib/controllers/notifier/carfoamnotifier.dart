@@ -278,6 +278,10 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     state = state.copyWith(transmission: tranmission);
   }
 
+  void updateOdometerUnit(String odometer){
+    state = state.copyWith(odometerUnit: odometer);
+  }
+
 void prefillFromInvoice(Invoice inv) {
   // ---- Provider State Prefill (Dropdowns + Textfields) ----
   state = state.copyWith(
@@ -298,6 +302,7 @@ void prefillFromInvoice(Invoice inv) {
     vin: inv.vinNo,
     engineNo: inv.engineNumber,
     odometer: inv.odometer,
+    odometerUnit: inv.odometerUnit,
 
     bodyType: inv.type,
     color: inv.color,

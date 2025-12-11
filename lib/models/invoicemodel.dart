@@ -12,6 +12,7 @@ class Invoice {
   final String type;
   final String year;
   final String odometer;
+  final String odometerUnit;
   final String plateNumber;
   final String engineNumber;
   final String total;
@@ -51,6 +52,7 @@ class Invoice {
     required this.type,
     required this.year,
     required this.odometer,
+    required this.odometerUnit,
     required this.plateNumber,
     required this.engineNumber,
     required this.total,
@@ -92,6 +94,7 @@ class Invoice {
       type: json['type'] ?? '',
       year: json['Year'] ?? '',
       odometer: json['Odometer'] ?? '',
+      odometerUnit: json['OdometerUnit'] ?? '',
       plateNumber: json['PlateNumber'] ?? '',
       engineNumber: json['EngineNumber'] ?? '',
       total: json['Total'] ?? '',
@@ -134,6 +137,7 @@ class Invoice {
       "type": type,
       "Year": year,
       "Odometer": odometer,
+      "OdometerUnit": odometerUnit,
       "PlateNumber": plateNumber,
       "EngineNumber": engineNumber,
       "Total": total,

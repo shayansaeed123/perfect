@@ -169,6 +169,7 @@ final TextEditingController _title = TextEditingController();
     customerEmail.clear();
     total.clear();
     totalValue.clear();
+    carCondition.clear();
     
   }
 
