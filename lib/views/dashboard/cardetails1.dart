@@ -46,7 +46,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
         // 🔹 Stable params (no new Map every build)
     final yearsAsync = ref.watch(dropdownProvider(const DropdownParams("Year=1", "year_name")));
     final makeAsync = ref.watch(dropdownProvider(const DropdownParams("Make=1", "make_name")));
-    final trimAsync = ref.watch(dropdownProvider(const DropdownParams("trim=1", "trim_name")));
+    // final trimAsync = ref.watch(dropdownProvider(const DropdownParams("trim=1", "trim_name")));
     final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     final form = ref.watch(carFormProvider);
     final editId = ref.watch(editInvoiceIdProvider);
@@ -118,6 +118,40 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   loading: () => const CircularProgressIndicator(),
                   error: (err, _) => const CircularProgressIndicator(),
                   )],
+                  
+                  if(selectedModel != null)...[
+                    reusablaSizaBox(context, 0.03),
+                    ref.watch(trimProvider(selectedModel!.id)).when(
+                    data: (trimList){
+                      if (form.trim != null && form.trim!.isNotEmpty) {
+                    selectedModel ??= trimList.firstWhere(
+                      (m) => m.id == form.trim,
+                      orElse: () => DropdownItem(id: "", name: "Select Trim"),
+                      );
+                    }
+                    return reusableDropdown(trimList,selectedTrim,"Select Trim",(item) => item.name,(value) {
+                  setState(() => selectedTrim = value);
+                  ref.read(carFormProvider.notifier).updateTrim(value!.id);
+                  },enabled: editId == null);},
+                  loading: () => const CircularProgressIndicator(),
+                  error: (err, _) => const CircularProgressIndicator(),
+                  )],
+                  // trimAsync.when(
+                  //   data: (trim){
+                  //     if (form.trim != null && form.trim!.isNotEmpty) {
+                  //     selectedTrim = trim.firstWhere(
+                  //       (y) => y.id.toString() == form.trim.toString(),
+                  //       orElse: () => DropdownItem(id: "", name: "Select Trim"),
+                  //     );
+                  //   }
+                  //     return reusableDropdown(trim, selectedTrim, "Select Trim", (item) => item.name,(value) {
+                  //     setState(() => selectedTrim = value);
+                  //     ref.read(carFormProvider.notifier).updateTrim(value!.id);
+                  //     },enabled: editId == null);
+                  //   },
+                  //   loading: () => const CircularProgressIndicator(),
+                  //   error: (err, _) => const CircularProgressIndicator(),
+                  // ),
                   reusablaSizaBox(context, 0.03),
                   yearsAsync.when(
                     data: (year){
@@ -136,23 +170,6 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     error: (err, _) => const CircularProgressIndicator(),
                   ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
-                  trimAsync.when(
-                    data: (trim){
-                      if (form.trim != null && form.trim!.isNotEmpty) {
-                      selectedTrim = trim.firstWhere(
-                        (y) => y.id.toString() == form.trim.toString(),
-                        orElse: () => DropdownItem(id: "", name: "Select Trim"),
-                      );
-                    }
-                      return reusableDropdown(trim, selectedTrim, "Select Trim", (item) => item.name,(value) {
-                      setState(() => selectedTrim = value);
-                      ref.read(carFormProvider.notifier).updateTrim(value!.id);
-                      },enabled: editId == null);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
                   reusablaSizaBox(context, 0.03),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

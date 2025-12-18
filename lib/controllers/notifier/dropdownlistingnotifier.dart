@@ -55,3 +55,19 @@ final modelProvider = FutureProvider.family<List<DropdownItem>, String>((ref, ma
     throw Exception("Failed to load models");
   }
 });
+
+final trimProvider = FutureProvider.family<List<DropdownItem>, String>((ref, modelId) async {
+  final response = await http.get(
+    Uri.parse('${Utils.baseUrl}masterapi.php?model_id=$modelId'),
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    final rootKey = data.keys.first; // e.g. "Model"
+    final List items = data[rootKey];
+
+    return items.map((e) => DropdownItem.fromJson(e, "trim_name")).toList();
+  } else {
+    throw Exception("Failed to load models");
+  }
+});
