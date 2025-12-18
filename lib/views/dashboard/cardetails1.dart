@@ -87,7 +87,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       } else {
                         selectedMake = DropdownItem(id: "", name: "Select Make");
                       }
-                      return reusableDropdown(make, selectedMake, "Select Make", (item) => item.name,(value) {
+                      return reusableSearchableDropdown(make, selectedMake, "Select Make", (item) => item.name,(value) {
                       setState((){
                         setState(() {
                       selectedMake = value;
