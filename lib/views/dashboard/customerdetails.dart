@@ -60,11 +60,10 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
         Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  reusablaSizaBox(context, 0.02),
                   reusableText('Customer Details',color:colorController.textColorDark,fontsize: 18,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   banksAsync.when(
                     data: (banks){
                       if (form.bankName != null && form.bankName!.isNotEmpty) {
@@ -75,7 +74,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                       } else {
                         selectedBanks = DropdownItem(id: "", name: "Select Bank");
                       }
-                      return reusableDropdown(banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
+                      return reusableDropdown(context,banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
                       // setState(() => selectedBanks = value);
                       ref.read(carFormProvider.notifier).updateBank(value!.id);
                       },enabled: editId == null);
@@ -111,29 +110,44 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
 //   error: (err, _) => Text("Error loading banks"),
 // ),
 
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Custormer Email', colorController.textfieldColor, FocusNode(), (){}),
-                  reusablaSizaBox(context, 0.03),
-                  reusableDate(context, lastDate, selectedDate, (DateTime timeofday){
-                                      setState(() {
-                                                selectedDate = timeofday;
-                                                print('date $selectedDate');
-                                              });
-                                              ref.read(carFormProvider.notifier).updateDate(timeofday.toIso8601String());
-                                    }, Icon(Icons.calendar_month_outlined),'Inspection Date',
-                                    enabled: editId == null,),
+                  reusablaSizaBox(context, 0.015),
+                  // reusableDate(context, lastDate, selectedDate, (DateTime timeofday){
+                  //                     setState(() {
+                  //                               selectedDate = timeofday;
+                  //                               print('date $selectedDate');
+                  //                             });
+                  //                             ref.read(carFormProvider.notifier).updateDate(timeofday.toIso8601String());
+                  //                   }, Icon(Icons.calendar_month_outlined),'Inspection Date',
+                  //                   enabled: editId == null,),
+                  reusableDate(
+                    context,
+                    selectedDate,
+                    (DateTime date) {
+                      setState(() {
+                        selectedDate = date;
+                      });
+                      ref
+                          .read(carFormProvider.notifier)
+                          .updateDate(date.toIso8601String());
+                    },
+                    const Icon(Icons.calendar_month_outlined),
+                    'Inspection Date',
+                    enabled: editId == null,
+                  ),
                   // reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   // reusablaSizaBox(context, 0.03),
                   // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Evaluation No', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-                  reusablaSizaBox(context, 0.05),
+                  reusablaSizaBox(context, 0.02),
                   reusableBtn(context, 'Next', (){
                     final requestedFor =
                   reusabletextfieldcontroller.requested.text.trim();

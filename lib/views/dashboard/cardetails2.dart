@@ -62,10 +62,9 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.02,),
-                  reusablaSizaBox(context, 0.02),
                   reusableText('Car Details',color:colorController.textColorDark,fontsize: 18,),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   typeAsync.when(
                     data: (type){
                       if (form.bodyType != null && form.bodyType!.isNotEmpty) {
@@ -74,7 +73,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         orElse: () => DropdownItem(id: "", name: "Select Body Type"),
                       );
                       }
-                      return reusableDropdown(type, selectedType, "Select Body Type", (item) => item.name,(value) {
+                      return reusableDropdown(context,type, selectedType, "Select Body Type", (item) => item.name,(value) {
                       setState(() => selectedType = value);
                       ref.read(carFormProvider.notifier).updateBodytype(value!.id);
                       },);
@@ -84,7 +83,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   ),
                   // reusableTextField(context, reusabletextfieldcontroller.trim, 'Trim', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                    colorAsync.when(
                     data: (color){
                       if (form.color != null && form.color!.isNotEmpty) {
@@ -93,7 +92,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         orElse: () => DropdownItem(id: "", name: "Select Color"),
                       );
                       }
-                      return reusableDropdown(color, selectedColor, "Select Color", (item) => item.name,(value) {
+                      return reusableDropdown(context,color, selectedColor, "Select Color", (item) => item.name,(value) {
                       setState(() => selectedColor = value);
                        ref.read(carFormProvider.notifier).updateColor(value!.id);
                       },);
@@ -103,13 +102,13 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   ),
     
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.cylinders, 'No of Cylinders', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     MaxNumberInputFormatter(24),  // user cannot type more than 24
                   ],),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   //   children: [
@@ -128,7 +127,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         orElse: () => DropdownItem(id: "", name: "Select Fuel Type"),
                       );
                       }
-                      return reusableDropdown(fuel, selectedfuel, "Select Fuel Type", (item) => item.name,(value) {
+                      return reusableDropdown(context,fuel, selectedfuel, "Select Fuel Type", (item) => item.name,(value) {
                       setState(() => selectedfuel = value);
                       ref.read(carFormProvider.notifier).updateFuelType(value!.id);
                       },);
@@ -137,7 +136,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                     error: (err, _) => const CircularProgressIndicator(),
                   ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   transmissionAsync.when(
                     data: (transmission){
                       if (form.transmission != null && form.transmission!.isNotEmpty) {
@@ -146,7 +145,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         orElse: () => DropdownItem(id: "", name: "Select Transmission type"),
                       );
                       }
-                      return reusableDropdown(transmission, selectTransmission, "Select Transmission type", (item) => item.name,(value) {
+                      return reusableDropdown(context,transmission, selectTransmission, "Select Transmission type", (item) => item.name,(value) {
                       setState(() => selectTransmission = value);
                        ref.read(carFormProvider.notifier).updateTransmission(value!.id);
                       },);
@@ -154,18 +153,18 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
                   ),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.option, 'Second Color', colorController.textfieldColor, FocusNode(), (){}),
                   // reusableTextField(context, reusabletextfieldcontroller.tranmission, 'Trasmission Type', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.totalValue, 'Total Value', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
-                  reusablaSizaBox(context, 0.05),
+                  reusablaSizaBox(context, 0.02),
                    Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

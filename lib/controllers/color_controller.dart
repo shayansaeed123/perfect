@@ -11,6 +11,8 @@ class ColorController extends GetxController{
   Color btnColor = Color(0xFFf26927);
   Color btnTextColor = Color(0xFFf3bfa6);
   Color textColorDark = Color(0xFFf26927);
+  Color iconColor = Color(0xFFf26927);
+  Color mainColorWithOpacity = Color(0xFFf26927).withOpacity(0.12);
   Color textColorLight = Color(0xFFf3bfa6);
   Color progressbarColor = Color(0xFFD6D85D);
   Color whiteColor = Colors.white;

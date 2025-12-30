@@ -6,6 +6,7 @@ import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/dropdownmodel.dart';
 import 'package:project/repo/perfect_repo.dart';
+import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusablecard.dart';
 import 'package:project/reuse/reusabledropdown.dart';
@@ -86,8 +87,8 @@ class _HomeState extends ConsumerState<Home> {
                         Expanded(
                           child: statusAsync.when(
                           data: (status){
-                            return reusableDropdown(status, selectedStatus, "Status", (item) => item.name,(value) {
-                            // setState(() => selectedStatus = value);
+                            return reusableDropdown(context,status, selectedStatus, "Status", (item) => item.name,(value) {
+                            setState(() => selectedStatus = value);
                             ref.read(invoiceFilterProvider.notifier).state =
               ref.read(invoiceFilterProvider).copyWith(actionStatus: value?.id ?? "");
                             },);
@@ -176,43 +177,53 @@ class _HomeState extends ConsumerState<Home> {
                                     final invoice = invoices[index];
                                     return Padding(
                                       padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.01,),
-                                      child: reusableCard(
-                                      context, 
-                                      invoice.applicationNo, 
-                                      invoice.invoiceDate, 
-                                      invoice.requestedFor ?? '',
-                                      invoice.address ?? '',
-                                      invoice.model, 
-                                      invoice.year, 
-                                      (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          return Invoicedetails(
-                                            address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
-                                            carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
-                                            customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
-                                            engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
-                                            odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
-                                            requestfor: invoice.requestedFor??'', specification: invoice.specification, 
-                                            total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
-                                            trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
-                                            totalValue: invoice.totalValue,);
-                                        },));
-                                      },
-                                      (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(
-                                          applicationNo: invoice.applicationNo, 
-                                          bank: invoice.bankName ?? '', 
-                                          statusName: invoice.status_name ?? '', 
-                                          customerName: invoice.customerName ?? '', 
-                                          make: invoice.make, 
-                                          model: invoice.model, 
-                                          year: invoice.year, 
-                                          total: invoice.total, 
-                                          paymentUrl: invoice.code,
-                                          totalValue: invoice.totalValue,
-                                          ),));
-                                      }
-                                      ),
+                                      child: VehicleListCard(
+                                        context, 
+                                        "${Utils.baseUrlImages+invoice.makeImage}", 
+                                        "${invoice.year}"+ " ${invoice.make}"+ " ${invoice.model}", 
+                                        invoice.customerName ?? '', 
+                                        invoice.invoiceDate, 
+                                        invoice.engineNumber,
+                                         (){
+
+                                         })
+                                      // reusableCard(
+                                      // context, 
+                                      // invoice.applicationNo, 
+                                      // invoice.invoiceDate, 
+                                      // invoice.requestedFor ?? '',
+                                      // invoice.address ?? '',
+                                      // invoice.model, 
+                                      // invoice.year, 
+                                      // (){
+                                      //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      //     return Invoicedetails(
+                                      //       address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
+                                      //       carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
+                                      //       customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
+                                      //       engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
+                                      //       odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
+                                      //       requestfor: invoice.requestedFor??'', specification: invoice.specification, 
+                                      //       total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
+                                      //       trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
+                                      //       totalValue: invoice.totalValue,);
+                                      //   },));
+                                      // },
+                                      // (){
+                                      //   Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(
+                                      //     applicationNo: invoice.applicationNo, 
+                                      //     bank: invoice.bankName ?? '', 
+                                      //     statusName: invoice.status_name ?? '', 
+                                      //     customerName: invoice.customerName ?? '', 
+                                      //     make: invoice.make, 
+                                      //     model: invoice.model, 
+                                      //     year: invoice.year, 
+                                      //     total: invoice.total, 
+                                      //     paymentUrl: invoice.code,
+                                      //     totalValue: invoice.totalValue,
+                                      //     ),));
+                                      // }
+                                      // ),
                                       );
                                   },
                                   childCount: invoices.length,

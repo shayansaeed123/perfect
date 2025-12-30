@@ -8,6 +8,7 @@ class Invoice {
   final String fuel;
   final String? requestedFor;
   final String make;
+  final String makeImage;
   final String model;
   final String type;
   final String year;
@@ -48,6 +49,7 @@ class Invoice {
     required this.fuel,
     this.requestedFor,
     required this.make,
+    required this.makeImage,
     required this.model,
     required this.type,
     required this.year,
@@ -90,6 +92,7 @@ class Invoice {
       fuel: json['fuel'] ?? '',
       requestedFor: json['requested_for'],
       make: json['Make'] ?? '',
+      makeImage: json['Make_image'] ?? '',
       model: json['Model'] ?? '',
       type: json['type'] ?? '',
       year: json['Year'] ?? '',
@@ -133,6 +136,7 @@ class Invoice {
       "fuel": fuel,
       "requested_for": requestedFor,
       "Make": make,
+      "Make_image": make,
       "Model": model,
       "type": type,
       "Year": year,

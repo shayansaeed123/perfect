@@ -46,6 +46,7 @@ dependencies:
   google_mlkit_text_recognition: 
   image_picker: 
   image_cropper:  
+  crop_your_image: ^0.7.3
   dotted_border:
   flutter_image_compress: 
   provider: 
@@ -56,6 +57,8 @@ dependencies:
   connectivity_plus: 
   url_launcher: 
   dropdown_search: ^5.0.6
+  device_preview: 
+  modal_bottom_sheet: 
 
 dev_dependencies:
   flutter_test:

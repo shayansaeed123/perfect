@@ -8,40 +8,39 @@ import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 
-reusableimagewidget(BuildContext context,String add2,String add3,String title2,String image2, String image3,Function ontap2,Function ontap3, String imgCondition){
+reusableimagewidget(BuildContext context,String add2,String add3,String image2, String image3,Function ontap2,Function ontap3, String imgCondition){
   return  
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        reusableText(title2, fontsize: 20,color: colorController.blackColor,fontweight: FontWeight.bold),
-        reusablaSizaBox(context, .030),
+        reusablaSizaBox(context, .015),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
               children: [
                 DottedBorder(
                   color: colorController.blackColor,
-                    strokeWidth: 2,
-                    dashPattern: [6, 3],
+                    strokeWidth: 1,
+                    dashPattern: [4, 2],
                     radius: Radius.circular(15),
-                    child:  reusableSelectImage(context, (){ontap2();}, image2,imgCondition)
+                    child:  reusableSelectImage(context, (){ontap2();}, image2,imgCondition,isSmall: true,)
                 ),
                 reusablaSizaBox(context, .010),
-                reusableText(add2, color: colorController.btnColor,fontsize: 15),
+                reusableText(add2, color: colorController.btnColor,fontsize: 12.5),
               ],
             ),
             Column(
               children: [
                 DottedBorder(
                   color: colorController.blackColor,
-                    strokeWidth: 2,
-                    dashPattern: [6, 3],
+                    strokeWidth: 1,
+                    dashPattern: [4, 2],
                     radius: Radius.circular(15),
-                    child:  reusableSelectImage(context, (){ontap3();}, image3,imgCondition)
+                    child:  reusableSelectImage(context, (){ontap3();}, image3,imgCondition,isSmall: true,)
                 ),
                 reusablaSizaBox(context, .010),
-                reusableText(add3, color: colorController.btnColor,fontsize: 15),
+                reusableText(add3, color: colorController.btnColor,fontsize: 12.5),
               ],
             ),
           ],
@@ -51,12 +50,16 @@ reusableimagewidget(BuildContext context,String add2,String add3,String title2,S
   // );
 }
 
-reusableSelectImage(BuildContext context,Function ontap,String image,String imgCondition){
+reusableSelectImage(BuildContext context,Function ontap,String image,String imgCondition,{
+  bool isSmall = false,
+}) {
+  final double size = MediaQuery.of(context).size.width *
+      (isSmall ? 0.30 : 0.40);
   return InkWell(
             onTap: (){ontap();},
             child: Container(
-              width: MediaQuery.of(context).size.width * .43,
-              height: MediaQuery.of(context).size.height * .18,
+              width: size,
+              height: size,
               decoration: BoxDecoration(
                 color: colorController.whiteColor,
                 borderRadius: BorderRadius.circular(10),

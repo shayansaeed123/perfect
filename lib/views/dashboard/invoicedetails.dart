@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/database/my_shared.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/views/dashboard/addCars.dart';
@@ -126,7 +127,8 @@ class Invoicedetails extends StatelessWidget {
                   reusablaSizaBox(context, 0.015),
                   reusableText('Total Value: $totalValue',color: colorController.textColorLight,fontweight: FontWeight.bold),
                   reusablaSizaBox(context, 0.015),
-                  reusableBtn(context, 'Edit', (){
+                  if(MySharedPrefrence().get_designation_id() == '12')...[
+                     reusableBtn(context, 'Edit', (){
                       Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -134,6 +136,7 @@ class Invoicedetails extends StatelessWidget {
                       ),
                     );
                   },width: 0.8),
+                  ],
                   reusablaSizaBox(context, 0.02),
                 ],
               ),

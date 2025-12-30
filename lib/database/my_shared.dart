@@ -34,6 +34,14 @@ class MySharedPrefrence {
     _box.write('user_id', userId);
   }
 
+  String get_designation_id() {
+    return _box.read<String>('designation_id') ?? '';
+  }
+
+  void set_designation_id(String designationId) {
+    _box.write('designation_id', designationId);
+  }
+
   String get_hospital_id() {
     return _box.read<String>('hospital_id') ?? '';
   }

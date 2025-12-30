@@ -53,99 +53,101 @@ class Carevalutiondetails extends StatelessWidget {
         ),
         body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Card(
-          elevation: 3,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                ReadOnlyField("Evaluation No:", applicationNo),
-                ReadOnlyField("Bank:", bank),
-                ReadOnlyField(
-                  "Payment Status:",
-                  statusName,
-                  backgroundColor: statusName == "Paid" ? colorController.appliedTextColor : Colors.redAccent.withOpacity(0.5),
-                  textColor: statusName == "Paid" ? colorController.whiteColor : Colors.red[900],
-                ),
-                ReadOnlyField("Customer Name:", customerName),
-                ReadOnlyField("Make:", make),
-                ReadOnlyField("Model:", model),
-                ReadOnlyField("Year:", year),
-                ReadOnlyField("Certificate Charges:", total),
-                ReadOnlyField("Total Value:", totalValue),
-                ReadOnlyField("Payment Url:", "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: reusableBtn(context, 'Copy Link', (){
-                        Clipboard.setData(ClipboardData(text: "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Link copied to clipboard")),
+        child: SingleChildScrollView(
+          child: Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  ReadOnlyField("Evaluation No:", applicationNo),
+                  ReadOnlyField("Bank:", bank),
+                  ReadOnlyField(
+                    "Payment Status:",
+                    statusName,
+                    backgroundColor: statusName == "Paid" ? colorController.appliedTextColor : Colors.redAccent.withOpacity(0.5),
+                    textColor: statusName == "Paid" ? colorController.whiteColor : Colors.red[900],
+                  ),
+                  ReadOnlyField("Customer Name:", customerName),
+                  ReadOnlyField("Make:", make),
+                  ReadOnlyField("Model:", model),
+                  ReadOnlyField("Year:", year),
+                  ReadOnlyField("Certificate Charges:", total),
+                  ReadOnlyField("Total Value:", totalValue),
+                  ReadOnlyField("Payment Url:", "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: reusableBtn(context, 'Copy Link', (){
+                          Clipboard.setData(ClipboardData(text: "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Link copied to clipboard")),
+                            );
+                        }),
+                      ),
+                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+                      Expanded(
+                        child: reusableBtn(context, 'Open Link', ()async{
+                                                  final Uri url = Uri.parse(
+                            "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl",
                           );
-                      }),
-                    ),
-                    SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-                    Expanded(
-                      child: reusableBtn(context, 'Open Link', ()async{
-                                                final Uri url = Uri.parse(
-                          "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl",
-                        );
-
-                        bool launched = await launchUrl(
-                          url,
-                          mode: LaunchMode.externalApplication,
-                        );
-
-                        if (!launched) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Could not launch URL")),
+          
+                          bool launched = await launchUrl(
+                            url,
+                            mode: LaunchMode.externalApplication,
                           );
-                        }
-                      }),
-                    ),
-//                     ElevatedButton(
-//                       style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-//                       onPressed: () {
-//                         Clipboard.setData(ClipboardData(text: "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"));
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           const SnackBar(content: Text("Link copied to clipboard")),
-//                         );
-//                       },
-//                       child: const Text("Copy Link"),
-//                     ),
-//                     ElevatedButton(
-//                       style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
-//                       onPressed: () async {
-//                         // final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
-//                         // if (await canLaunchUrl(url)) {
-//                         //   await launchUrl(url, mode: LaunchMode.externalApplication);
-//                         // } else {
-//                         //   ScaffoldMessenger.of(context).showSnackBar(
-//                         //     const SnackBar(content: Text("Could not launch URL")),
-//                         //   );
-//                         // }
-// final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
-
-// if (await canLaunchUrl(url)) {
-//   await launchUrl(
-//     url,
-//     mode: LaunchMode.externalApplication, // opens Chrome / external browser
-//   );
-// } else {
-//   ScaffoldMessenger.of(context).showSnackBar(
-//     const SnackBar(content: Text("Could not launch URL")),
-//   );
-// }
-
-//                       },
-//                       child: const Text("Open Click"),
-//                     ),
-                  ],
-                )
-              ],
+          
+                          if (!launched) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Could not launch URL")),
+                            );
+                          }
+                        }),
+                      ),
+          //                     ElevatedButton(
+          //                       style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+          //                       onPressed: () {
+          //                         Clipboard.setData(ClipboardData(text: "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"));
+          //                         ScaffoldMessenger.of(context).showSnackBar(
+          //                           const SnackBar(content: Text("Link copied to clipboard")),
+          //                         );
+          //                       },
+          //                       child: const Text("Copy Link"),
+          //                     ),
+          //                     ElevatedButton(
+          //                       style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
+          //                       onPressed: () async {
+          //                         // final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
+          //                         // if (await canLaunchUrl(url)) {
+          //                         //   await launchUrl(url, mode: LaunchMode.externalApplication);
+          //                         // } else {
+          //                         //   ScaffoldMessenger.of(context).showSnackBar(
+          //                         //     const SnackBar(content: Text("Could not launch URL")),
+          //                         //   );
+          //                         // }
+          // final url = Uri.parse("https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl");
+          
+          // if (await canLaunchUrl(url)) {
+          //   await launchUrl(
+          //     url,
+          //     mode: LaunchMode.externalApplication, // opens Chrome / external browser
+          //   );
+          // } else {
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     const SnackBar(content: Text("Could not launch URL")),
+          //   );
+          // }
+          
+          //                       },
+          //                       child: const Text("Open Click"),
+          //                     ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

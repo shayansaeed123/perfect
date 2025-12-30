@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,7 +8,16 @@ import 'package:project/views/splash.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init('values'); // 👈 ye zaroori hai
-  runApp(ProviderScope(child: MyApp()));
+  runApp(
+    ProviderScope(child: 
+  //   DevicePreview(
+  //    enabled: true,
+  //    builder: (context) => 
+  //   MyApp(), // Wrap your app
+  //  ),
+    MyApp()
+    )
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,8 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
+    return MaterialApp(
         
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -25,7 +34,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: Splash(),
-      ),
     );
   }
 }

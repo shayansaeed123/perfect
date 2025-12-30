@@ -4,6 +4,8 @@ import 'package:project/database/my_shared.dart';
 import 'package:project/models/logincheck.dart';
 import 'package:project/repo/perfect_repo.dart';
 
+// ---------------- Providers ----------------
+final bottomNavProvider = StateProvider<int>((ref) => 0);
 final authServiceProvider = Provider<PerfectRepo>((ref) => PerfectRepo());
 final sharedPrefProvider = Provider<MySharedPrefrence>((ref) => MySharedPrefrence());
 
@@ -48,6 +50,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         // save in storage
         _pref.setUserLoginStatus(true);
         _pref.set_user_id(userId);
+        _pref.set_designation_id(result["designation_id"]);
 
         state = state.copyWith(
           isLoading: false,

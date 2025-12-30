@@ -3,10 +3,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
+import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/notifier/loginnotifier.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/views/accounts/login.dart';
+
+
+
 
 class Profile extends ConsumerStatefulWidget {
   const Profile({super.key});
@@ -42,8 +48,21 @@ class _ProfileState extends ConsumerState<Profile> {
               children: [
                 Image.asset('assets/images/logo.png'),
                 Center(
-                  child: reusableBtn(context, 'Logout', (){
+                  child: reusableBtn(context, 'Logout', ()async{
                     ref.read(authProvider.notifier).logout();
+
+                    // 2️⃣ Reset bottom nav (Home pe lao)
+                    ref.invalidate(bottomNavProvider);
+
+                    // 3️⃣ Clear invoice related providers
+                    ref.invalidate(invoiceStreamProvider);
+                    ref.invalidate(invoiceFilterProvider);
+
+                    // 4️⃣ Agar dropdown providers hain
+                    ref.invalidate(dropdownProvider);
+
+                    // 5️⃣ Storage clear (optional but recommended)
+                    await GetStorage('values').erase();
                     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_) => const Login()),
                     (route) => false,);
                   },width: 0.8),

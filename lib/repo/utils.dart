@@ -7,6 +7,7 @@ import 'package:project/reuse/reusabletext.dart';
 
 class Utils {
   static const String baseUrl = 'https://car.greenzoneliving.org/API/';
+  static const String baseUrlImages = 'https://car.greenzoneliving.org/';
   static const String imageUrl = 'https://car.greenzoneliving.org/API/uploads/api_image_image/';
   static String imageUploadUrl = "${baseUrl}image.php";
   static String formSubmitUrl = "${baseUrl}form_submit.php";

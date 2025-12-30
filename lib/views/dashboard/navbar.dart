@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
+import 'package:project/controllers/notifier/loginnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/views/dashboard/addCars.dart';
 import 'package:project/views/dashboard/home.dart';
@@ -13,8 +14,7 @@ import 'package:project/views/dashboard/profile.dart';
 
 
 
-// ---------------- Providers ----------------
-final bottomNavProvider = StateProvider<int>((ref) => 0);
+
 
 class NavBar extends ConsumerWidget {
   const NavBar({super.key});
