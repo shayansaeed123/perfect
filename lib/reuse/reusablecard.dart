@@ -77,16 +77,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/reuse/reusablebtn.dart';
+import 'package:project/reuse/reusabletext.dart';
 
 Widget VehicleListCard(BuildContext context,String brandLogo,String carName,String ownerName,String dateTime,String status,VoidCallback onTap){
   return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: colorController.whiteColor,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -99,8 +100,8 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
           children: [
             /// LEFT - BRAND LOGO
             Container(
-              height: 48,
-              width: 48,
+              // height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.2,
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
@@ -112,35 +113,30 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
               ),
             ),
 
-            const SizedBox(width: 12),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.03),
 
             /// CENTER - DETAILS
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  reusableText(
+                    color: colorController.blackColor,
+                    fontsize: 16,
                     carName,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    fontweight: FontWeight.w600
                   ),
-                  const SizedBox(height: 2),
-                  Text(
+                  reusablaSizaBox(context, 0.005),
+                  reusableText(
+                    color: colorController.lightblackColor,
+                    fontsize: 12.5,
                     ownerName,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.grey.shade700,
-                    ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
+                  reusablaSizaBox(context, 0.005),
+                  reusableText(
+                    color: colorController.lightblackColor,
+                    fontsize: 12.5,
                     dateTime,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade500,
-                    ),
                   ),
                 ],
               ),
