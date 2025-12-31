@@ -141,6 +141,9 @@ final TextEditingController _title = TextEditingController();
   final TextEditingController _wallet = TextEditingController();
   TextEditingController get wallet => _wallet;
 
+  final TextEditingController _bankRef = TextEditingController();
+  TextEditingController get bankRef => _bankRef;
+
   final TextEditingController _customerEmail = TextEditingController();
   TextEditingController get customerEmail => _customerEmail;
 

@@ -155,7 +155,8 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
                   ),
-                  reusablaSizaBox(context, 0.015),
+                  if(selectedBanks != null)...[
+                    reusablaSizaBox(context, 0.015),
                   ref.watch(bankEmailProvider(selectedBanks!.id)).when(
                     data: (emailList) {
                     if (form.requestedFor != null && form.requestedFor!.isNotEmpty) {
@@ -171,6 +172,9 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                   loading: () => const CircularProgressIndicator(),
                   error: (err, _) => const CircularProgressIndicator(),
                   ),
+                  ],
+                  reusablaSizaBox(context, 0.015),
+                  reusableTextField(context, reusabletextfieldcontroller.bankRef, 'Bank Reference', colorController.textfieldColor, FocusNode(), (){}),
                   reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
                   // reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
@@ -218,6 +222,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     address: address,
                     customerEmail: customerEmail,
                     total: reusabletextfieldcontroller.total.text,
+                    bankRef: reusabletextfieldcontroller.bankRef.text,
                     // evaluationNo: evaluationNo,
                   );
         

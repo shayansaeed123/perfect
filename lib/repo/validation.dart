@@ -107,7 +107,7 @@ class CarDetails1ValidationNotifier
     } else if (engineNo.isEmpty) {
       state = CarDetails1ValidationState(errorMessage: "⚠️ Engine No is required");
       return state.errorMessage;
-    }
+    } 
 
     state = CarDetails1ValidationState(errorMessage: null);
     return null;
