@@ -100,7 +100,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       } else {
                         selectedMake = DropdownItem(id: "", name: "Select Make");
                       }
-                      return reusableSearchableDropdown(make, selectedMake, "Select Make", (item) => item.name,(value) {
+                      return reusableDropdown(context, make, selectedMake, "Select Make", (item) => item.name,(value) {
                       setState((){
                         setState(() {
                       selectedMake = value;
@@ -137,7 +137,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                     ref.watch(trimProvider(selectedModel!.id)).when(
                     data: (trimList){
                       if (form.trim != null && form.trim!.isNotEmpty) {
-                    selectedModel ??= trimList.firstWhere(
+                    selectedTrim ??= trimList.firstWhere(
                       (m) => m.id == form.trim,
                       orElse: () => DropdownItem(id: "", name: "Select Trim"),
                       );
@@ -349,6 +349,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                 },width: 0.4),
               ],
             ),
+            reusablaSizaBox(context, 0.02),
                 ],
               ),
       ],

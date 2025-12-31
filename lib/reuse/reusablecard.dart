@@ -146,19 +146,12 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Icon(
-                  Icons.verified,
-                  color: Colors.green,
-                  size: 20,
-                ),
+                reusableText(status,color: colorController.lightblackColor,fontsize: 12),
                 const SizedBox(height: 4),
-                Text(
-                  status,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.green,
-                    fontWeight: FontWeight.w600,
-                  ),
+                Icon(
+                  Icons.handshake,
+                  color: colorController.grayTextColor,
+                  size: 20,
                 ),
               ],
             ),

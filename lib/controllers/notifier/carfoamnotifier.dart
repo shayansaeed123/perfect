@@ -29,7 +29,8 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     String? customerName,
     String? inspectionDate,
     String? address,
-    String? customerEmail
+    String? customerEmail,
+    String? total,
     // String? evaluationNo,
   }) {
     state = state.copyWith(
@@ -39,6 +40,7 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
       inspectionDate: inspectionDate,
       address: address,
       customerEmail: customerEmail,
+      total: total,
       // evaluationNo: evaluationNo,
     );
   }
@@ -82,7 +84,6 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
     String? transmission,
     String? option,
     String? carCondition,
-    String? total,
     String? totalVAlue,
     String? enterby,
   }) {
@@ -94,7 +95,6 @@ class CarFormNotifier extends StateNotifier<CarFormData> {
       transmission: transmission,
       option: option,
       carCondition: carCondition,
-      total: total,
       totalValue: totalVAlue,
       enterby: enterby,
     );

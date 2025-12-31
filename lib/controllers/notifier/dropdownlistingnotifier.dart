@@ -71,3 +71,19 @@ final trimProvider = FutureProvider.family<List<DropdownItem>, String>((ref, mod
     throw Exception("Failed to load models");
   }
 });
+
+final bankEmailProvider = FutureProvider.family<List<DropdownItem>, String>((ref, bankID) async {
+  final response = await http.get(
+    Uri.parse('${Utils.baseUrl}masterapi.php?Bankid=$bankID&Bankemail=1'),
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    final rootKey = data.keys.first; // e.g. "Model"
+    final List items = data[rootKey];
+
+    return items.map((e) => DropdownItem.fromJson(e, "email")).toList();
+  } else {
+    throw Exception("Failed to load models");
+  }
+});

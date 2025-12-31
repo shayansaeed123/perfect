@@ -161,8 +161,6 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
-                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.totalValue, 'Total Value', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
                   reusablaSizaBox(context, 0.02),
                    Row(
@@ -182,7 +180,6 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         transmission: selectTransmission?.id,
                         option: reusabletextfieldcontroller.option.text.trim(),
                         carCondition: reusabletextfieldcontroller.carCondition.text.trim(),
-                        total: reusabletextfieldcontroller.total.text.trim(),
                         totalValue: reusabletextfieldcontroller.totalValue.text.trim(),
                       );
         
@@ -200,7 +197,6 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         transmission: selectTransmission?.id,
                         option: reusabletextfieldcontroller.option.text,
                         carCondition: reusabletextfieldcontroller.carCondition.text,
-                        total: reusabletextfieldcontroller.total.text,
                         totalVAlue: reusabletextfieldcontroller.totalValue.text,
                         enterby: MySharedPrefrence().get_user_id(),
                       );
@@ -221,6 +217,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                 },width: 0.4),
               ],
             ),
+            reusablaSizaBox(context, 0.02),
                 ],
               ),
       ],

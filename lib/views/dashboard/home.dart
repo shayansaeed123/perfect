@@ -183,9 +183,20 @@ class _HomeState extends ConsumerState<Home> {
                                         "${invoice.year}"+ " ${invoice.make}"+ " ${invoice.model}", 
                                         invoice.customerName ?? '', 
                                         invoice.invoiceDate, 
-                                        invoice.engineNumber,
+                                        invoice.status_name ?? '',
                                          (){
-
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                          return Invoicedetails(
+                                            address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
+                                            carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
+                                            customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
+                                            engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
+                                            odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
+                                            requestfor: invoice.requestedFor??'', specification: invoice.specification, 
+                                            total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make, makeImage: invoice.makeImage,
+                                            trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
+                                            totalValue: invoice.totalValue,bankName: invoice.bankName ?? '',status_name: invoice.status_name ?? '',code: invoice.code,);
+                                        },));
                                          })
                                       // reusableCard(
                                       // context, 

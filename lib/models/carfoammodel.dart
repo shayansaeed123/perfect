@@ -10,6 +10,7 @@ class CarFormData {
   // String? evaluationNo;
   String? bankName;
   String? customerEmail;
+  String? total;
 
   // Car Details 1
   String? make;
@@ -34,7 +35,6 @@ class CarFormData {
   String? transmission;
   String? option;
   String? carCondition;
-  String? total;
   String? totalValue;
   String? enterby;
 

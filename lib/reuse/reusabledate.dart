@@ -111,7 +111,8 @@ Widget reusableDate(
 
   final controller = TextEditingController(
     text: selectedTime == null
-        ? DateFormat('yyyy-MM-dd').format(today)
+        // ? DateFormat('yyyy-MM-dd').format(today)
+        ? ''
         : DateFormat('yyyy-MM-dd').format(selectedTime),
   );
 
@@ -120,7 +121,7 @@ Widget reusableDate(
         ? () async {
             final DateTime? picked = await showDatePicker(
               context: context,
-              initialDate: today,
+              initialDate: selectedTime ?? today,
               firstDate: today,
               lastDate: today, // 👈 ONLY TODAY
               builder: (BuildContext context, Widget? child) {

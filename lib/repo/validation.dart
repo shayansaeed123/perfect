@@ -11,34 +11,38 @@ class CustomerValidationNotifier extends StateNotifier<CustomerValidationState> 
   CustomerValidationNotifier() : super(CustomerValidationState());
 
   String? validate({
-    required String requestedFor,
+    required String? requestedFor,
     required String? bankName,
     required String customerName,
     required String inspectionDate,
     required String address,
-    required String customerEmail
+    required String customerEmail,
+    required String total,
     // required String evaluationNo,
   }) {
-    if (requestedFor.isEmpty) {
-      state = CustomerValidationState(errorMessage: "⚠️ bank person email is requried");
+    if (customerName.isEmpty) {
+      state = CustomerValidationState(errorMessage: "⚠️ Customer Name is required");
+      return state.errorMessage;
+    } else if (customerEmail.isEmpty){
+      state = CustomerValidationState(errorMessage: "Customer Email is requried");
+      return state.errorMessage;
+    } else if (inspectionDate.isEmpty) {
+      state = CustomerValidationState(errorMessage: "⚠️ Inspection Date is required");
+      return state.errorMessage;
+    } else if (address.isEmpty) {
+      state = CustomerValidationState(errorMessage: "⚠️ Address is required");
       return state.errorMessage;
     } else if (bankName == null || bankName.isEmpty) {
       state = CustomerValidationState(errorMessage: "⚠️ Bank Name is required");
       return state.errorMessage;
-    } else if (customerName.isEmpty) {
-      state = CustomerValidationState(errorMessage: "⚠️ Customer Name is required");
+    } else if (requestedFor == null || requestedFor.isEmpty) {
+      state = CustomerValidationState(errorMessage: "⚠️ bank person email is requried");
       return state.errorMessage;
-    } 
-    else if (inspectionDate.isEmpty) {
-      state = CustomerValidationState(errorMessage: "⚠️ Inspection Date is required");
+    } else if (total.isEmpty) {
+      state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges is required");
       return state.errorMessage;
-    } 
-    else if (address.isEmpty) {
-      state = CustomerValidationState(errorMessage: "⚠️ Address is required");
-      return state.errorMessage;
-    } else if (customerEmail.isEmpty){
-      state = CustomerValidationState(errorMessage: "Customer Email is requried");
     }
+     
     // else if (evaluationNo.isEmpty) {
     //   state = CustomerValidationState(errorMessage: "⚠️ Evaluation No is required");
     //   return state.errorMessage;
@@ -135,7 +139,6 @@ class CarDetails2ValidationNotifier
     required String? transmission,
     required String option,
     required String carCondition,
-    required String total,
     required String totalValue,
   }) {
       if (bodyType == null || bodyType.isEmpty) {
@@ -158,9 +161,6 @@ class CarDetails2ValidationNotifier
       return state.errorMessage;
     }  else if (carCondition.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Car Condition is required");
-      return state.errorMessage;
-    } else if (total.isEmpty) {
-      state = CarDetails2ValidationState(errorMessage: "⚠️ Certificate Charges is required");
       return state.errorMessage;
     } else if (totalValue.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Total Value is required");

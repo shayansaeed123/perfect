@@ -29,6 +29,14 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
   DateTime? selectedDate;
   late DateTime lastDate = DateTime(1970, 1, 1);
   DropdownItem? selectedBanks;
+  DropdownItem? selectedEmail;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedDate = DateTime.now();
+  }
 
 
   @override
@@ -61,27 +69,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   reusableText('Customer Details',color:colorController.textColorDark,fontsize: 18,),
-                  reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
-                  reusablaSizaBox(context, 0.015),
-                  banksAsync.when(
-                    data: (banks){
-                      if (form.bankName != null && form.bankName!.isNotEmpty) {
-                        selectedBanks = banks.firstWhere(
-                          (b) => b.id.toString() == form.bankName.toString(),
-                          orElse: () => DropdownItem(id: "", name: "Select Bank"),
-                        );
-                      } else {
-                        selectedBanks = DropdownItem(id: "", name: "Select Bank");
-                      }
-                      return reusableDropdown(context,banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
-                      // setState(() => selectedBanks = value);
-                      ref.read(carFormProvider.notifier).updateBank(value!.id);
-                      },enabled: editId == null);
-                    },
-                    loading: () => const CircularProgressIndicator(),
-                    error: (err, _) => const CircularProgressIndicator(),
-                  ),
+                  
 //                    banksAsync.when(
 //   data: (banks) {
 //     DropdownItem? selectedBank;
@@ -131,6 +119,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                       setState(() {
                         selectedDate = date;
                       });
+                      print(selectedDate);
                       ref
                           .read(carFormProvider.notifier)
                           .updateDate(date.toIso8601String());
@@ -139,10 +128,52 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     'Inspection Date',
                     enabled: editId == null,
                   ),
+                  reusablaSizaBox(context, 0.015),
+                  reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
+                  reusablaSizaBox(context, 0.015),
+                  reusableText('Bank Details',color:colorController.textColorDark,fontsize: 18,),
                   // reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
+                  banksAsync.when(
+                    data: (banks){
+                      if (form.bankName != null && form.bankName!.isNotEmpty) {
+                        selectedBanks = banks.firstWhere(
+                          (b) => b.id.toString() == form.bankName.toString(),
+                          orElse: () => DropdownItem(id: "", name: "Select Bank"),
+                        );
+                      } else {
+                        selectedBanks = DropdownItem(id: "", name: "Select Bank");
+                      }
+                      return reusableDropdown(context,banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
+                      setState(() {
+                        selectedBanks = value;
+                      selectedEmail = null;});
+                      ref.read(carFormProvider.notifier).updateBank(value!.id);
+                      },enabled: editId == null);
+                    },
+                    loading: () => const CircularProgressIndicator(),
+                    error: (err, _) => const CircularProgressIndicator(),
+                  ),
+                  reusablaSizaBox(context, 0.015),
+                  ref.watch(bankEmailProvider(selectedBanks!.id)).when(
+                    data: (emailList) {
+                    if (form.requestedFor != null && form.requestedFor!.isNotEmpty) {
+                    selectedEmail ??= emailList.firstWhere(
+                      (m) => m.id == form.requestedFor,
+                      orElse: () => DropdownItem(id: "", name: "Select Rep Bank Email"),
+                    );
+                  }
+                  return reusableDropdown(context,emailList,selectedEmail,"Select Rep Bank Email",(item) => item.name,(value) {
+                  setState(() => selectedEmail = value);
+                  ref.read(carFormProvider.notifier).updateModel(value!.id);
+                  },enabled: editId == null);},
+                  loading: () => const CircularProgressIndicator(),
+                  error: (err, _) => const CircularProgressIndicator(),
+                  ),
+                  reusablaSizaBox(context, 0.015),
+                  reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
+                  // reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   // reusablaSizaBox(context, 0.03),
                   // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Evaluation No', colorController.textfieldColor, FocusNode(), (){}),
@@ -164,12 +195,13 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               final error = ref
                   .read(customerValidationProvider.notifier)
                   .validate(
-                    requestedFor: requestedFor,
+                    requestedFor: selectedEmail?.id,
                     bankName: selectedBanks?.id,
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,
                     address: address,
                     customerEmail: customerEmail,
+                    total: reusabletextfieldcontroller.total.text.trim(),
                     // evaluationNo: evaluationNo,
                   );
         
@@ -179,12 +211,13 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               }
               // ✅ Save in provider only if valid
               ref.read(carFormProvider.notifier).updateCustomerDetails(
-                    requestedFor: requestedFor,
+                    requestedFor: selectedEmail?.id,
                     bankName: selectedBanks?.id,
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,
                     address: address,
                     customerEmail: customerEmail,
+                    total: reusabletextfieldcontroller.total.text,
                     // evaluationNo: evaluationNo,
                   );
         
