@@ -174,7 +174,7 @@ class CarFormData {
     "customer_email": customerEmail ?? "",
     "Invoice_Date": inspectionDate ?? "",
     "address": address ?? "",
-    "bank_Reference": bankRef ?? " ",
+    "bank_Reference": bankRef ?? "",
     // "ApplicationNo": evaluationNo ?? "",
     "Make": make ?? "",
     "Model": model ?? "",

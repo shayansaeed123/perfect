@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
@@ -82,7 +83,7 @@ class Carevalutiondetails extends StatelessWidget {
                     children: [
                       Expanded(
                         child: reusableBtn(context, 'Copy Link', (){
-                          Clipboard.setData(ClipboardData(text: "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"));
+                          Clipboard.setData(ClipboardData(text: "${Utils.baseUrlImages}paynow.php?invoiceids=$paymentUrl"));
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text("Link copied to clipboard")),
                             );
@@ -92,7 +93,7 @@ class Carevalutiondetails extends StatelessWidget {
                       Expanded(
                         child: reusableBtn(context, 'Open Link', ()async{
                                                   final Uri url = Uri.parse(
-                            "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl",
+                            "${Utils.baseUrlImages}paynow.php?invoiceids=$paymentUrl",
                           );
           
                           bool launched = await launchUrl(

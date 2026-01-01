@@ -199,7 +199,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               final error = ref
                   .read(customerValidationProvider.notifier)
                   .validate(
-                    requestedFor: selectedEmail?.id,
+                    requestedFor: selectedEmail?.name,
                     bankName: selectedBanks?.id,
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,
@@ -215,7 +215,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               }
               // ✅ Save in provider only if valid
               ref.read(carFormProvider.notifier).updateCustomerDetails(
-                    requestedFor: selectedEmail?.id,
+                    requestedFor: selectedEmail?.name,
                     bankName: selectedBanks?.id,
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,

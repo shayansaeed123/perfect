@@ -31,6 +31,7 @@ class Invoice {
   final String specification;
   final String enterBy;
   final String? status_name;
+  final String? statusAction;
   final String? bankName;
   final String? customer_email;
   String? image1;
@@ -73,6 +74,7 @@ class Invoice {
     required this.specification,
     required this.enterBy,
     this.status_name,
+    this.statusAction,
     this.bankName,
     required this.customer_email,
     this.image1,
@@ -117,6 +119,7 @@ class Invoice {
       specification: json['specification'] ?? '',
       enterBy: json['enterby'] ?? '',
       status_name: json['status_name'],
+      statusAction: json['action_status'],
       bankName: json['BankName'],
       customer_email: json['customer_email'],
       image1: json['image1'],
@@ -162,6 +165,7 @@ class Invoice {
       "specification": specification,
       "enterby": enterBy,
       "status_name": status_name,
+      "action_status": statusAction,
       "BankName": bankName,
       "customer_email": customer_email,
       "image1": image1,

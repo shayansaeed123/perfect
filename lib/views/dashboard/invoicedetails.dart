@@ -8,6 +8,7 @@ import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/views/dashboard/addCars.dart';
 import 'package:project/views/dashboard/carevalutiondetails.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Invoicedetails extends StatelessWidget {
   final String applicationNo;
@@ -37,6 +38,7 @@ class Invoicedetails extends StatelessWidget {
   final String totalValue;
   final String bankName;
   final String status_name;
+  final String statusAction;
   final String code;
   const Invoicedetails({super.key,
   required this.address,required this.applicationNo,required this.carCondition,required this.color,
@@ -44,7 +46,7 @@ class Invoicedetails extends StatelessWidget {
   required this.model,required this.odometer,required this.option,required this.platno,required this.make, required this.makeImage,
   required this.requestfor,required this.specification,required this.total,required this.tranmissiontype,
   required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate,
-  required this.id, required this.totalValue, required this.bankName, required this.status_name, required this.code
+  required this.id, required this.totalValue, required this.bankName, required this.status_name, required this.code,required this.statusAction
   });
 
   @override
@@ -192,6 +194,38 @@ class Invoicedetails extends StatelessWidget {
                   ),
                   reusablaSizaBox(context, 0.015),
                   reusableText('Total Value: $totalValue',color: colorController.blackColor,fontweight: FontWeight.bold, fontsize: 13),
+                  reusablaSizaBox(context, 0.015),
+                  if(statusAction == '3')...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          width: MediaQuery.sizeOf(context).width * 0.17,
+                          height: MediaQuery.sizeOf(context).height * 0.06,
+                          decoration: BoxDecoration(
+                            color: colorController.mainColorWithOpacity,
+                            borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: IconButton(onPressed: ()async{
+                            final Uri url = Uri.parse(
+                            "${Utils.baseUrlImages}invoice_4.php?invoiceids=$code",
+                          );
+          
+                          bool launched = await launchUrl(
+                            url,
+                            mode: LaunchMode.externalApplication,
+                          );
+          
+                          if (!launched) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Could not launch URL")),
+                            );
+                          }
+                          }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
+                        ),
+                      ],
+                    )
+                  ],
                   reusablaSizaBox(context, 0.015),
                   if(MySharedPrefrence().get_designation_id() == '12')...[
                      reusableBtn(context, 'Edit', (){

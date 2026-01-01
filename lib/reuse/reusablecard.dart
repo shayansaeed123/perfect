@@ -100,7 +100,7 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
           children: [
             /// LEFT - BRAND LOGO
             Container(
-              // height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.11,
               width: MediaQuery.of(context).size.width * 0.2,
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
@@ -141,19 +141,21 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
                 ],
               ),
             ),
-
+ SizedBox(width: MediaQuery.sizeOf(context).width * 0.01),
             /// RIGHT - STATUS
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                reusableText(status,color: colorController.lightblackColor,fontsize: 12),
-                const SizedBox(height: 4),
-                Icon(
-                  Icons.handshake,
-                  color: colorController.grayTextColor,
-                  size: 20,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  reusableText(status,color: colorController.lightblackColor,fontsize: 12),
+                  const SizedBox(height: 4),
+                  Icon(
+                    Icons.handshake,
+                    color: colorController.grayTextColor,
+                    size: 20,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -195,7 +195,8 @@ class _HomeState extends ConsumerState<Home> {
                                             requestfor: invoice.requestedFor??'', specification: invoice.specification, 
                                             total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make, makeImage: invoice.makeImage,
                                             trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
-                                            totalValue: invoice.totalValue,bankName: invoice.bankName ?? '',status_name: invoice.status_name ?? '',code: invoice.code,);
+                                            totalValue: invoice.totalValue,bankName: invoice.bankName ?? '',status_name: invoice.status_name ?? '',code: invoice.code,
+                                            statusAction: invoice.statusAction ?? '',);
                                         },));
                                          })
                                       // reusableCard(

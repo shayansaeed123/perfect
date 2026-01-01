@@ -152,8 +152,6 @@ final TextEditingController _title = TextEditingController();
   final TextEditingController _furtherInfo = TextEditingController();
   TextEditingController get furtherInfo => _furtherInfo;
 
-
-  // ✅ Ye method banado
   void clearAll() {
     requested.clear();
     customerName.clear();
@@ -173,7 +171,7 @@ final TextEditingController _title = TextEditingController();
     total.clear();
     totalValue.clear();
     carCondition.clear();
-    
+    bankRef.clear();
   }
 
 }
