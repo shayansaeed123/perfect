@@ -76,7 +76,7 @@ class Invoice {
     this.status_name,
     this.statusAction,
     this.bankName,
-    required this.customer_email,
+    this.customer_email,
     this.image1,
     this.image2,
     this.image3,

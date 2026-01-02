@@ -133,7 +133,7 @@ class CarFormData {
       address: address ?? this.address,
       // evaluationNo: evaluationNo ?? this.evaluationNo,
       bankName: bankName ?? this.bankName,
-      customerEmail: customerName ?? this.customerEmail,
+      customerEmail: customerEmail ?? this.customerEmail,
       bankRef: bankRef ?? this.bankRef,
       make: make ?? this.make,
       model: model ?? this.model,
