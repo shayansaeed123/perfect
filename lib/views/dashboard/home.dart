@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/notifier/connectivitynotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
@@ -53,6 +54,7 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
     final filter = ref.watch(invoiceFilterProvider);
     final statusAsync = ref.watch(dropdownProvider(const DropdownParams("action_status=1", "status_name")));
     final userAsync = ref.watch(dropdownProvider(const DropdownParams("admin_id=1", "user_name")));
+    final isConnected = ref.watch(connectivityProvider);
     return Scaffold(
         backgroundColor: colorController.whiteColor,
         appBar: AppBar(
@@ -105,7 +107,7 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                           child: GestureDetector(
                                           onTap: () => repo.selectDateRange(context,ref),
                                           child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.017,),
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.006,),
                           decoration: BoxDecoration(
                             border: Border.all(color: colorController.btnColor),
                             borderRadius: BorderRadius.circular(8),
@@ -199,15 +201,23 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                       }
                     });
 
-                    return TabBar(
-                      controller: _tabController,
-                      isScrollable: true,
-                      indicatorColor: colorController.mainColor,
-                      labelColor: colorController.mainColor,
-                      unselectedLabelColor: Colors.grey,
-                      tabs: statusList
-                          .map((e) => Tab(text: e.name))
-                          .toList(),
+                    return Container(
+                      decoration: BoxDecoration(
+    color: colorController.mainColor.withOpacity(0.08), // 👈 background
+    borderRadius: BorderRadius.circular(12),
+  ),
+                      child: TabBar(
+                        controller: _tabController,
+                        isScrollable: true,
+                        indicatorColor: colorController.mainColor,
+                        labelColor: colorController.mainColor,
+                        unselectedLabelColor: Colors.grey,
+                        splashBorderRadius: BorderRadius.circular(15),
+                        overlayColor: WidgetStatePropertyAll(colorController.mainColorWithOpacity),
+                        tabs: statusList
+                            .map((e) => Tab(text: e.name))
+                            .toList(),
+                      ),
                     );
                   },
                   loading: () => const SizedBox(),
@@ -225,11 +235,11 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                         return CustomScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
                           slivers: [
-                             SliverAppBar(
-                              floating: true,
-                              snap: true,
-                              title: Center(child: reusableText('Invoices',fontsize: 22,fontweight: FontWeight.bold)),
-                            ),
+                            //  SliverAppBar(
+                            //   floating: true,
+                            //   snap: true,
+                            //   title: Center(child: reusableText('Invoices',fontsize: 22,fontweight: FontWeight.bold)),
+                            // ),
                             
                             SliverPadding(
                               padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.000,),
@@ -309,7 +319,20 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                       },
                       loading: () =>
                           const Center(child: CircularProgressIndicator()),
-                      error: (err, _) => Center(child: Text("Error: $err")),
+                      error: (err, stack) {
+                        if (!isConnected) {
+                          return const NoInternetWidget();
+                        }
+                        if (err.toString().contains('SocketException')) {
+                          return const NoInternetWidget();
+                        }
+                        return Center(
+                          child: Text(
+                            "Something went wrong",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      },
                             ),
                     ),
                   ],
