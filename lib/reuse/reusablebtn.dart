@@ -5,14 +5,14 @@ import 'package:project/controllers/color_controller.dart';
 Widget reusableBtn(
   BuildContext context,
   String btnText,
-  Function onValidTap,
+  VoidCallback? onValidTap,
   {double width = 1,double height = .055}
 ) {
   return 
   GestureDetector(
-    onTap: (){
-      onValidTap();
-    },
+    onTap: 
+      onValidTap,
+    
     child: 
     Container(
       width: MediaQuery.of(context).size.width * width,

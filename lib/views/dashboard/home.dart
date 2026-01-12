@@ -17,6 +17,8 @@ import 'package:project/views/dashboard/invoicedetails.dart';
 
 // 🔹 Provider to store selected date range
 final dateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
+final selectedTabProvider = StateProvider<int>((ref) => 0);
+
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -25,7 +27,8 @@ class Home extends ConsumerStatefulWidget {
   ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends ConsumerState<Home> {
+class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixin {
+  TabController? _tabController;
   late final ScrollController _innerController;
   PerfectRepo repo = PerfectRepo();
   DropdownItem? selectedStatus;
@@ -41,6 +44,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void dispose() {
     _innerController.dispose();
+    _tabController?.dispose();
     super.dispose();
   }
   @override
@@ -80,45 +84,24 @@ class _HomeState extends ConsumerState<Home> {
                 padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.02,),
                 child: Column(
                   children: [
-                    reusablaSizaBox(context, 0.01),
+                    reusablaSizaBox(context, 0.005),
                     Row(
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
-                          child: statusAsync.when(
-                          data: (status){
-                            return reusableDropdown(context,status, selectedStatus, "Status", (item) => item.name,(value) {
-                            setState(() => selectedStatus = value);
-                            ref.read(invoiceFilterProvider.notifier).state =
-              ref.read(invoiceFilterProvider).copyWith(actionStatus: value?.id ?? "");
-                            },);
-                          },
-                          loading: () => Center(child: const CircularProgressIndicator()),
-                          error: (err, _) => const CircularProgressIndicator(),
-                                        ),
-                        ),
-                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-                      Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
-                          ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
-                        },))
-                      // Expanded(
-                      //   child: userAsync.when(
-                      //     data: (user){
-                      //       return reusableDropdown(user, selectedUser, "User", (item) => item.name,(value) {
-                      //       // setState(() => selectedUser = value);
-                      //       ref.read(invoiceFilterProvider.notifier).setEnterBy(value!.id.toString());
-                      //       },);
-                      //     },
-                      //     loading: () => const CircularProgressIndicator(),
-                      //     error: (err, _) => const CircularProgressIndicator(),
-                      //   ),
-                      // ),
-                      ],
-                    ),
-                    reusablaSizaBox(context, 0.015),
-                    Row(
-                      children: [
-                        Expanded(
+              //           Expanded(
+              //             child: statusAsync.when(
+              //             data: (status){
+              //               return reusableDropdown(context,status, selectedStatus, "Status", (item) => item.name,(value) {
+              //               setState(() => selectedStatus = value);
+              //               ref.read(invoiceFilterProvider.notifier).state =
+              // ref.read(invoiceFilterProvider).copyWith(actionStatus: value?.id ?? "");
+              //               },);
+              //             },
+              //             loading: () => Center(child: const CircularProgressIndicator()),
+              //             error: (err, _) => const CircularProgressIndicator(),
+              //                           ),
+              //           ),
+              Expanded(
                           child: GestureDetector(
                                           onTap: () => repo.selectDateRange(context,ref),
                                           child: Container(
@@ -147,10 +130,89 @@ class _HomeState extends ConsumerState<Home> {
                                           ),
                                     ),
                         ),
-                        // SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-                        
+                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+                      Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
+                          ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
+                        },))
                       ],
                     ),
+              //       reusablaSizaBox(context, 0.015),
+              //       Row(
+              //         children: [
+              //           Expanded(
+              //             child: GestureDetector(
+              //                             onTap: () => repo.selectDateRange(context,ref),
+              //                             child: Container(
+              //             padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.017,),
+              //             decoration: BoxDecoration(
+              //               border: Border.all(color: colorController.btnColor),
+              //               borderRadius: BorderRadius.circular(8),
+              //             ),
+              //             child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              // Expanded(
+              //   child: Text(
+              //     filter.dateRange.isEmpty
+              //         ? "Select Date Range"
+              //         : filter.dateRange, // 👈 default aj ki date show hogi
+              //     style: TextStyle(
+              //       fontSize: 12.5,
+              //       color: colorController.btnColor,
+              //     ),
+              //   ),
+              // ),
+              // Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
+              //       ],
+              //     ),
+              //                             ),
+              //                       ),
+              //           ),
+              //           // SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+                        
+              //         ],
+              //       ),
+                    reusablaSizaBox(context, 0.005),
+                    /// 🔹 Dynamic Tabs (API based)
+                statusAsync.when(
+                  data: (statusList) {
+                    _tabController ??= TabController(
+                      length: statusList.length,
+                      vsync: this,
+                      initialIndex: ref.watch(selectedTabProvider),
+                    );
+
+                    _tabController!.addListener(() {
+                      if (_tabController!.indexIsChanging) {
+                        final status = statusList[_tabController!.index];
+                        ref.read(selectedTabProvider.notifier).state =
+                            _tabController!.index;
+
+                        /// 🔑 Update filter on tab change
+                        ref
+                            .read(invoiceFilterProvider.notifier)
+                            .state = filter.copyWith(
+                          actionStatus: status.id,
+                        );
+
+                        setState(() => selectedStatus = status);
+                      }
+                    });
+
+                    return TabBar(
+                      controller: _tabController,
+                      isScrollable: true,
+                      indicatorColor: colorController.mainColor,
+                      labelColor: colorController.mainColor,
+                      unselectedLabelColor: Colors.grey,
+                      tabs: statusList
+                          .map((e) => Tab(text: e.name))
+                          .toList(),
+                    );
+                  },
+                  loading: () => const SizedBox(),
+                  error: (_, __) => const SizedBox(),
+                ),
                     reusablaSizaBox(context, 0.015),
                     Expanded(
                       child: asyncInvoices.when(
