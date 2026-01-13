@@ -87,7 +87,8 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: colorController.whiteColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: colorController.grayTextColor,width: 1),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -101,11 +102,12 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
             /// LEFT - BRAND LOGO
             Container(
               height: MediaQuery.of(context).size.height * 0.11,
-              width: MediaQuery.of(context).size.width * 0.2,
+              width: MediaQuery.of(context).size.width * 0.22,
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: colorController.grayTextColor,width: 0.5),
               ),
               child: Image.network(
                 brandLogo,

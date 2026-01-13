@@ -26,6 +26,14 @@ class CustomerDetails extends ConsumerStatefulWidget {
 }
 
 class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
+
+  late FocusNode customerNameFocus;
+late FocusNode customerEmailFocus;
+late FocusNode addressFocus;
+late FocusNode bankRefEmailFocus;
+late FocusNode bankRefFocus;
+late FocusNode chargesFocus;
+ 
   DateTime? selectedDate;
   late DateTime lastDate = DateTime(1970, 1, 1);
   DropdownItem? selectedBanks;
@@ -36,6 +44,13 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
     // TODO: implement initState
     super.initState();
     selectedDate = DateTime.now();
+
+    customerNameFocus = FocusNode();
+  customerEmailFocus = FocusNode();
+  addressFocus = FocusNode();
+  bankRefFocus = FocusNode();
+  bankRefEmailFocus = FocusNode();
+  chargesFocus = FocusNode();
   }
 
 
@@ -99,10 +114,10 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
 // ),
 
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, FocusNode(), (){}),
+                  reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, customerNameFocus, (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Custormer Email', colorController.textfieldColor, FocusNode(), (){}),
+                  reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Custormer Email', colorController.textfieldColor, customerEmailFocus, (){}),
                   reusablaSizaBox(context, 0.015),
                   // reusableDate(context, lastDate, selectedDate, (DateTime timeofday){
                   //                     setState(() {
@@ -129,7 +144,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     enabled: editId == null,
                   ),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, FocusNode(), (){}),
+                  reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, addressFocus, (){}),
                   reusablaSizaBox(context, 0.015),
                   reusableText('Bank Details',color:colorController.textColorDark,fontsize: 18,),
                   // reusableTextField(context, reusabletextfieldcontroller.inspectiondate, 'Inspection Date', colorController.textfieldColor, FocusNode(), (){}),
@@ -145,7 +160,7 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                       } else {
                         selectedBanks = DropdownItem(id: "", name: "Select Bank");
                       }
-                      return reusableDropdown(context,banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
+                      return reusableDropdown(context,ref,banks, selectedBanks, "Select Bank", (item) => item.name,(value) {
                       setState(() {
                         selectedBanks = value;
                       selectedEmail = null;});
@@ -155,28 +170,39 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
                     loading: () => const CircularProgressIndicator(),
                     error: (err, _) => const CircularProgressIndicator(),
                   ),
-                  if(selectedBanks != null)...[
-                    reusablaSizaBox(context, 0.015),
-                  ref.watch(bankEmailProvider(selectedBanks!.id)).when(
-                    data: (emailList) {
-                    if (form.requestedFor != null && form.requestedFor!.isNotEmpty) {
-                    selectedEmail ??= emailList.firstWhere(
-                      (m) => m.id == form.requestedFor,
-                      orElse: () => DropdownItem(id: "", name: "Select Rep Bank Email"),
-                    );
-                  }
-                  return reusableDropdown(context,emailList,selectedEmail,"Select Rep Bank Email",(item) => item.name,(value) {
-                  setState(() => selectedEmail = value);
-                  ref.read(carFormProvider.notifier).updateModel(value!.id);
-                  },enabled: editId == null);},
-                  loading: () => const CircularProgressIndicator(),
-                  error: (err, _) => const CircularProgressIndicator(),
+                  reusablaSizaBox(context, 0.015),
+                  reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Rep Email', colorController.textfieldColor, bankRefEmailFocus, (){}),
+                  // if(selectedBanks != null)...[
+                  //   reusablaSizaBox(context, 0.015),
+                  // ref.watch(bankEmailProvider(selectedBanks!.id)).when(
+                  //   data: (emailList) {
+                  //   if (form.requestedFor != null && form.requestedFor!.isNotEmpty) {
+                  //   selectedEmail ??= emailList.firstWhere(
+                  //     (m) => m.id == form.requestedFor,
+                  //     orElse: () => DropdownItem(id: "", name: "Select Rep Bank Email"),
+                  //   );
+                  // }
+                  // return reusableDropdown(context,emailList,selectedEmail,"Select Rep Bank Email",(item) => item.name,(value) {
+                  // setState(() => selectedEmail = value);
+                  // ref.read(carFormProvider.notifier).updateModel(value!.id);
+                  // },enabled: editId == null);},
+                  // loading: () => const CircularProgressIndicator(),
+                  // error: (err, _) => const CircularProgressIndicator(),
+                  // ),
+                  // ],
+                  reusablaSizaBox(context, 0.015),
+                  reusableTextField(context, reusabletextfieldcontroller.bankRef, 'Bank Reference', colorController.textfieldColor, bankRefFocus, (){}),
+                  reusablaSizaBox(context, 0.015),
+                  reusableText('Payment Details',color:colorController.textColorDark,fontsize: 18,),
+                  reusablaSizaBox(context, 0.015),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      reusableText('AED',color: colorController.blackColor,fontsize: 16),
+                      reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, chargesFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73),
+                    ],
                   ),
-                  ],
-                  reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.bankRef, 'Bank Reference', colorController.textfieldColor, FocusNode(), (){}),
-                  reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
+                  
                   // reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   // reusablaSizaBox(context, 0.03),
@@ -199,7 +225,8 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               final error = ref
                   .read(customerValidationProvider.notifier)
                   .validate(
-                    requestedFor: selectedEmail?.name,
+                    // requestedFor: selectedEmail?.name,
+                    requestedFor: requestedFor,
                     bankName: selectedBanks?.id,
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,
@@ -215,7 +242,8 @@ class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
               }
               // ✅ Save in provider only if valid
               ref.read(carFormProvider.notifier).updateCustomerDetails(
-                    requestedFor: selectedEmail?.name,
+                    // requestedFor: selectedEmail?.name,
+                    requestedFor: requestedFor,
                     bankName: selectedBanks?.id,
                     customerName: customerName,
                     inspectionDate: inspectionDateStr,

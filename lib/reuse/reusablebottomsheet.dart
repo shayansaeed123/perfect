@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/keyboardcontroller.dart';
 
 
 
@@ -92,8 +94,10 @@ reuablebottomsheet(BuildContext context, String title, Function gallaryontap,
 
 
 
-void openBottomSheet(BuildContext context,VoidCallback ontapCamera, VoidCallback ontapGallery) {
-    showCupertinoModalBottomSheet(
+void openBottomSheet(BuildContext context,WidgetRef ref,VoidCallback ontapCamera, VoidCallback ontapGallery) {
+   ref.read(keyboardControllerProvider).hide(); 
+    Future.delayed(Duration(milliseconds: 120), (){
+      showCupertinoModalBottomSheet(
       context: context,
       topRadius: const Radius.circular(24),
       backgroundColor: Colors.white,
@@ -146,6 +150,7 @@ void openBottomSheet(BuildContext context,VoidCallback ontapCamera, VoidCallback
         );
       },
     );
+    });
   }
 
 

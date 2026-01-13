@@ -61,8 +61,8 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
           backgroundColor: colorController.mainColor,
           title: Center(
               child: 
-              reusableText('Home',
-                  color: colorController.textColorLight,
+              reusableText('Perfect',
+                  color: colorController.whiteColor,
                   fontsize: 25,
                   fontweight: FontWeight.bold)
                   ),
@@ -83,61 +83,52 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
         ),
       ),
               Padding(
-                padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.02,),
+                padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.00,),
                 child: Column(
                   children: [
-                    reusablaSizaBox(context, 0.005),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-              //           Expanded(
-              //             child: statusAsync.when(
-              //             data: (status){
-              //               return reusableDropdown(context,status, selectedStatus, "Status", (item) => item.name,(value) {
-              //               setState(() => selectedStatus = value);
-              //               ref.read(invoiceFilterProvider.notifier).state =
-              // ref.read(invoiceFilterProvider).copyWith(actionStatus: value?.id ?? "");
-              //               },);
-              //             },
-              //             loading: () => Center(child: const CircularProgressIndicator()),
-              //             error: (err, _) => const CircularProgressIndicator(),
-              //                           ),
+              //       reusablaSizaBox(context, 0.005),
+              //       Row(
+              //         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              // Expanded(
+              //             child: GestureDetector(
+              //                             onTap: () => repo.selectDateRange(context,ref),
+              //                             child: Container(
+              //             padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.006,),
+              //             decoration: BoxDecoration(
+              //               border: Border.all(color: colorController.btnColor),
+              //               borderRadius: BorderRadius.circular(8),
+              //             ),
+              //             child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              // Expanded(
+              //   child: Text(
+              //     filter.dateRange.isEmpty
+              //         ? "Select Date Range"
+              //         : filter.dateRange, // 👈 default aj ki date show hogi
+              //     style: TextStyle(
+              //       fontSize: 12.5,
+              //       color: colorController.btnColor,
+              //     ),
+              //   ),
+              // ),
+              // Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
+              //       ],
+              //     ),
+              //                             ),
+              //                       ),
               //           ),
-              Expanded(
-                          child: GestureDetector(
-                                          onTap: () => repo.selectDateRange(context,ref),
-                                          child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.006,),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: colorController.btnColor),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-              Expanded(
-                child: Text(
-                  filter.dateRange.isEmpty
-                      ? "Select Date Range"
-                      : filter.dateRange, // 👈 default aj ki date show hogi
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    color: colorController.btnColor,
-                  ),
-                ),
-              ),
-              Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
-                    ],
-                  ),
-                                          ),
-                                    ),
-                        ),
-                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-                      Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
-                          ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
-                        },))
-                      ],
-                    ),
+              //         SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+              //         Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
+              //             ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
+              //           },))
+              //         ],
+              //       ),
+
+
+
+
               //       reusablaSizaBox(context, 0.015),
               //       Row(
               //         children: [
@@ -174,7 +165,9 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                         
               //         ],
               //       ),
-                    reusablaSizaBox(context, 0.005),
+
+
+                    // reusablaSizaBox(context, 0.005),
                     /// 🔹 Dynamic Tabs (API based)
                 statusAsync.when(
                   data: (statusList) {
@@ -203,17 +196,18 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
 
                     return Container(
                       decoration: BoxDecoration(
-    color: colorController.mainColor.withOpacity(0.08), // 👈 background
-    borderRadius: BorderRadius.circular(12),
+    color: colorController.mainColor, // 👈 background
+    border: Border.all(color: colorController.whiteColor,width: BorderSide.strokeAlignOutside)
   ),
                       child: TabBar(
                         controller: _tabController,
                         isScrollable: true,
-                        indicatorColor: colorController.mainColor,
-                        labelColor: colorController.mainColor,
-                        unselectedLabelColor: Colors.grey,
+                        indicatorColor: colorController.whiteColor,
+                        indicatorPadding: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height *0.004),
+                        labelColor: colorController.whiteColor,
+                        unselectedLabelColor: colorController.whiteColor,
                         splashBorderRadius: BorderRadius.circular(15),
-                        overlayColor: WidgetStatePropertyAll(colorController.mainColorWithOpacity),
+                        overlayColor: WidgetStatePropertyAll(colorController.mainColor),
                         tabs: statusList
                             .map((e) => Tab(text: e.name))
                             .toList(),
@@ -242,7 +236,7 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                             // ),
                             
                             SliverPadding(
-                              padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.000,),
+                              padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.015,),
                               sliver: SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {
@@ -268,7 +262,8 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                                             total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make, makeImage: invoice.makeImage,
                                             trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
                                             totalValue: invoice.totalValue,bankName: invoice.bankName ?? '',status_name: invoice.status_name ?? '',code: invoice.code,
-                                            statusAction: invoice.statusAction ?? '',);
+                                            statusAction: invoice.statusAction ?? '',image1: invoice.image1 ?? '',image2: invoice.image2 ?? '',image3: invoice.image3 ?? '',
+                                            image4: invoice.image4 ?? '',image5: invoice.image5 ?? '',image6: invoice.image6 ?? '',image7: invoice.image7 ?? '',image8: invoice.image8 ?? '',);
                                         },));
                                          })
                                       // reusableCard(

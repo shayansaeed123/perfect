@@ -103,7 +103,7 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
         title:  Center(
           child: reusableText(
             editId != null ? 'Edit Invoice' : 'Add Cars',
-            color: colorController.textColorLight,
+            color: colorController.whiteColor,
             fontsize: 25,
             fontweight: FontWeight.bold,
           ),

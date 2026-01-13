@@ -219,6 +219,33 @@ class _CarimagesState extends ConsumerState<Carimages> {
                   },
                   'assets/images/addimgplaceholder.png',
                 ),
+
+                reusableimagewidget(
+                      context,
+                      'Car Image (Left)',
+                      'Car Image (Right)',
+                      // profile_image7?.path ?? 'assets/images/addimgplaceholder.png',
+                      // profile_image8?.path ?? 'assets/images/addimgplaceholder.png',
+                      getImagePath(profile_image7 ?? form.profile_image7),
+                      getImagePath(profile_image8 ?? form.profile_image8),
+                      () {
+                        reuablebottomsheet(
+                          context,
+                          "Choose Car Left Image",
+                          () => _pickImage(ImageSource.gallery, 'profile_image7'),
+                          () => _pickImage(ImageSource.camera, 'profile_image7'),
+                        );
+                      },
+                      () {
+                        reuablebottomsheet(
+                          context,
+                          "Choose Car Right Image",
+                          () => _pickImage(ImageSource.gallery, 'profile_image8'),
+                          () => _pickImage(ImageSource.camera, 'profile_image8'),
+                        );
+                      },
+                      'assets/images/addimgplaceholder.png',
+                    ),
                 // reusablaSizaBox(context, 0.03),
                             reusableimagewidget(
                   context,
@@ -273,32 +300,7 @@ class _CarimagesState extends ConsumerState<Carimages> {
                       'assets/images/addimgplaceholder.png',
                     ),
                     // reusablaSizaBox(context, 0.03),
-                      reusableimagewidget(
-                      context,
-                      'Car Image (Left)',
-                      'Car Image (Right)',
-                      // profile_image7?.path ?? 'assets/images/addimgplaceholder.png',
-                      // profile_image8?.path ?? 'assets/images/addimgplaceholder.png',
-                      getImagePath(profile_image7 ?? form.profile_image7),
-                      getImagePath(profile_image8 ?? form.profile_image8),
-                      () {
-                        reuablebottomsheet(
-                          context,
-                          "Choose Car Left Image",
-                          () => _pickImage(ImageSource.gallery, 'profile_image7'),
-                          () => _pickImage(ImageSource.camera, 'profile_image7'),
-                        );
-                      },
-                      () {
-                        reuablebottomsheet(
-                          context,
-                          "Choose Car Right Image",
-                          () => _pickImage(ImageSource.gallery, 'profile_image8'),
-                          () => _pickImage(ImageSource.camera, 'profile_image8'),
-                        );
-                      },
-                      'assets/images/addimgplaceholder.png',
-                    ),
+                      
                     reusablaSizaBox(context, 0.02),
                     Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

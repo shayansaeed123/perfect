@@ -22,6 +22,7 @@ class ColorController extends GetxController{
   Color yellowColor = Color(0xFFfbc523);
   Color yellowColor2 = Color(0xFFfbc523);
   Color grayTextColor= Color(0xFF9e9e9e);
+  Color lightBlackColor= Color.fromARGB(255, 63, 62, 62);
   Color blueColor = Color(0xFF1e5ec0);
   Color textformborderColor = Color(0xFF67c9f2);
   Color loginBtnColor =  Color(0xFFcf93d9);

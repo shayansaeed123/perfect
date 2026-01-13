@@ -2,8 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/keyboardcontroller.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
@@ -242,6 +244,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 
 Widget reusableDropdown<T>(
   BuildContext context,
+  WidgetRef ref,
   List<T> items,
   T? selectedItem,
   String label,
@@ -254,12 +257,14 @@ Widget reusableDropdown<T>(
   int tempSelectedIndex = initialIndex < 0 ? 0 : initialIndex;
 
   final TextEditingController searchController = TextEditingController();
+  final searchFocusNode = FocusNode();
   List<T> filteredItems = List.from(items);
 
   void openPicker() {
-    FocusScope.of(context).unfocus();
+    ref.read(keyboardControllerProvider).hide();
 
-    showCupertinoModalBottomSheet(
+    Future.delayed(Duration(milliseconds: 120), (){
+      showCupertinoModalBottomSheet(
       context: context,
       topRadius: const Radius.circular(16),
       backgroundColor: colorController.whiteColor,
@@ -312,6 +317,8 @@ Widget reusableDropdown<T>(
                           horizontal: 16, vertical: 6),
                       child: TextField(
                         controller: searchController,
+                        focusNode: searchFocusNode,
+                        autofocus: true,
                         style: const TextStyle(fontSize: 12.5),
                         decoration: InputDecoration(
                           hintText: 'Search',
@@ -381,6 +388,7 @@ Widget reusableDropdown<T>(
         );
       },
     );
+    });
   }
 
   return GestureDetector(

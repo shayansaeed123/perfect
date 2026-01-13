@@ -42,7 +42,7 @@ class InvoiceFilterNotifier extends StateNotifier<InvoiceFilter> {
   InvoiceFilterNotifier()
       : super(
           InvoiceFilter(
-            dateRange: _todayRange(),
+            dateRange: _defaultRange(),
             text: "",
             actionStatus: "",
             enterBy: MySharedPrefrence().get_user_id().toString(),
@@ -54,6 +54,16 @@ class InvoiceFilterNotifier extends StateNotifier<InvoiceFilter> {
     final formatted = DateFormat("MM/dd/yyyy").format(now);
     return "$formatted - $formatted";
   }
+
+  static String _defaultRange() {
+  final startDate = DateTime(2019, 1, 1); // 1 Jan 2019
+  final endDate = DateTime.now();         // Today
+
+  final formatter = DateFormat("MM/dd/yyyy");
+
+  return "${formatter.format(startDate)} - ${formatter.format(endDate)}";
+}
+
 
   void setDateRange(String range) => state = state.copyWith(dateRange: range);
   void setText(String text) => state = state.copyWith(text: text);

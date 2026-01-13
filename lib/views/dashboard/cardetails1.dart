@@ -30,6 +30,12 @@ class CarDetails1 extends ConsumerStatefulWidget {
 }
 
 class _CarDetails1State extends ConsumerState<CarDetails1> {
+
+  late FocusNode plateNoFocus;
+  late FocusNode odometerFocus;
+  late FocusNode vinFocus;
+  late FocusNode engineNoFocus;
+
   DropdownItem? selectedMake;
   DropdownItem? selectedModel;
   DropdownItem? selectedYear;
@@ -37,6 +43,16 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
   DropdownItem? selectedTrim;
   DropdownItem? selectedSpec;
   String selectUnit = 'KM';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  plateNoFocus = FocusNode();
+  odometerFocus = FocusNode();
+  vinFocus = FocusNode();
+  engineNoFocus = FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +116,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       } else {
                         selectedMake = DropdownItem(id: "", name: "Select Make");
                       }
-                      return reusableDropdown(context, make, selectedMake, "Select Make", (item) => item.name,(value) {
+                      return reusableDropdown(context,ref, make, selectedMake, "Select Make", (item) => item.name,(value) {
                       setState((){
                         setState(() {
                       selectedMake = value;
@@ -124,7 +140,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       orElse: () => DropdownItem(id: "", name: "Select Model"),
                     );
                   }
-                  return reusableDropdown(context,modelList,selectedModel,"Select Model",(item) => item.name,(value) {
+                  return reusableDropdown(context,ref,modelList,selectedModel,"Select Model",(item) => item.name,(value) {
                   setState(() => selectedModel = value);
                   ref.read(carFormProvider.notifier).updateModel(value!.id);
                   },enabled: editId == null);},
@@ -142,7 +158,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                       orElse: () => DropdownItem(id: "", name: "Select Trim"),
                       );
                     }
-                    return reusableDropdown(context,trimList,selectedTrim,"Select Trim",(item) => item.name,(value) {
+                    return reusableDropdown(context,ref,trimList,selectedTrim,"Select Trim",(item) => item.name,(value) {
                   setState(() => selectedTrim = value);
                   ref.read(carFormProvider.notifier).updateTrim(value!.id);
                   },enabled: editId == null);},
@@ -174,7 +190,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                         orElse: () => DropdownItem(id: "", name: "Select Year"),
                       );
                     }
-                      return reusableDropdown(context, year, selectedYear, "Select Year", (item) => item.name,(value) {
+                      return reusableDropdown(context,ref, year, selectedYear, "Select Year", (item) => item.name,(value) {
                       setState(() => selectedYear = value);
                        ref.read(carFormProvider.notifier).updateYear(value!.id);
                       },enabled: editId == null);
@@ -184,21 +200,21 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.015),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      reusableTextField(context, reusabletextfieldcontroller.plateNo, 'Plate No', colorController.textfieldColor, FocusNode(), (){},width: 0.73),
-                      reusableIconBtn(context, (){
-                      openBottomSheet(context,
-                      (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.plateNo,ImageSource.camera);},
-                      (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.plateNo,ImageSource.gallery);},
-                        );
-                      })
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                      reusableTextField(context, reusabletextfieldcontroller.plateNo, 'Plate No', colorController.textfieldColor, plateNoFocus, (){},),
+                      // reusableIconBtn(context, (){
+                      // openBottomSheet(context,
+                      // (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.plateNo,ImageSource.camera);},
+                      // (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.plateNo,ImageSource.gallery);},
+                      //   );
+                      // })
+                  //   ],
+                  // ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, FocusNode(), (){},keyboardType: TextInputType.number,enabled: editId == null,
+                  reusableTextField(context, reusabletextfieldcontroller.odometer, 'Odometer Reading', colorController.textfieldColor, odometerFocus, (){},keyboardType: TextInputType.number,enabled: editId == null,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,     // Only numbers allowed
                     LengthLimitingTextInputFormatter(6),        // Max 6 digits
@@ -232,14 +248,14 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      reusableTextField(context, reusabletextfieldcontroller.vin, 'Vin', colorController.textfieldColor, FocusNode(), (){},width: 0.73,
+                      reusableTextField(context, reusabletextfieldcontroller.vin, 'Vin', colorController.textfieldColor, vinFocus, (){},width: 0.73,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                         LengthLimitingTextInputFormatter(20),
                       ]),
                       reusableIconBtn(context, (){
                         // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context, OcrTarget.vin);
-                        openBottomSheet(context,
+                        openBottomSheet(context,ref,
                       (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.camera);},
                       (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.gallery);},
                         );
@@ -255,7 +271,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                         orElse: () => DropdownItem(id: "", name: "Select Specification"),
                       );
                       }
-                      return reusableDropdown(context,spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
+                      return reusableDropdown(context,ref,spec, selectedSpec, "Select Specification", (item) => item.name,(value) {
                       setState(() => selectedSpec = value);
                       ref.read(carFormProvider.notifier).updateSpec(value!.id);
                       },enabled: editId == null);
@@ -268,14 +284,14 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      reusableTextField(context, reusabletextfieldcontroller.engineNo, 'Engine No', colorController.textfieldColor, FocusNode(), (){},width: 0.73,
+                      reusableTextField(context, reusabletextfieldcontroller.engineNo, 'Engine No', colorController.textfieldColor, engineNoFocus, (){},width: 0.73,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                         LengthLimitingTextInputFormatter(20),
                       ]),
                       reusableIconBtn(context, (){
                         // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo);
-                        openBottomSheet(context,
+                        openBottomSheet(context,ref,
                       (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo,ImageSource.camera);},
                       (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo,ImageSource.gallery);},
                         );
