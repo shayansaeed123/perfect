@@ -318,7 +318,9 @@ Widget reusableDropdown<T>(
                       child: TextField(
                         controller: searchController,
                         focusNode: searchFocusNode,
-                        autofocus: true,
+                        autofocus: false,
+                        readOnly: true,
+                        canRequestFocus: false,
                         style: const TextStyle(fontSize: 12.5),
                         decoration: InputDecoration(
                           hintText: 'Search',
