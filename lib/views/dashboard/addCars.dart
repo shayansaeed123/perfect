@@ -94,12 +94,10 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
     final currentStep = ref.watch(progressProvider);
     final progressPercent = ref.watch(progressPercentageProvider);
     final editId = ref.watch(editInvoiceIdProvider);
-    // return _buildStepContent(currentStep);
     return Scaffold(
       backgroundColor: colorController.whiteColor,
      appBar: AppBar(
         backgroundColor: colorController.mainColor,
-        // title: Center(child: reusableText('Add Cars',color: colorController.textColorLight,fontsize: 25,fontweight: FontWeight.bold)),
         title:  Center(
           child: reusableText(
             editId != null ? 'Edit Invoice' : 'Add Cars',
