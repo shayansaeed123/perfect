@@ -59,6 +59,7 @@ dependencies:
   dropdown_search: ^5.0.6
   device_preview: 
   modal_bottom_sheet: 
+  shimmer: 
 
 dev_dependencies:
   flutter_test:

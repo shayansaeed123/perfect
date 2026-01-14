@@ -19,6 +19,7 @@ import 'package:project/views/dashboard/cardetails2.dart';
 import 'package:project/views/dashboard/carimages.dart';
 import 'package:project/views/dashboard/customerdetails.dart';
 import 'package:http/http.dart' as http;
+import 'package:shimmer/shimmer.dart';
 
 class AddCars extends ConsumerStatefulWidget {
     final String? editId;        // 🔥 Edit ID pass hogi
@@ -106,15 +107,46 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
             fontweight: FontWeight.bold,
           ),
         ),
+        // bottom: PreferredSize(
+        //   preferredSize: const Size.fromHeight(8),
+        //   child: LinearProgressIndicator(
+        //     value: progressPercent,
+        //     backgroundColor: Colors.grey.shade300,
+        //     valueColor: AlwaysStoppedAnimation(colorController.progressbarColor),
+        //     minHeight: 8,
+        //   ),
+        // ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(8),
-          child: LinearProgressIndicator(
-            value: progressPercent,
-            backgroundColor: Colors.grey.shade300,
-            valueColor: AlwaysStoppedAnimation(colorController.progressbarColor),
-            minHeight: 8,
+        preferredSize: const Size.fromHeight(8),
+        child: Container(
+          height: 8,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            // borderRadius: BorderRadius.circular(10),
           ),
+          child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Stack(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: constraints.maxWidth * progressPercent,
+                  child: Shimmer.fromColors(
+                    baseColor: colorController.textColorLight,
+                    highlightColor: colorController.mainColor,
+                    child: Container(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
         ),
+      ),
       ),
       // body: SingleChildScrollView(
       //   physics: AlwaysScrollableScrollPhysics(),
