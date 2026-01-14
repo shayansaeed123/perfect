@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/database/my_shared.dart';
 import 'package:project/repo/utils.dart';
@@ -61,6 +62,10 @@ class Invoicedetails extends StatelessWidget {
   required this.image1,required this.image2,required this.image3,required this.image4,required this.image5,required this.image6,required this.image7,required this.image8,
   });
 
+  String formatAmountFromString(String value) {
+  final number = int.tryParse(value) ?? 0;
+  return NumberFormat('#,##0', 'en_US').format(number);
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -276,8 +281,6 @@ class Invoicedetails extends StatelessWidget {
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
-                  reusableText('Total Value: $totalValue',color: colorController.blackColor,fontweight: FontWeight.bold, fontsize: 13),
-                  reusablaSizaBox(context, 0.015),
                   if(statusAction == '3')...[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -306,7 +309,7 @@ class Invoicedetails extends StatelessWidget {
                             );
                           }
                             },
-                            child: Image.asset('assets/images/download.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,))
+                            child: Image.asset('assets/images/downloa.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,))
                           // IconButton(onPressed: ()async{
                             
                           // }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
@@ -328,10 +331,7 @@ class Invoicedetails extends StatelessWidget {
                               ),
                             );
                             },
-                            child: Image.asset('assets/images/download.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,))
-                          // IconButton(onPressed: ()async{
-                            
-                          // }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
+                            child: Image.asset('assets/images/edit.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,)),
                         ),
                   ],
                       ],
@@ -373,7 +373,7 @@ class Invoicedetails extends StatelessWidget {
                                width: 20,
                              ),
                            ),
-                           reusableText('AED $totalValue',color: colorController.blackColor,fontsize: 18)
+                           reusableText('AED ${formatAmountFromString(totalValue)}',color: colorController.blackColor,fontsize: 18)
                         ],
                       ),
                     ),

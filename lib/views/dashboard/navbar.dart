@@ -40,23 +40,32 @@ class NavBar extends ConsumerWidget {
       body: getCurrentScreen(selectedIndex),
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: colorController.mainColor,
+        gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          
+                          colorController.mainColor,
+                          colorController.textColorLight,
+                        ],
+                      ),
         style: TabStyle.react,
         elevation: 10,
         items: [
           TabItem(
             icon: Icon(Icons.home_outlined, color: colorController.textColorLight),
             title: 'Home',
-            activeIcon: Icon(Icons.home, color: colorController.textColorLight),
+            activeIcon: Icon(Icons.home, color: colorController.whiteColor),
           ),
           TabItem(
             icon: Icon(Icons.add, color: colorController.textColorLight),
             title: 'Add',
-            activeIcon: Icon(CupertinoIcons.add_circled, color: colorController.textColorLight),
+            activeIcon: Icon(CupertinoIcons.add_circled, color: colorController.whiteColor),
           ),
           TabItem(
             icon: Icon(Icons.person_outline, color: colorController.textColorLight),
             title: 'Profile',
-            activeIcon: Icon(Icons.person, color: colorController.textColorLight),
+            activeIcon: Icon(Icons.person, color: colorController.whiteColor),
           ),
         ],
         initialActiveIndex: selectedIndex,

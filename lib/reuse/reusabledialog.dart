@@ -12,7 +12,7 @@ void reusableDialog(BuildContext context,String image){
         content: SizedBox(
           width: MediaQuery.of(context).size.width * 0.4,
           height: MediaQuery.of(context).size.height * 0.3,
-          child: Image.network(image, fit: BoxFit.cover),
+          child: image.isEmpty ? Image.asset('assets/images/notimage.png',fit: BoxFit.cover) : Image.network(image, fit: BoxFit.cover),
         ),
         actions: [
           Center(
