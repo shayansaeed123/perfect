@@ -12,6 +12,7 @@ import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/repo/validation.dart';
+import 'package:project/reuse/reusablaimage.dart';
 import 'package:project/reuse/reusablebottomsheet.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusablecarimages.dart';
@@ -76,6 +77,9 @@ class _CarimagesState extends ConsumerState<Carimages> {
       selectedImage = await compressImage(selectedImage);
     }
 
+    final croppedImage = await cropImage(selectedImage);
+  if (croppedImage == null) return;
+
     if (!mounted) return;
 
     // Dialog Preview
@@ -86,7 +90,7 @@ class _CarimagesState extends ConsumerState<Carimages> {
         content: SizedBox(
           width: MediaQuery.of(context).size.width * 0.4,
           height: MediaQuery.of(context).size.height * 0.3,
-          child: Image.file(selectedImage, fit: BoxFit.contain),
+          child: Image.file(croppedImage, fit: BoxFit.contain),
         ),
         actions: [
           Padding(
@@ -101,7 +105,7 @@ class _CarimagesState extends ConsumerState<Carimages> {
               // ✅ Upload
               final uploadedPath = await ref
                   .read(carFormProvider.notifier)
-                  .uploadCarImage(selectedImage, fieldName);
+                  .uploadCarImage(croppedImage, fieldName);
 
               if (!mounted) return; // <-- check again
 

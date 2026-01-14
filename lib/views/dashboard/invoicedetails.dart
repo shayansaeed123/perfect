@@ -1,11 +1,13 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/database/my_shared.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablaimage.dart';
 import 'package:project/reuse/reusablebtn.dart';
+import 'package:project/reuse/reusabledialog.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/views/dashboard/addCars.dart';
 import 'package:project/views/dashboard/carevalutiondetails.dart';
@@ -209,24 +211,68 @@ class Invoicedetails extends StatelessWidget {
                       Expanded(child: reusableRichText('Certificate Charges: ', total, colorController.blackColor)),
                     ],
                   ),
+                  reusablaSizaBox(context, 0.018),
+                  reusableText('Status',color: colorController.blackColor,fontweight: FontWeight.bold, fontsize: 16),
+                  reusablaSizaBox(context, 0.015),
+                  Row(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: reusableRichText('Status: ', '$status_name', colorController.blackColor)),
+                      Expanded(child: reusableRichText('Date : ', invoiceDate, colorController.blackColor)),
+                    ],
+                  ),
+                  reusablaSizaBox(context, 0.015),
+                  Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(child: reusableRichText('Payment Link: ', 'https://car.greenzoneliving.org/paynow.php?invoiceids=$code', colorController.blackColor)),
+                      InkWell(
+                        onTap: (){
+                          Clipboard.setData(ClipboardData(text: "${Utils.baseUrlImages}paynow.php?invoiceids=$code"));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Link copied to clipboard")),
+                            );
+                        },
+                        child: Image.asset('assets/images/copy.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,height: MediaQuery.of(context).size.height * 0.04,)),
+                      InkWell(
+                        onTap: ()async{
+                          final Uri url = Uri.parse(
+                            "${Utils.baseUrlImages}paynow.php?invoiceids=$code",
+                          );
+          
+                          bool launched = await launchUrl(
+                            url,
+                            mode: LaunchMode.externalApplication,
+                          );
+          
+                          if (!launched) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Could not launch URL")),
+                            );
+                          }
+                        },
+                        child: Image.asset('assets/images/website.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,height: MediaQuery.of(context).size.height * 0.04,)),
+                    ],
+                  ),
+                  
                   reusablaSizaBox(context, 0.02),
                   Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      reusableImage(context, image1),
-                      reusableImage(context, image2),
-                      reusableImage(context, image3),
-                      reusableImage(context, image4),
+                      reusableImage(context, image1,(){reusableDialog(context, image1);}),
+                      reusableImage(context, image2,(){reusableDialog(context, image2);}),
+                      reusableImage(context, image3,(){reusableDialog(context, image3);}),
+                      reusableImage(context, image4,(){reusableDialog(context, image4);}),
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
                   Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      reusableImage(context, image5),
-                      reusableImage(context, image6),
-                      reusableImage(context, image7),
-                      reusableImage(context, image8),
+                      reusableImage(context, image5,(){reusableDialog(context, image5);}),
+                      reusableImage(context, image6,(){reusableDialog(context, image6);}),
+                      reusableImage(context, image7,(){reusableDialog(context, image7);}),
+                      reusableImage(context, image8,(){reusableDialog(context, image8);}),
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
@@ -265,20 +311,74 @@ class Invoicedetails extends StatelessWidget {
                             
                           // }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
                         ),
+                        if(MySharedPrefrence().get_designation_id() == '12')...[
+                          Container(
+                          width: MediaQuery.sizeOf(context).width * 0.15,
+                          height: MediaQuery.sizeOf(context).height * 0.05,
+                          decoration: BoxDecoration(
+                            color: colorController.whiteColor,
+                            borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => AddCars(editId: id),
+                              ),
+                            );
+                            },
+                            child: Image.asset('assets/images/download.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,))
+                          // IconButton(onPressed: ()async{
+                            
+                          // }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
+                        ),
+                  ],
                       ],
                     )
                   ],
                   reusablaSizaBox(context, 0.015),
-                  if(MySharedPrefrence().get_designation_id() == '12')...[
-                     reusableBtn(context, 'Edit', (){
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AddCars(editId: id),
+                  Container(
+                    padding: EdgeInsets.all(9),
+                    // height: MediaQuery.sizeOf(context).width * 0.1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(11.0),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFFffcb00),
+                          colorController.mainColor,
+                        ],
                       ),
-                    );
-                  },width: 0.8),
-                  ],
+                    ),
+                    child: IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              reusableText('$customerName',color: colorController.blackColor,fontsize: 16),
+                              reusableText('$bankName',color: colorController.blackColor,fontsize: 16),
+                              reusableText('$invoiceDate',color: colorController.blackColor,fontsize: 16),
+                            ],
+                          ),
+                           SizedBox(
+                            height: double.infinity,
+                             child: VerticalDivider(
+                               color: Colors.black,
+                               thickness: 1,
+                               width: 20,
+                             ),
+                           ),
+                           reusableText('AED $totalValue',color: colorController.blackColor,fontsize: 18)
+                        ],
+                      ),
+                    ),
+                  ),
+                  
                   // reusablaSizaBox(context, 0.015),
                   // reusableBtn(context, 'Car Evalution Details', (){
                   //   Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(
@@ -294,7 +394,7 @@ class Invoicedetails extends StatelessWidget {
                   //                         totalValue: totalValue,
                   //                         ),));
                   // },width: 0.8),
-                  reusablaSizaBox(context, 0.02),
+                  reusablaSizaBox(context, 0.03),
                 ],
               ),
             ),
