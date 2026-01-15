@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/database/my_shared.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablaimage.dart';
+import 'package:project/reuse/reusablebottomsheet.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabledialog.dart';
 import 'package:project/reuse/reusabletext.dart';
@@ -14,7 +16,7 @@ import 'package:project/views/dashboard/addCars.dart';
 import 'package:project/views/dashboard/carevalutiondetails.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Invoicedetails extends StatelessWidget {
+class Invoicedetails extends ConsumerWidget {
   final String applicationNo;
   final String id;
   final String address;
@@ -43,6 +45,7 @@ class Invoicedetails extends StatelessWidget {
   final String bankName;
   final String status_name;
   final String statusAction;
+  final String customerEmail;
   final String code;
   final String image1;
   final String image2;
@@ -57,7 +60,7 @@ class Invoicedetails extends StatelessWidget {
   required this.customerName,required this.cylinder,required this.engineNo,required this.fuel,
   required this.model,required this.odometer,required this.option,required this.platno,required this.make, required this.makeImage,
   required this.requestfor,required this.specification,required this.total,required this.tranmissiontype,
-  required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate,
+  required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate, required this.customerEmail,
   required this.id, required this.totalValue, required this.bankName, required this.status_name, required this.code,required this.statusAction,
   required this.image1,required this.image2,required this.image3,required this.image4,required this.image5,required this.image6,required this.image7,required this.image8,
   });
@@ -67,7 +70,7 @@ class Invoicedetails extends StatelessWidget {
   return NumberFormat('#,##0', 'en_US').format(number);
 }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
       backgroundColor: colorController.whiteColor,
         appBar: AppBar(
@@ -212,7 +215,7 @@ class Invoicedetails extends StatelessWidget {
                   Row(
                      crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(child: reusableRichText('Request For: ', requestfor, colorController.blackColor)),
+                      Expanded(child: reusableRichText('Customer Email: ', customerEmail, colorController.blackColor)),
                       Expanded(child: reusableRichText('Certificate Charges: ', total, colorController.blackColor)),
                     ],
                   ),
@@ -257,6 +260,7 @@ class Invoicedetails extends StatelessWidget {
                           }
                         },
                         child: Image.asset('assets/images/website.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,height: MediaQuery.of(context).size.height * 0.04,)),
+                        
                     ],
                   ),
                   
@@ -281,39 +285,40 @@ class Invoicedetails extends StatelessWidget {
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
-                  if(statusAction == '3')...[
-                    Row(
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          width: MediaQuery.sizeOf(context).width * 0.15,
-                          height: MediaQuery.sizeOf(context).height * 0.05,
-                          decoration: BoxDecoration(
-                            color: colorController.whiteColor,
-                            borderRadius: BorderRadius.circular(7)
-                          ),
-                          child: InkWell(
-                            onTap: ()async{
-                              final Uri url = Uri.parse(
-                            "${Utils.baseUrlImages}invoice_4.php?invoiceids=$code",
-                          );
-          
-                          bool launched = await launchUrl(
-                            url,
-                            mode: LaunchMode.externalApplication,
-                          );
-          
-                          if (!launched) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Could not launch URL")),
-                            );
-                          }
-                            },
-                            child: Image.asset('assets/images/downloa.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,))
-                          // IconButton(onPressed: ()async{
-                            
-                          // }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
-                        ),
+                      if(statusAction == '3')...[
+                            Container(
+                              width: MediaQuery.sizeOf(context).width * 0.15,
+                              height: MediaQuery.sizeOf(context).height * 0.05,
+                              decoration: BoxDecoration(
+                                color: colorController.whiteColor,
+                                borderRadius: BorderRadius.circular(7)
+                              ),
+                              child: InkWell(
+                                onTap: ()async{
+                                  final Uri url = Uri.parse(
+                                "${Utils.baseUrlImages}invoice_4.php?invoiceids=$code",
+                              );
+              
+                              bool launched = await launchUrl(
+                                url,
+                                mode: LaunchMode.externalApplication,
+                              );
+              
+                              if (!launched) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Could not launch URL")),
+                                );
+                              }
+                                },
+                                child: Image.asset('assets/images/downloa.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,))
+                              // IconButton(onPressed: ()async{
+                                
+                              // }, icon: Icon(Icons.print_rounded),color: colorController.lightblackColor,iconSize: MediaQuery.sizeOf(context).width * 0.08,),
+                            ),
+                        ],
                         if(MySharedPrefrence().get_designation_id() == '12')...[
                           Container(
                           width: MediaQuery.sizeOf(context).width * 0.15,
@@ -333,10 +338,36 @@ class Invoicedetails extends StatelessWidget {
                             },
                             child: Image.asset('assets/images/edit.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,)),
                         ),
-                  ],
+                      
                       ],
-                    )
-                  ],
+                      InkWell(
+                        onTap: (){
+                          openResendCertificateBottomSheet(
+                            context,
+                            ref,
+                            requestForEmail: requestfor,
+                            customerEmail: customerEmail,
+                          );
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(11),
+                                            // height: MediaQuery.sizeOf(context).width * 0.1,
+                                            decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFFffcb00),
+                            colorController.mainColor,
+                          ],
+                        ),
+                                            ),
+                          child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
+                          ),
+                      )
+                    ],
+                  ),
                   reusablaSizaBox(context, 0.015),
                   Container(
                     padding: EdgeInsets.all(9),

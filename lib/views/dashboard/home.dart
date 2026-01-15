@@ -258,7 +258,7 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                                             customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
                                             engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
                                             odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
-                                            requestfor: invoice.requestedFor??'', specification: invoice.specification, 
+                                            requestfor: invoice.requestedFor??'', specification: invoice.specification, customerEmail: invoice.customer_email ?? '',
                                             total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make, makeImage: invoice.makeImage,
                                             trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
                                             totalValue: invoice.totalValue,bankName: invoice.bankName ?? '',status_name: invoice.status_name ?? '',code: invoice.code,
