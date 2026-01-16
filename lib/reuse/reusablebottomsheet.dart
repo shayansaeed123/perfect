@@ -6,6 +6,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/keyboardcontroller.dart';
 import 'package:project/controllers/notifier/emailnotifier.dart';
+import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 
@@ -234,6 +235,7 @@ void openBottomSheet(BuildContext context,WidgetRef ref,VoidCallback ontapCamera
 
 void openResendCertificateBottomSheet(
   BuildContext context,
+  String code,
   WidgetRef ref, {
   required String requestForEmail,
   required String customerEmail,
@@ -260,14 +262,15 @@ void openResendCertificateBottomSheet(
     context: context,
     topRadius: const Radius.circular(20),
     backgroundColor: Colors.white,
-    builder: (_) => const ResendCertificateSheet(),
+    builder: (_) => ResendCertificateSheet(code: code,),
   );
 }
 
 
 
 class ResendCertificateSheet extends ConsumerWidget {
-  const ResendCertificateSheet({super.key});
+  String code;
+  ResendCertificateSheet({super.key,required this.code});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -342,12 +345,38 @@ class ResendCertificateSheet extends ConsumerWidget {
       
               reusablaSizaBox(context, 0.03),
       
-              reusableBtn(context, 'Resend', emails.isEmpty
-                      ? null
-                      : () {
-                          debugPrint('Emails to resend: $emails');
+              // reusableBtn(context, 'Resend', emails.isEmpty
+              //         ? null
+              //         : () {
+              //             debugPrint('Emails to resend: $emails');
+              //             Navigator.pop(context);
+              //           },),
+
+              reusableBtn(
+                context,
+                'Resend',
+                emails.isEmpty
+                    ? null
+                    : () async {
+                        try {
+                          final apiMessage = await ref
+                              .read(resendCertificateProvider.notifier)
+                              .resendCertificate(
+                                code: code,
+                              );
+
                           Navigator.pop(context);
-                        },),
+
+                          /// ✅ Success Message from API
+                          Utils.snakbarSuccess(context, apiMessage);
+
+                        } catch (errorMessage) {
+
+                          /// ❌ Error Message from API
+                          Utils.snakbar(context, errorMessage.toString());
+                        }
+                      },
+              )
             ],
           ),
         ),
@@ -380,7 +409,7 @@ class EmailChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(child: reusableText(email,color: colorController.blackColor,fontsize: 18)),
+            Expanded(child: reusableText(email,color: colorController.blackColor,fontsize: 17)),
             // const SizedBox(width: 8),
             GestureDetector(
               onTap: onRemove,

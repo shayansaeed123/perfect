@@ -344,6 +344,7 @@ class Invoicedetails extends ConsumerWidget {
                         onTap: (){
                           openResendCertificateBottomSheet(
                             context,
+                            code,
                             ref,
                             requestForEmail: requestfor,
                             customerEmail: customerEmail,

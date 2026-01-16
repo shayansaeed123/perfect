@@ -1,5 +1,7 @@
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:project/controllers/color_controller.dart';
@@ -15,6 +17,7 @@ class Utils {
   static String invoiceListingUrl = "${baseUrl}invoice_listing.php";
   static String getInvoice = '${baseUrl}get_invoice.php?id=';
   static String editInvoice = '${baseUrl}edit_invoice.php';
+  static String resendEmail = 'resend_email.php';
 
   static void fieldFocusChange(
       BuildContext context, FocusNode current, FocusNode nextFocus) {
@@ -34,7 +37,7 @@ class Utils {
 
   static snakbarSuccess(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: colorController.progressbarColor,
+      backgroundColor: colorController.whiteColor,
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 2),
       content: reusableText(message, color: colorController.btnColor),
@@ -63,3 +66,13 @@ class Utils {
   }
   
 }
+
+final dioProvider = Provider<Dio>((ref) {
+  return Dio(
+    BaseOptions(
+      baseUrl: '${Utils.baseUrl}',
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+    ),
+  );
+});
