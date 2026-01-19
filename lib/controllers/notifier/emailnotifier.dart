@@ -65,14 +65,15 @@ class ResendCertificateNotifier extends StateNotifier<List<String>> {
   final dio = ref.read(dioProvider);
   final service = ResendCertificateService(dio);
 
+  
+
   try {
     final response = await service.resendEmail(
       emails: state,
       code: code,
     );
-
+    print(response);
     final data = response.data;
-    print(data.toString());
 
     /// CASE 1: Plain string
     if (data is String) {
@@ -106,11 +107,9 @@ class ResendCertificateNotifier extends StateNotifier<List<String>> {
   }
 }
 
-
-
   /// 🔹 Clear (optional)
-  void clear() {
-    state = [];
-  }
+  // void clear() {
+  //   state = [];
+  // }
 }
 
