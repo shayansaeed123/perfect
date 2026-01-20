@@ -103,4 +103,19 @@ class PerfectRepo {
 }
 
 
+static Future<int> fetchPercentage() async {
+    final url = Uri.parse(
+        '${Utils.baseUrl}masterapi.php?percentage=1');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['percentage'][0]['percentage'];
+    } else {
+      throw Exception('Failed to fetch percentage');
+    }
+  }
+
+
 }

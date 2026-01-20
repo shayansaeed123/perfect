@@ -61,6 +61,7 @@ class ResendCertificateNotifier extends StateNotifier<List<String>> {
 
   Future<String> resendCertificate({
   required String code,
+  required String paid,
 }) async {
   final dio = ref.read(dioProvider);
   final service = ResendCertificateService(dio);
@@ -71,6 +72,7 @@ class ResendCertificateNotifier extends StateNotifier<List<String>> {
     final response = await service.resendEmail(
       emails: state,
       code: code,
+      paid: paid,
     );
     print(response);
     final data = response.data;
@@ -111,5 +113,6 @@ class ResendCertificateNotifier extends StateNotifier<List<String>> {
   // void clear() {
   //   state = [];
   // }
+
 }
 

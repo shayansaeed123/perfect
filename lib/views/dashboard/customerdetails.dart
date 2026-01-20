@@ -3,10 +3,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
+import 'package:project/controllers/notifier/percentagenotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/models/dropdownmodel.dart';
@@ -18,6 +20,8 @@ import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
 
+final NumberFormat currencyFormatter = NumberFormat('#,##0');
+
 class CustomerDetails extends ConsumerStatefulWidget {
   const CustomerDetails({super.key});
 
@@ -27,6 +31,9 @@ class CustomerDetails extends ConsumerStatefulWidget {
 
 class _CustomerDetailsState extends ConsumerState<CustomerDetails> {
 
+  
+        final TextEditingController amountController = TextEditingController();
+
   late FocusNode customerNameFocus;
 late FocusNode customerEmailFocus;
 late FocusNode addressFocus;
@@ -34,7 +41,7 @@ late FocusNode bankRefEmailFocus;
 late FocusNode bankRefFocus;
 late FocusNode chargesFocus;
  
-  DateTime? selectedDate;
+  // DateTime? selectedDate;
   late DateTime lastDate = DateTime(1970, 1, 1);
   DropdownItem? selectedBanks;
   DropdownItem? selectedEmail;
@@ -43,7 +50,7 @@ late FocusNode chargesFocus;
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedDate = DateTime.now();
+    // selectedDate = DateTime.now();
 
     customerNameFocus = FocusNode();
   customerEmailFocus = FocusNode();
@@ -51,6 +58,12 @@ late FocusNode chargesFocus;
   bankRefFocus = FocusNode();
   bankRefEmailFocus = FocusNode();
   chargesFocus = FocusNode();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ref.read(carFormProvider.notifier).updateDate(
+          DateTime.now().toIso8601String(),
+        );
+  });
   }
 
 
@@ -61,11 +74,21 @@ late FocusNode chargesFocus;
      final form = ref.watch(carFormProvider);
 
     // convert provider date string to DateTime
-    DateTime? selectedDate = form.inspectionDate != null && form.inspectionDate!.isNotEmpty
-        ? DateTime.tryParse(form.inspectionDate!)
-        : null;
+    final DateTime selectedDate = (form.inspectionDate != null &&
+        form.inspectionDate!.isNotEmpty)
+    ? DateTime.tryParse(form.inspectionDate!) ?? DateTime.now()
+    : DateTime.now();
 
         final editId = ref.watch(editInvoiceIdProvider);
+        final percentageAsync = ref.watch(percentageProvider);
+        final total = ref.watch(totalProvider);
+
+        if (total != null) {
+        reusabletextfieldcontroller.total.text =
+            currencyFormatter.format(total);
+      } else {
+        reusabletextfieldcontroller.total.clear();
+      }
     return Stack(
       children: [
         Center(
@@ -119,30 +142,29 @@ late FocusNode chargesFocus;
                   reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Custormer Email', colorController.textfieldColor, customerEmailFocus, (){}),
                   reusablaSizaBox(context, 0.015),
-                  // reusableDate(context, lastDate, selectedDate, (DateTime timeofday){
-                  //                     setState(() {
-                  //                               selectedDate = timeofday;
-                  //                               print('date $selectedDate');
-                  //                             });
-                  //                             ref.read(carFormProvider.notifier).updateDate(timeofday.toIso8601String());
-                  //                   }, Icon(Icons.calendar_month_outlined),'Inspection Date',
-                  //                   enabled: editId == null,),
-                  reusableDate(
+                  reusableTodayDateField(
                     context,
-                    selectedDate,
-                    (DateTime date) {
-                      setState(() {
-                        selectedDate = date;
-                      });
-                      print(selectedDate);
-                      ref
-                          .read(carFormProvider.notifier)
-                          .updateDate(date.toIso8601String());
-                    },
+                    selectedDate!,
                     const Icon(Icons.calendar_month_outlined),
                     'Inspection Date',
-                    enabled: editId == null,
                   ),
+
+                  // reusableDate(
+                  //   context,
+                  //   selectedDate,
+                  //   (DateTime date) {
+                  //     setState(() {
+                  //       selectedDate = date;
+                  //     });
+                  //     print(selectedDate);
+                  //     ref
+                  //         .read(carFormProvider.notifier)
+                  //         .updateDate(date.toIso8601String());
+                  //   },
+                  //   const Icon(Icons.calendar_month_outlined),
+                  //   'Inspection Date',
+                  //   enabled: editId == null,
+                  // ),
                   reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.address, 'Address', colorController.textfieldColor, addressFocus, (){}),
                   reusablaSizaBox(context, 0.015),
@@ -196,13 +218,49 @@ late FocusNode chargesFocus;
                   reusableText('Payment Details',color:colorController.textColorDark,fontsize: 18,),
                   reusablaSizaBox(context, 0.015),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      reusableText('AED',color: colorController.blackColor,fontsize: 16),
-                      reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, chargesFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73),
+                      // reusableText('AED',color: colorController.blackColor,fontsize: 16),
+                      // Expanded(child: reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, chargesFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73)),
+                      Expanded(child: reusableTextField(context, amountController, 
+                      'Enter amount (min 200)', 
+                      colorController.textfieldColor, 
+                      chargesFocus, (){},
+                      fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73,
+                      onChanged: (value) {
+                        if (value.isEmpty) {
+                        ref.read(amountProvider.notifier).state = null;
+                        reusabletextfieldcontroller.total.clear();
+                        return;
+                      }
+
+                      final parsed = double.tryParse(value);
+                      if (parsed != null) {
+                        ref.read(amountProvider.notifier).state = parsed;
+                      }
+                      },)),
+                      SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
+                      percentageAsync.when(
+                                data: (percentage) {
+                                  return reusableText('$percentage%',color: colorController.mainColor,fontsize: 14);
+                                },
+                                loading: () => const CircularProgressIndicator(),
+                                error: (e, _) => Text(
+                                  'Error loading percentage',
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ),
                     ],
                   ),
-                  
+                  reusablaSizaBox(context, 0.015),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(child: reusableText('AED',color: colorController.blackColor,fontsize: 16)),
+                      SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
+                      reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: false,width: 0.73,),
+                    ],
+                  ),
                   // reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   // reusablaSizaBox(context, 0.03),
@@ -232,7 +290,7 @@ late FocusNode chargesFocus;
                     inspectionDate: inspectionDateStr,
                     address: address,
                     customerEmail: customerEmail,
-                    total: reusabletextfieldcontroller.total.text.trim(),
+                    total: amountController.text.trim(),
                     // evaluationNo: evaluationNo,
                   );
         

@@ -80,7 +80,7 @@ import 'package:project/controllers/color_controller.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 
-Widget VehicleListCard(BuildContext context,String brandLogo,String carName,String ownerName,String dateTime,String status,VoidCallback onTap){
+Widget VehicleListCard(BuildContext context,String brandLogo,String carName,String ownerName,String dateTime,String status,String image, VoidCallback onTap){
   return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -151,11 +151,12 @@ Widget VehicleListCard(BuildContext context,String brandLogo,String carName,Stri
                 children: [
                   reusableText(status,color: colorController.lightblackColor,fontsize: 12),
                   const SizedBox(height: 4),
-                  Icon(
-                    Icons.handshake,
-                    color: colorController.grayTextColor,
-                    size: 20,
-                  ),
+                  // Icon(
+                  //   Icons.handshake,
+                  //   color: colorController.grayTextColor,
+                  //   size: 20,
+                  // ),
+                  Image.asset(image,fit: BoxFit.contain,height: MediaQuery.sizeOf(context).height *0.035,)
                 ],
               ),
             ),

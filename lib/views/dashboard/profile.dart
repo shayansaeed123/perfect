@@ -55,7 +55,7 @@ class _ProfileState extends ConsumerState<Profile> {
                     ref.invalidate(bottomNavProvider);
 
                     // 3️⃣ Clear invoice related providers
-                    ref.invalidate(invoiceStreamProvider);
+                    ref.invalidate(invoiceProvider);
                     ref.invalidate(invoiceFilterProvider);
 
                     // 4️⃣ Agar dropdown providers hain

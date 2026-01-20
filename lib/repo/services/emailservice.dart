@@ -32,8 +32,10 @@ class ResendCertificateService {
   Future<Response> resendEmail({
   required List<String> emails,
   required String code,
+  required String paid,
 }) async {
   final payload = {
+    'paid': paid,
     'code': code,
     'resend_mail': emails,
   };
@@ -69,6 +71,7 @@ class ResendCertificateService {
       rethrow;
     }
 }
+
 
 }
 

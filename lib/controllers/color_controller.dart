@@ -28,12 +28,12 @@ class ColorController extends GetxController{
   Color loginBtnColor =  Color(0xFFcf93d9);
   Color categoryBtnColor = Color(0xFF934dfe);
   Color itemsBtnColor= Color(0xFF934dfe);
-  Color qualificationItemsColors = Color(0xFFbe0000);
+  Color underreview = Color.fromARGB(255, 227, 119, 119);
     Color sidebarBg = Color(0xFFe3e18e);
-      Color arabicTextBtnColor = Color(0xFF15a79d);
+      Color unpaid= Color.fromARGB(255, 133, 227, 221);
       Color urduTextBtnColor = Color(0xFF4d53ff);
       Color turkishTextBtnColor = Color(0xFFdd46ba);
-      Color appliedTextColor = Color(0xFF4bae4f);
+      Color paid = Color.fromARGB(255, 156, 235, 159);
       Color redColor = Color(0xFFbe0000);
       Color greenColor = Color(0xFF3ab9a9);
 

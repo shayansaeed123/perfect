@@ -15,26 +15,34 @@ final invoiceRepositoryProvider = Provider<PerfectRepo>((ref) {
 
 /// Holds current invoice id being edited. Null => create mode.
 final editInvoiceIdProvider = StateProvider<String?>((ref) => null);
+final isRefreshingProvider = StateProvider<bool>((ref) => false);
 
 
-final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
+final invoiceProvider = FutureProvider.autoDispose<List<Invoice>>((ref) async {
   final repo = ref.read(invoiceRepositoryProvider);
-
   final filter = ref.watch(invoiceFilterProvider);
 
-  final invoices = await repo.fetchInvoices(filter);
-  yield invoices;
-
-  while (true) {
-    await Future.delayed(const Duration(seconds: 10));
-    try {
-      final invoices = await repo.fetchInvoices(filter);
-      yield invoices;
-    } catch (e) {
-      yield [];
-    }
-  }
+  return repo.fetchInvoices(filter);
 });
+
+// final invoiceStreamProvider = StreamProvider<List<Invoice>>((ref) async* {
+//   final repo = ref.read(invoiceRepositoryProvider);
+
+//   final filter = ref.watch(invoiceFilterProvider);
+
+//   final invoices = await repo.fetchInvoices(filter);
+//   yield invoices;
+
+//   while (true) {
+//     await Future.delayed(const Duration(seconds: 10));
+//     try {
+//       final invoices = await repo.fetchInvoices(filter);
+//       yield invoices;
+//     } catch (e) {
+//       yield [];
+//     }
+//   }
+// });
 
 
 
@@ -75,4 +83,12 @@ final invoiceFilterProvider =
     StateNotifierProvider<InvoiceFilterNotifier, InvoiceFilter>((ref) {
   return InvoiceFilterNotifier();
 });
+
+Future<void> onRefresh(WidgetRef ref) async {
+  ref.read(isRefreshingProvider.notifier).state = true;
+
+  await ref.refresh(invoiceProvider.future);
+
+  ref.read(isRefreshingProvider.notifier).state = false;
+}
 

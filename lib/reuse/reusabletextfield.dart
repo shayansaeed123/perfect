@@ -39,6 +39,7 @@ Widget reusableTextField(
                           
       obscureText: obscureText,
       onChanged: enabled ? onChanged : null,
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         filled: true,
         fillColor: enabled ? fillColor : Colors.grey.shade200,
@@ -164,3 +165,6 @@ ReadOnlyField(String label, String value,
       ),
     );
   }
+
+
+  

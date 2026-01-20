@@ -9,6 +9,7 @@ import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
+import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/repo/validation.dart';
@@ -77,8 +78,14 @@ class _CarimagesState extends ConsumerState<Carimages> {
       selectedImage = await compressImage(selectedImage);
     }
 
-    final croppedImage = await cropImage(selectedImage);
-  if (croppedImage == null) return;
+    final File? croppedImage = await Navigator.push<File>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => CropScreen(imageFile: selectedImage),
+        ),
+      );
+    // final croppedImage = await cropImage(selectedImage);
+    if (croppedImage == null) return;
 
     if (!mounted) return;
 
@@ -112,14 +119,14 @@ class _CarimagesState extends ConsumerState<Carimages> {
               if (uploadedPath != null) {
                 setState(() {
                   switch (fieldName) {
-                    case 'profile_image1': profile_image1 = selectedImage; break;
-                    case 'profile_image2': profile_image2 = selectedImage; break;
-                    case 'profile_image3': profile_image3 = selectedImage; break;
-                    case 'profile_image4': profile_image4 = selectedImage; break;
-                    case 'profile_image5': profile_image5 = selectedImage; break;
-                    case 'profile_image6': profile_image6 = selectedImage; break;
-                    case 'profile_image7': profile_image7 = selectedImage; break;
-                    case 'profile_image8': profile_image8 = selectedImage; break;
+                    case 'profile_image1': profile_image1 = croppedImage; break;
+                    case 'profile_image2': profile_image2 = croppedImage; break;
+                    case 'profile_image3': profile_image3 = croppedImage; break;
+                    case 'profile_image4': profile_image4 = croppedImage; break;
+                    case 'profile_image5': profile_image5 = croppedImage; break;
+                    case 'profile_image6': profile_image6 = croppedImage; break;
+                    case 'profile_image7': profile_image7 = croppedImage; break;
+                    case 'profile_image8': profile_image8 = croppedImage; break;
                   }
                 });
 

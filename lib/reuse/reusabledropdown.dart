@@ -262,6 +262,7 @@ Widget reusableDropdown<T>(
 
   void openPicker() {
     ref.read(keyboardControllerProvider).hide();
+    searchController.clear();
 
     Future.delayed(Duration(milliseconds: 120), (){
       showCupertinoModalBottomSheet(
@@ -319,8 +320,8 @@ Widget reusableDropdown<T>(
                         controller: searchController,
                         focusNode: searchFocusNode,
                         autofocus: false,
-                        readOnly: true,
-                        canRequestFocus: false,
+                        readOnly: false,
+                        canRequestFocus: true,
                         style: const TextStyle(fontSize: 12.5),
                         decoration: InputDecoration(
                           hintText: 'Search',

@@ -225,11 +225,20 @@ class Invoicedetails extends ConsumerWidget {
                   Row(
                      crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(child: reusableRichText('Status: ', '$status_name', colorController.blackColor)),
+
+                      // Expanded(child: Container(
+                      //   padding: EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.02),
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(8),
+                      //     color: statusAction == '3' ? colorController.paid : statusAction == '2' ? colorController.unpaid : statusAction == '1' ? colorController.underreview : colorController.whiteColor
+                      //   ),
+                      //   child: reusableRichText('Status: ', '$status_name', colorController.blackColor))),
+                      Expanded(child: reusableStatusText(context, 'Status: ', '$status_name', colorController.blackColor, statusAction)),
                       Expanded(child: reusableRichText('Date : ', invoiceDate, colorController.blackColor)),
                     ],
                   ),
-                  reusablaSizaBox(context, 0.015),
+                  if(statusAction == '2')...[
+                    reusablaSizaBox(context, 0.015),
                   Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -263,6 +272,7 @@ class Invoicedetails extends ConsumerWidget {
                         
                     ],
                   ),
+                  ],
                   
                   reusablaSizaBox(context, 0.02),
                   Row(
@@ -340,11 +350,34 @@ class Invoicedetails extends ConsumerWidget {
                         ),
                       
                       ],
-                      InkWell(
+                      if(MySharedPrefrence().get_designation_id() == '34')...[
+                          Container(
+                          width: MediaQuery.sizeOf(context).width * 0.15,
+                          height: MediaQuery.sizeOf(context).height * 0.05,
+                          decoration: BoxDecoration(
+                            color: colorController.whiteColor,
+                            borderRadius: BorderRadius.circular(7)
+                          ),
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => AddCars(editId: id),
+                              ),
+                            );
+                            },
+                            child: Image.asset('assets/images/edit.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,)),
+                        ),
+                      
+                      ],
+                      if(statusAction == '3')... [
+                        InkWell(
                         onTap: (){
                           openResendCertificateBottomSheet(
                             context,
                             code,
+                            '1',
                             ref,
                             requestForEmail: requestfor,
                             customerEmail: customerEmail,
@@ -367,6 +400,36 @@ class Invoicedetails extends ConsumerWidget {
                           child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
                           ),
                       )
+                      ]else... [
+                        InkWell(
+                        onTap: (){
+                          openResendCertificateBottomSheet(
+                            context,
+                            code,
+                            '0',
+                            ref,
+                            requestForEmail: requestfor,
+                            customerEmail: customerEmail,
+                          );
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(11),
+                                            // height: MediaQuery.sizeOf(context).width * 0.1,
+                                            decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFFffcb00),
+                            colorController.mainColor,
+                          ],
+                        ),
+                                            ),
+                          child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
+                          ),
+                      )
+                      ]
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
@@ -388,14 +451,16 @@ class Invoicedetails extends ConsumerWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              reusableText('$customerName',color: colorController.blackColor,fontsize: 16),
-                              reusableText('$bankName',color: colorController.blackColor,fontsize: 16),
-                              reusableText('$invoiceDate',color: colorController.blackColor,fontsize: 16),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                reusableText('$customerName',color: colorController.blackColor,fontsize: 16),
+                                reusableText('$bankName',color: colorController.blackColor,fontsize: 16),
+                                reusableText('$invoiceDate',color: colorController.blackColor,fontsize: 16),
+                              ],
+                            ),
                           ),
                            SizedBox(
                             height: double.infinity,
@@ -426,7 +491,7 @@ class Invoicedetails extends ConsumerWidget {
                   //                         totalValue: totalValue,
                   //                         ),));
                   // },width: 0.8),
-                  reusablaSizaBox(context, 0.03),
+                  reusablaSizaBox(context, 0.06),
                 ],
               ),
             ),

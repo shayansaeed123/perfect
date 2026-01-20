@@ -236,6 +236,7 @@ void openBottomSheet(BuildContext context,WidgetRef ref,VoidCallback ontapCamera
 void openResendCertificateBottomSheet(
   BuildContext context,
   String code,
+  String paid,
   WidgetRef ref, {
   required String requestForEmail,
   required String customerEmail,
@@ -262,7 +263,7 @@ void openResendCertificateBottomSheet(
     context: context,
     topRadius: const Radius.circular(20),
     backgroundColor: Colors.white,
-    builder: (_) => ResendCertificateSheet(code: code,),
+    builder: (_) => ResendCertificateSheet(code: code,paid: paid,),
   );
 }
 
@@ -270,7 +271,8 @@ void openResendCertificateBottomSheet(
 
 class ResendCertificateSheet extends ConsumerWidget {
   String code;
-  ResendCertificateSheet({super.key,required this.code});
+  String paid;
+  ResendCertificateSheet({super.key,required this.code,required this.paid});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -363,6 +365,7 @@ class ResendCertificateSheet extends ConsumerWidget {
                               .read(resendCertificateProvider.notifier)
                               .resendCertificate(
                                 code: code,
+                                paid: paid,
                               );
 
                           Navigator.pop(context);

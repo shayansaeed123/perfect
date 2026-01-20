@@ -67,7 +67,7 @@ class Carevalutiondetails extends StatelessWidget {
                   ReadOnlyField(
                     "Payment Status:",
                     statusName,
-                    backgroundColor: statusName == "Paid" ? colorController.appliedTextColor : Colors.redAccent.withOpacity(0.5),
+                    backgroundColor: statusName == "Paid" ? colorController.paid : Colors.redAccent.withOpacity(0.5),
                     textColor: statusName == "Paid" ? colorController.whiteColor : Colors.red[900],
                   ),
                   ReadOnlyField("Customer Name:", customerName),
