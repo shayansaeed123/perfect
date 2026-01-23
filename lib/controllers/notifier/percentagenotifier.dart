@@ -6,6 +6,8 @@ final percentageProvider = FutureProvider<int>((ref) async {
 });
 final amountProvider = StateProvider<double?>((ref) => null);
 
+final totalValueProvider = StateProvider<double?>((ref) => null);
+
 
 final totalProvider = Provider<double?>((ref) {
   final amount = ref.watch(amountProvider);

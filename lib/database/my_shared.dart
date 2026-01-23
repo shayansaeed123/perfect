@@ -34,6 +34,7 @@ class MySharedPrefrence {
     _box.write('user_id', userId);
   }
 
+
   String get_designation_id() {
     return _box.read<String>('designation_id') ?? '';
   }

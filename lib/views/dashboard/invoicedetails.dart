@@ -234,7 +234,7 @@ class Invoicedetails extends ConsumerWidget {
                       //   ),
                       //   child: reusableRichText('Status: ', '$status_name', colorController.blackColor))),
                       Expanded(child: reusableStatusText(context, 'Status: ', '$status_name', colorController.blackColor, statusAction)),
-                      Expanded(child: reusableRichText('Date : ', invoiceDate, colorController.blackColor)),
+                      // Expanded(child: reusableRichText('Date : ', invoiceDate, colorController.blackColor)),
                     ],
                   ),
                   if(statusAction == '2')...[

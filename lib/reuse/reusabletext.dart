@@ -46,14 +46,14 @@ Widget reusableStatusText(BuildContext context, String txt1, String txt2, Color 
     text: TextSpan(
       children: [
         TextSpan(
-          text: '$txt1',
+          text: '$txt1   ',
           style: TextStyle(
             color: colorController.lightBlackColor,
             fontSize: fontsize,
           ),
         ),
         WidgetSpan(
-          alignment: PlaceholderAlignment.top,
+          alignment: PlaceholderAlignment.middle,
           child: Container(
                         padding: EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.01),
                         decoration: BoxDecoration(

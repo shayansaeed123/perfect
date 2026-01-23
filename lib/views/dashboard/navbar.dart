@@ -16,9 +16,22 @@ import 'package:project/views/dashboard/profile.dart';
 
 
 
-class NavBar extends ConsumerWidget {
+class NavBar extends ConsumerStatefulWidget {
   const NavBar({super.key});
 
+  @override
+  ConsumerState<NavBar> createState() => _NavBarState();
+}
+
+class _NavBarState extends ConsumerState<NavBar> {
+
+   @override
+  void initState() {
+    super.initState();
+    // 👇 Reset tab on open
+    ref.read(bottomNavProvider.notifier).state = 0;
+  } 
+  
   Widget getCurrentScreen(int index) {
     switch (index) {
       case 0:
@@ -33,7 +46,7 @@ class NavBar extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context,) {
     final selectedIndex = ref.watch(bottomNavProvider);
 
     return Scaffold(

@@ -20,7 +20,11 @@ import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/reuse/reusabletextfield.dart';
 
-final NumberFormat currencyFormatter = NumberFormat('#,##0');
+final currencyFormatter = NumberFormat.currency(
+  locale: 'en_AE',
+  symbol: '',
+  decimalDigits: 1, 
+);
 
 class CustomerDetails extends ConsumerStatefulWidget {
   const CustomerDetails({super.key});
@@ -60,10 +64,16 @@ late FocusNode chargesFocus;
   chargesFocus = FocusNode();
 
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    ref.read(carFormProvider.notifier).updateDate(
-          DateTime.now().toIso8601String(),
-        );
+    final editId = ref.read(editInvoiceIdProvider);
+
+    // ✅ ONLY CREATE MODE
+    if (editId == null) {
+      ref.read(carFormProvider.notifier).updateDate(
+            DateTime.now().toIso8601String(),
+          );
+    }
   });
+  
   }
 
 
@@ -83,12 +93,14 @@ late FocusNode chargesFocus;
         final percentageAsync = ref.watch(percentageProvider);
         final total = ref.watch(totalProvider);
 
-        if (total != null) {
+        if(editId == null){
+          if (total != null) {
         reusabletextfieldcontroller.total.text =
             currencyFormatter.format(total);
       } else {
         reusabletextfieldcontroller.total.clear();
       }
+        }
     return Stack(
       children: [
         Center(
@@ -144,7 +156,7 @@ late FocusNode chargesFocus;
                   reusablaSizaBox(context, 0.015),
                   reusableTodayDateField(
                     context,
-                    selectedDate!,
+                    selectedDate,
                     const Icon(Icons.calendar_month_outlined),
                     'Inspection Date',
                   ),
@@ -217,7 +229,8 @@ late FocusNode chargesFocus;
                   reusablaSizaBox(context, 0.015),
                   reusableText('Payment Details',color:colorController.textColorDark,fontsize: 18,),
                   reusablaSizaBox(context, 0.015),
-                  Row(
+                  if(editId == null)...[
+                    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // reusableText('AED',color: colorController.blackColor,fontsize: 16),
@@ -253,6 +266,7 @@ late FocusNode chargesFocus;
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
+                  ],
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -268,6 +282,19 @@ late FocusNode chargesFocus;
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.02),
                   reusableBtn(context, 'Next', (){
+
+                    // final amountText = amountController.text.trim();
+                    // final amount = double.tryParse(amountText);
+                    // if (amountText.isEmpty) {
+                    //   Utils.snakbar(context, 'Please enter amount');
+                    //   return;}
+                    // if (amount == null) {
+                    //   Utils.snakbar(context, 'Please enter a valid amount');
+                    //   return;}
+                    // if (amount < 200) {
+                    //   Utils.snakbar(context, 'Amount must be at least 200');
+                    //   return; }
+
                     final requestedFor =
                   reusabletextfieldcontroller.requested.text.trim();
               final customerName =
@@ -277,6 +304,9 @@ late FocusNode chargesFocus;
               final address = reusabletextfieldcontroller.address.text.trim();
               final evaluationNo =
                   reusabletextfieldcontroller.evaluationNo.text.trim();
+                  final totalText = editId != null
+    ? reusabletextfieldcontroller.total.text.trim()
+    : amountController.text.trim();
                   // final selectbank = selectedBanks?.id;
         
               // ✅ Validate
@@ -290,7 +320,7 @@ late FocusNode chargesFocus;
                     inspectionDate: inspectionDateStr,
                     address: address,
                     customerEmail: customerEmail,
-                    total: amountController.text.trim(),
+                    total: totalText,
                     // evaluationNo: evaluationNo,
                   );
         
@@ -308,6 +338,7 @@ late FocusNode chargesFocus;
                     address: address,
                     customerEmail: customerEmail,
                     total: reusabletextfieldcontroller.total.text,
+                    // total: amountText,
                     bankRef: reusabletextfieldcontroller.bankRef.text,
                     // evaluationNo: evaluationNo,
                   );

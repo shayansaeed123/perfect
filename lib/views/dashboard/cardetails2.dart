@@ -7,6 +7,7 @@ import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
+import 'package:project/controllers/notifier/percentagenotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
@@ -175,7 +176,17 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, carConFocus, (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.totalValue, 'Total Value', colorController.textfieldColor, totalFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null),
+                  reusableTextField(context, reusabletextfieldcontroller.totalValue, 'Total Value', colorController.textfieldColor, totalFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      ref.read(totalValueProvider.notifier).state = null;
+                      return;
+                    }
+
+                    final parsed = double.tryParse(value);
+                    ref.read(totalValueProvider.notifier).state = parsed;
+                  },),
+
                   reusablaSizaBox(context, 0.02),
                    Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,6 +195,21 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   ref.read(progressProvider.notifier).state = 1;
                 },width: 0.4),
                 reusableBtn(context, 'Next', () {
+                  final totalValueText = reusabletextfieldcontroller.totalValue.text.trim();
+                  final totalValue = double.tryParse(totalValueText);
+
+                  if (totalValueText.isEmpty) {
+                    Utils.snakbar(context, 'Please enter total value');
+                    return; }
+                  if (totalValue == null) {
+                    Utils.snakbar(context, 'Please enter a valid total value');
+                    return; }
+                  if (totalValue < 5000) {
+                    Utils.snakbar(context, 'Amount must be at least 5000');
+                    return; }
+
+
+
                   final error = ref
                       .read(carDetails2ValidationProvider.notifier)
                       .validate(
@@ -194,7 +220,8 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         transmission: selectTransmission?.id,
                         option: reusabletextfieldcontroller.option.text.trim(),
                         carCondition: reusabletextfieldcontroller.carCondition.text.trim(),
-                        totalValue: reusabletextfieldcontroller.totalValue.text.trim(),
+                        // totalValue: reusabletextfieldcontroller.totalValue.text.trim(),
+                        totalValue: totalValueText,
                       );
         
                   if (error != null) {
@@ -211,7 +238,8 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         transmission: selectTransmission?.id,
                         option: reusabletextfieldcontroller.option.text,
                         carCondition: reusabletextfieldcontroller.carCondition.text,
-                        totalVAlue: reusabletextfieldcontroller.totalValue.text,
+                        // totalVAlue: reusabletextfieldcontroller.totalValue.text,
+                        totalVAlue: totalValueText,
                         enterby: MySharedPrefrence().get_user_id(),
                       );
         

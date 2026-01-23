@@ -41,6 +41,9 @@ class CustomerValidationNotifier extends StateNotifier<CustomerValidationState> 
     } else if (total.isEmpty) {
       state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges is required");
       return state.errorMessage;
+    }else if (int.parse(total) <= 200){
+      state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges must be at least 200");
+      return state.errorMessage;
     }
      
     // else if (evaluationNo.isEmpty) {

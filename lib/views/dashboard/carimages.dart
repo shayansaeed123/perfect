@@ -8,11 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/carfoamnotifier.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
+import 'package:project/controllers/notifier/loginnotifier.dart';
 import 'package:project/controllers/notifier/progressnotifier.dart';
 import 'package:project/controllers/notifier/textimagenotifier.dart';
 import 'package:project/controllers/textfieldcontrollers.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/repo/validation.dart';
+import 'package:project/reuse/animationdialog.dart';
 import 'package:project/reuse/reusablaimage.dart';
 import 'package:project/reuse/reusablebottomsheet.dart';
 import 'package:project/reuse/reusablebtn.dart';
@@ -403,18 +405,50 @@ class _CarimagesState extends ConsumerState<Carimages> {
                   
                 if (success) {
                   // clear and navigate
-                  ref.read(carFormProvider.notifier).resetForm();
-                  reusabletextfieldcontroller.clearAll();
-                  ref.read(progressProvider.notifier).state = 0;
-                  ref.read(editInvoiceIdProvider.notifier).state = null;
+                  // ref.read(carFormProvider.notifier).resetForm();
+                  // reusabletextfieldcontroller.clearAll();
+                  // ref.read(progressProvider.notifier).state = 0;
+                  // ref.read(editInvoiceIdProvider.notifier).state = null;
                   
                   if (context.mounted) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const NavBar()),
-                      (route) => false,
-                    );
-                    Utils.snakbarSuccess(context, editId != null ? '✅ Invoice updated successfully' : '✅ Form submitted successfully');
+                    
+                    // Utils.snakbarSuccess(context, editId != null ? '✅ Invoice updated successfully' : '✅ Form submitted successfully');
+                    // showLottieDialog(context, 'assets/images/submit.json', editId != null ? 'Invoice updated successfully' : 'Form submitted successfully', (){
+                    //   ref.read(bottomNavProvider.notifier).state = 0;
+                    //   Navigator.pushAndRemoveUntil(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const NavBar()),
+                    //   (route) => false,
+                    // );
+                    // });
+                    showLottieDialog(
+  context,
+  'assets/images/submit.json',
+  editId != null
+      ? 'Invoice updated successfully'
+      : 'Form submitted successfully',
+  () {
+
+    // 1️⃣ HOME tab force
+    ref.read(bottomNavProvider.notifier).state = 0;
+
+    // 2️⃣ REAL navigation (ROOT navigator)
+    Navigator.of(context, rootNavigator: true)
+        .pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const NavBar()),
+      (route) => false,
+    );
+
+    // 3️⃣ AB form reset karo (after navigation)
+    Future.microtask(() {
+      ref.read(carFormProvider.notifier).resetForm();
+      reusabletextfieldcontroller.clearAll();
+      ref.read(progressProvider.notifier).state = 0;
+      ref.read(editInvoiceIdProvider.notifier).state = null;
+    });
+  },
+);
+
                   }
                 } else {
                   if (context.mounted) Utils.snakbar(context, "❌ Operation failed");

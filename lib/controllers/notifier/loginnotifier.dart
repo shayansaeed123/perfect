@@ -51,6 +51,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         _pref.setUserLoginStatus(true);
         _pref.set_user_id(userId);
         _pref.set_designation_id(result["designation_id"]);
+        _pref.set_user_name(result["username"]);
+        _pref.set_user_image(result['image']);
+        _pref.set_user_contact(result['contact']);
+        _pref.set_user_email(result['email']);
 
         state = state.copyWith(
           isLoading: false,

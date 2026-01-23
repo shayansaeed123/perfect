@@ -7,6 +7,7 @@ import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/keyboardcontroller.dart';
 import 'package:project/controllers/notifier/emailnotifier.dart';
 import 'package:project/repo/utils.dart';
+import 'package:project/reuse/animationdialog.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabletext.dart';
 
@@ -368,10 +369,12 @@ class ResendCertificateSheet extends ConsumerWidget {
                                 paid: paid,
                               );
 
-                          Navigator.pop(context);
 
                           /// ✅ Success Message from API
-                          Utils.snakbarSuccess(context, apiMessage);
+                          // Utils.snakbarSuccess(context, apiMessage);
+                          showLottieDialog(context, 'assets/images/email.json', 'email send successfully', (){
+                            Navigator.pop(context);
+                          });
 
                         } catch (errorMessage) {
 

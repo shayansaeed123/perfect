@@ -29,7 +29,7 @@ class PerfectRepo {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
+      print('login data $data');
       return data; // API ka response map me return kar do
     } else {
       throw Exception("Failed to login. Status: ${response.statusCode}");

@@ -12,6 +12,7 @@ Widget reusableTodayDateField(
 ) {
   final controller = TextEditingController(
     text: DateFormat('dd-MM-yyyy').format(selectedDate),
+    // text: DateFormat('yyyy-MM-dd').format(selectedDate),
   );
 
   return TextFormField(

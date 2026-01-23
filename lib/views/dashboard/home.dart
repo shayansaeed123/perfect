@@ -259,7 +259,7 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                                           invoice.customerName ?? '', 
                                           invoice.invoiceDate, 
                                           invoice.status_name ?? '',
-                                          invoice.statusAction == '3' ? 'assets/images/paid.png' : invoice.statusAction == '2' ? 'assets/images/unpaid.png' : invoice.statusAction == '1' ? 'assets/images/pending.png' : '',
+                                          invoice.statusAction == '3' ? 'assets/images/paid.png' : invoice.statusAction == '2' ? 'assets/images/unpaid.png' : invoice.statusAction == '1' ? 'assets/images/pending.png' : 'assets/images/pending.png',
                                            (){
                                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                                             return Invoicedetails(
