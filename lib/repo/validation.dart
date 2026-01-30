@@ -38,13 +38,14 @@ class CustomerValidationNotifier extends StateNotifier<CustomerValidationState> 
     } else if (requestedFor == null || requestedFor.isEmpty) {
       state = CustomerValidationState(errorMessage: "⚠️ bank person email is requried");
       return state.errorMessage;
-    } else if (total.isEmpty) {
-      state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges is required");
-      return state.errorMessage;
-    }else if (int.parse(total) <= 200){
-      state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges must be at least 200");
-      return state.errorMessage;
-    }
+    } 
+    // else if (total.isEmpty) {
+    //   state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges is required");
+    //   return state.errorMessage;
+    // }else if (int.parse(total) <= 200){
+    //   state = CustomerValidationState(errorMessage: "⚠️ Certificate Charges must be at least 200");
+    //   return state.errorMessage;
+    // }
      
     // else if (evaluationNo.isEmpty) {
     //   state = CustomerValidationState(errorMessage: "⚠️ Evaluation No is required");
@@ -143,6 +144,7 @@ class CarDetails2ValidationNotifier
     required String option,
     required String carCondition,
     required String totalValue,
+    required String comments
   }) {
       if (bodyType == null || bodyType.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Body Type is required");
@@ -164,6 +166,9 @@ class CarDetails2ValidationNotifier
       return state.errorMessage;
     }  else if (carCondition.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Car Condition is required");
+      return state.errorMessage;
+    }else if (comments.isEmpty) {
+      state = CarDetails2ValidationState(errorMessage: "⚠️ Comment is required");
       return state.errorMessage;
     } else if (totalValue.isEmpty) {
       state = CarDetails2ValidationState(errorMessage: "⚠️ Total Value is required");

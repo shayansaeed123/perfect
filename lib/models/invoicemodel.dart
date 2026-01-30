@@ -34,6 +34,7 @@ class Invoice {
   final String? statusAction;
   final String? bankName;
   final String? customer_email;
+  final String? comments;
   String? image1;
   String? image2;
   String? image3;
@@ -77,6 +78,7 @@ class Invoice {
     this.statusAction,
     this.bankName,
     this.customer_email,
+    this.comments,
     this.image1,
     this.image2,
     this.image3,
@@ -122,6 +124,7 @@ class Invoice {
       statusAction: json['action_status'],
       bankName: json['BankName'],
       customer_email: json['customer_email'],
+      comments: json['comments'],
       image1: json['image1'],
       image2: json['image2'],
       image3: json['image3'],
@@ -168,6 +171,7 @@ class Invoice {
       "action_status": statusAction,
       "BankName": bankName,
       "customer_email": customer_email,
+      "comments": comments,
       "image1": image1,
     "image2": image2,
     "image3": image3,

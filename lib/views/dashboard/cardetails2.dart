@@ -34,6 +34,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
   late FocusNode carConFocus;
   late FocusNode totalFocus;
   late FocusNode cylanFocus;
+  late FocusNode commentFocus;
 
   DropdownItem? selectedType;
   DropdownItem? selectedfuel;
@@ -48,6 +49,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
     carConFocus = FocusNode();
   totalFocus = FocusNode();
   cylanFocus = FocusNode();
+  commentFocus = FocusNode();
   }
   
   @override
@@ -176,6 +178,8 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                   reusableTextField(context, reusabletextfieldcontroller.carCondition, 'Car Condition', colorController.textfieldColor, carConFocus, (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.015),
+                  reusableTextArea(context, reusabletextfieldcontroller.comments, 'Comment', colorController.textfieldColor, commentFocus, (){},enabled: editId == null),
+                  reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.totalValue, 'Total Value', colorController.textfieldColor, totalFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,
                   onChanged: (value) {
                     if (value.isEmpty) {
@@ -194,21 +198,26 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                 reusableBtn(context, 'Back', () {
                   ref.read(progressProvider.notifier).state = 1;
                 },width: 0.4),
-                reusableBtn(context, 'Next', () {
+                reusableBtn(context, 'Next', () async{
                   final totalValueText = reusabletextfieldcontroller.totalValue.text.trim();
                   final totalValue = double.tryParse(totalValueText);
 
                   if (totalValueText.isEmpty) {
                     Utils.snakbar(context, 'Please enter total value');
-                    return; }
+                    return;
+                  }
                   if (totalValue == null) {
                     Utils.snakbar(context, 'Please enter a valid total value');
-                    return; }
-                  if (totalValue < 5000) {
-                    Utils.snakbar(context, 'Amount must be at least 5000');
-                    return; }
-
-
+                    return;
+                  }
+                  final minTotalCharges = await ref.read(totalChargesProvider.future);
+                  if (totalValue < minTotalCharges) {
+                    Utils.snakbar(
+                      context,
+                      'Amount must be at least $minTotalCharges',
+                    );
+                    return;
+                  }
 
                   final error = ref
                       .read(carDetails2ValidationProvider.notifier)
@@ -221,6 +230,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         option: reusabletextfieldcontroller.option.text.trim(),
                         carCondition: reusabletextfieldcontroller.carCondition.text.trim(),
                         // totalValue: reusabletextfieldcontroller.totalValue.text.trim(),
+                        comments: reusabletextfieldcontroller.comments.text.trim(),
                         totalValue: totalValueText,
                       );
         
@@ -239,6 +249,7 @@ class _CarDetails2State extends ConsumerState<CarDetails2> {
                         option: reusabletextfieldcontroller.option.text,
                         carCondition: reusabletextfieldcontroller.carCondition.text,
                         // totalVAlue: reusabletextfieldcontroller.totalValue.text,
+                        comments: reusabletextfieldcontroller.comments.text,
                         totalVAlue: totalValueText,
                         enterby: MySharedPrefrence().get_user_id(),
                       );

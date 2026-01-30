@@ -78,6 +78,14 @@ class _ProfileState extends ConsumerState<Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Expanded(child: reusableText('Designation :',fontsize: 18,color: colorController.blackColor)),
+                          reusableText(MySharedPrefrence().get_designation_name(),fontsize: 18,color: colorController.blackColor),
+                        ],
+                      ),
+                      Divider(color: colorController.grayTextColor,height: 2,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
                           Expanded(child: reusableText('Email :',fontsize: 18,color: colorController.blackColor)),
                           reusableText(MySharedPrefrence().get_user_email(),fontsize: 18,color: colorController.blackColor),
                         ],

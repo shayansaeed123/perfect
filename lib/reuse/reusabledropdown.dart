@@ -272,118 +272,123 @@ Widget reusableDropdown<T>(
       builder: (_) {
         return StatefulBuilder(
           builder: (context, setModalState) {
-            return Material(
-              color: colorController.whiteColor,
-              child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.35,
-                child: Column(
-                  children: [
-                    // HEADER
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      child: Row(
-                        children: [
-                          Text(
-                            label,
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              color: colorController.mainColor,
-                            ),
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              if (filteredItems.isNotEmpty) {
-                                onChanged(
-                                    filteredItems[tempSelectedIndex]);
-                              }
-                            },
-                            child: Text(
-                              'Done',
+            return Padding(
+              padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom, // 👈 magic line
+      ),
+              child: Material(
+                color: colorController.whiteColor,
+                child: SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.35,
+                  child: Column(
+                    children: [
+                      // HEADER
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        child: Row(
+                          children: [
+                            Text(
+                              label,
                               style: TextStyle(
-                                color: colorController.mainColor,
                                 fontSize: 12.5,
+                                color: colorController.mainColor,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // 🔍 SEARCH FIELD
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 6),
-                      child: TextField(
-                        controller: searchController,
-                        focusNode: searchFocusNode,
-                        autofocus: false,
-                        readOnly: false,
-                        canRequestFocus: true,
-                        style: const TextStyle(fontSize: 12.5),
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          isDense: true,
-                          prefixIcon:
-                              const Icon(Icons.search, size: 18),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setModalState(() {
-                            filteredItems = items
-                                .where((e) => getLabel(e)
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()))
-                                .toList();
-
-                            tempSelectedIndex = 0;
-                          });
-                        },
-                      ),
-                    ),
-
-                    const Divider(height: 1),
-
-                    // PICKER
-                    Expanded(
-                      child: filteredItems.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'No results found',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            )
-                          : CupertinoPicker(
-                              itemExtent: 36,
-                              magnification: 1.05,
-                              useMagnifier: true,
-                              scrollController:
-                                  FixedExtentScrollController(
-                                initialItem: tempSelectedIndex,
-                              ),
-                              onSelectedItemChanged: (index) {
-                                tempSelectedIndex = index;
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                                if (filteredItems.isNotEmpty) {
+                                  onChanged(
+                                      filteredItems[tempSelectedIndex]);
+                                }
                               },
-                              children: filteredItems
-                                  .map(
-                                    (e) => Center(
-                                      child: Text(
-                                        getLabel(e),
-                                        style:
-                                            const TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                              child: Text(
+                                'Done',
+                                style: TextStyle(
+                                  color: colorController.mainColor,
+                                  fontSize: 12.5,
+                                ),
+                              ),
                             ),
-                    ),
-                  ],
+                          ],
+                        ),
+                      ),
+              
+                      // 🔍 SEARCH FIELD
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 6),
+                        child: TextField(
+                          controller: searchController,
+                          focusNode: searchFocusNode,
+                          autofocus: false,
+                          readOnly: false,
+                          canRequestFocus: true,
+                          style: const TextStyle(fontSize: 12.5),
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            isDense: true,
+                            prefixIcon:
+                                const Icon(Icons.search, size: 18),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setModalState(() {
+                              filteredItems = items
+                                  .where((e) => getLabel(e)
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()))
+                                  .toList();
+              
+                              tempSelectedIndex = 0;
+                            });
+                          },
+                        ),
+                      ),
+              
+                      const Divider(height: 1),
+              
+                      // PICKER
+                      Expanded(
+                        child: filteredItems.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'No results found',
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              )
+                            : CupertinoPicker(
+                                itemExtent: 36,
+                                magnification: 1.05,
+                                useMagnifier: true,
+                                scrollController:
+                                    FixedExtentScrollController(
+                                  initialItem: tempSelectedIndex,
+                                ),
+                                onSelectedItemChanged: (index) {
+                                  tempSelectedIndex = index;
+                                },
+                                children: filteredItems
+                                    .map(
+                                      (e) => Center(
+                                        child: Text(
+                                          getLabel(e),
+                                          style:
+                                              const TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

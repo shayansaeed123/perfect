@@ -245,23 +245,23 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   ),
                 
                   // reusablaSizaBox(context, 0.1),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      reusableTextField(context, reusabletextfieldcontroller.vin, 'Vin', colorController.textfieldColor, vinFocus, (){},width: 0.73,
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                      reusableTextField(context, reusabletextfieldcontroller.vin, 'Vin', colorController.textfieldColor, vinFocus, (){},
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                         LengthLimitingTextInputFormatter(20),
                       ]),
-                      reusableIconBtn(context, (){
-                        // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context, OcrTarget.vin);
-                        openBottomSheet(context,ref,
-                      (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.camera);},
-                      (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.gallery);},
-                        );
-                      })
-                    ],
-                  ),
+                  //     reusableIconBtn(context, (){
+                  //       // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context, OcrTarget.vin);
+                  //       openBottomSheet(context,ref,
+                  //     (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.camera);},
+                  //     (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.gallery);},
+                  //       );
+                  //     })
+                  //   ],
+                  // ),
                   reusablaSizaBox(context, 0.015),
                   specsAsync.when(
                     data: (spec){
@@ -281,23 +281,24 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.015),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      reusableTextField(context, reusabletextfieldcontroller.engineNo, 'Engine No', colorController.textfieldColor, engineNoFocus, (){},width: 0.73,
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                      reusableTextField(context, reusabletextfieldcontroller.engineNo, 'Engine No', colorController.textfieldColor, engineNoFocus, (){},
+                      // width: 0.73,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                         LengthLimitingTextInputFormatter(20),
                       ]),
-                      reusableIconBtn(context, (){
-                        // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo);
-                        openBottomSheet(context,ref,
-                      (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo,ImageSource.camera);},
-                      (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo,ImageSource.gallery);},
-                        );
-                      })
-                    ],
-                  ),
+                  //     reusableIconBtn(context, (){
+                  //       // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo);
+                  //       openBottomSheet(context,ref,
+                  //     (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo,ImageSource.camera);},
+                  //     (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.engineNo,ImageSource.gallery);},
+                  //       );
+                  //     })
+                  //   ],
+                  // ),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Color', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),

@@ -117,5 +117,40 @@ static Future<int> fetchPercentage() async {
     }
   }
 
+  static Future<int> fetchCharges() async {
+  final url = Uri.parse(
+    '${Utils.baseUrl}masterapi.php?charges=1',
+  );
+
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+
+    // list ke andar se first charge nikalna
+    return data['charges'][0]['charges'];
+  } else {
+    throw Exception('Failed to load charges');
+  }
+}
+
+
+static Future<int> fetchTotalCharges() async {
+  final url = Uri.parse(
+    '${Utils.baseUrl}masterapi.php?total_charges=1',
+  );
+
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+
+    // list ke andar se first charge nikalna
+    return data['total_charges'][0]['total_charges'];
+  } else {
+    throw Exception('Failed to load charges');
+  }
+}
+
 
 }

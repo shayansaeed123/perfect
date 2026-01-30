@@ -425,8 +425,8 @@ class _CarimagesState extends ConsumerState<Carimages> {
   context,
   'assets/images/submit.json',
   editId != null
-      ? 'Invoice updated successfully'
-      : 'Form submitted successfully',
+      ? 'Lead has been successfully updated'
+      : 'Lead has been successfully created',
   () {
 
     // 1️⃣ HOME tab force

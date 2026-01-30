@@ -168,3 +168,78 @@ ReadOnlyField(String label, String value,
 
 
   
+
+  Widget reusableTextArea(
+  BuildContext context,
+  TextEditingController controller,
+  String labelText,
+  Color color,
+  FocusNode focusnode,
+  Function onsubmit, {
+  TextInputType keyboardType = TextInputType.multiline,
+  Color fillColor = Colors.white,
+  double width = 1,
+  ValueChanged<String>? onChanged,
+  bool enabled = true,
+  int minLines = 3,
+  int maxLines = 5,
+  List<TextInputFormatter>? inputFormatters,
+}) {
+  return Container(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      style: const TextStyle(fontSize: 12.5),
+      focusNode: focusnode,
+      enabled: enabled,
+      minLines: minLines,
+      maxLines: maxLines,
+      inputFormatters: enabled ? inputFormatters : null,
+      textCapitalization: TextCapitalization.sentences,
+      onChanged: enabled ? onChanged : null,
+      onFieldSubmitted: (_) {
+        if (enabled) onsubmit();
+      },
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: enabled ? fillColor : Colors.grey.shade200,
+        labelText: labelText,
+        labelStyle: TextStyle(color: color, fontSize: 11.5),
+        hintStyle:
+            TextStyle(color: colorController.textfieldColor),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: enabled
+                ? colorController.textfieldBorderColorBefore
+                : Colors.grey,
+            width: 1.5,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: enabled
+                ? colorController.textfieldBorderColorBefore
+                : Colors.grey,
+            width: 1.5,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: enabled
+                ? colorController.textfieldBorderColorAfter
+                : Colors.grey,
+            width: 1.5,
+          ),
+        ),
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      ),
+    ),
+  );
+}

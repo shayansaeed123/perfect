@@ -66,6 +66,9 @@ final TextEditingController _requested = TextEditingController();
   final TextEditingController _totalValue = TextEditingController();
   TextEditingController get totalValue => _totalValue;
 
+  final TextEditingController _comments = TextEditingController();
+  TextEditingController get comments => _comments;
+
   final TextEditingController _search = TextEditingController();
   TextEditingController get search => _search;
 
@@ -147,6 +150,8 @@ final TextEditingController _title = TextEditingController();
   final TextEditingController _customerEmail = TextEditingController();
   TextEditingController get customerEmail => _customerEmail;
 
+  final TextEditingController _perController = TextEditingController();
+  TextEditingController get perController => _perController;
 
 
   final TextEditingController _furtherInfo = TextEditingController();

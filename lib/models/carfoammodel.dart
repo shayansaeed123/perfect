@@ -37,6 +37,7 @@ class CarFormData {
   String? option;
   String? carCondition;
   String? totalValue;
+  String? comments;
   String? enterby;
 
   // Car Images (List of file paths or base64)
@@ -77,6 +78,7 @@ class CarFormData {
     this.carCondition,
     this.total,
     this.totalValue,
+    this.comments,
     this.enterby,
     this.profile_image1,
     this.profile_image2,
@@ -116,6 +118,7 @@ class CarFormData {
     String? carCondition,
     String? total,
     String? totalValue,
+    String? comments,
     String? enterby,
     String? profile_image1,
     String? profile_image2,
@@ -154,6 +157,7 @@ class CarFormData {
       carCondition: carCondition ?? this.carCondition,
       total: total ?? this.total,
       totalValue: totalValue ?? this.totalValue,
+      comments: comments ?? this.comments,
       enterby: enterby ?? this.enterby,
       profile_image1: profile_image1 ?? this.profile_image1,
       profile_image2: profile_image2 ?? this.profile_image2,
@@ -195,6 +199,7 @@ class CarFormData {
     "car_condition": carCondition ?? "",
     "Total": total ?? "",
     "TotalValue": totalValue ?? "",
+    "comments": comments ?? "",
     "enterby": enterby ?? "",
     "profile_image1": profile_image1 ?? "",
     "profile_image2": profile_image2 ?? "",

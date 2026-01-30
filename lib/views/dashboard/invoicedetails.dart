@@ -200,7 +200,7 @@ class Invoicedetails extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(child: reusableRichText('Application No: ', applicationNo, colorController.blackColor)),
-                      Expanded(child: reusableRichText('Customer name: ', customerName, colorController.blackColor)),
+                      Expanded(child: reusableRichText('Enter By: ', customerName, colorController.blackColor)),
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),
@@ -371,65 +371,99 @@ class Invoicedetails extends ConsumerWidget {
                         ),
                       
                       ],
-                      if(statusAction == '3')... [
-                        InkWell(
-                        onTap: (){
+                      if (statusAction.trim() == '2' ||
+                        statusAction.trim() == '3') ...[
+                      InkWell(
+                        onTap: () {
                           openResendCertificateBottomSheet(
                             context,
                             code,
-                            '1',
+                            statusAction.trim() == '3' ? '1' : '0',
                             ref,
                             requestForEmail: requestfor,
                             customerEmail: customerEmail,
                           );
                         },
                         child: Container(
-                            padding: EdgeInsets.all(11),
-                                            // height: MediaQuery.sizeOf(context).width * 0.1,
-                                            decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFFffcb00),
-                            colorController.mainColor,
-                          ],
-                        ),
-                                            ),
-                          child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
+                          padding: EdgeInsets.all(11),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFFffcb00),
+                                colorController.mainColor,
+                              ],
+                            ),
                           ),
-                      )
-                      ]else... [
-                        InkWell(
-                        onTap: (){
-                          openResendCertificateBottomSheet(
-                            context,
-                            code,
-                            '0',
-                            ref,
-                            requestForEmail: requestfor,
-                            customerEmail: customerEmail,
-                          );
-                        },
-                        child: Container(
-                            padding: EdgeInsets.all(11),
-                                            // height: MediaQuery.sizeOf(context).width * 0.1,
-                                            decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFFffcb00),
-                            colorController.mainColor,
-                          ],
-                        ),
-                                            ),
-                          child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
+                          child: reusableText(
+                            'Resend Email',
+                            color: colorController.blackColor,
+                            fontsize: 14,
                           ),
-                      )
-                      ]
+                        ),
+                      ),
+                    ],
+                      // if(statusAction == '3')... [
+                      //   InkWell(
+                      //   onTap: (){
+                      //     openResendCertificateBottomSheet(
+                      //       context,
+                      //       code,
+                      //       '1',
+                      //       ref,
+                      //       requestForEmail: requestfor,
+                      //       customerEmail: customerEmail,
+                      //     );
+                      //   },
+                      //   child: Container(
+                      //       padding: EdgeInsets.all(11),
+                      //                       // height: MediaQuery.sizeOf(context).width * 0.1,
+                      //                       decoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(8.0),
+                      //   gradient: LinearGradient(
+                      //     begin: Alignment.topLeft,
+                      //     end: Alignment.bottomRight,
+                      //     colors: [
+                      //       Color(0xFFffcb00),
+                      //       colorController.mainColor,
+                      //     ],
+                      //   ),
+                      //                       ),
+                      //     child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
+                      //     ),
+                      // )
+                      // ]else... [
+                      //   InkWell(
+                      //   onTap: (){
+                      //     openResendCertificateBottomSheet(
+                      //       context,
+                      //       code,
+                      //       '0',
+                      //       ref,
+                      //       requestForEmail: requestfor,
+                      //       customerEmail: customerEmail,
+                      //     );
+                      //   },
+                      //   child: Container(
+                      //       padding: EdgeInsets.all(11),
+                      //                       // height: MediaQuery.sizeOf(context).width * 0.1,
+                      //                       decoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(8.0),
+                      //   gradient: LinearGradient(
+                      //     begin: Alignment.topLeft,
+                      //     end: Alignment.bottomRight,
+                      //     colors: [
+                      //       Color(0xFFffcb00),
+                      //       colorController.mainColor,
+                      //     ],
+                      //   ),
+                      //                       ),
+                      //     child: reusableText('Resend Email',color: colorController.blackColor,fontsize: 14),
+                      //     ),
+                      // )
+                      // ]
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),

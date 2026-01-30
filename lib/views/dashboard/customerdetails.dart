@@ -23,7 +23,7 @@ import 'package:project/reuse/reusabletextfield.dart';
 final currencyFormatter = NumberFormat.currency(
   locale: 'en_AE',
   symbol: '',
-  decimalDigits: 1, 
+  decimalDigits: 0, 
 );
 
 class CustomerDetails extends ConsumerStatefulWidget {
@@ -233,29 +233,109 @@ late FocusNode chargesFocus;
                     Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+
                       // reusableText('AED',color: colorController.blackColor,fontsize: 16),
                       // Expanded(child: reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, chargesFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73)),
-                      Expanded(child: reusableTextField(context, amountController, 
-                      'Enter amount (min 200)', 
+                      
+                      
+                      reusableText('Amount',color: colorController.grayTextColor,),
+                      SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
+                      Expanded(child: 
+                      reusableTextField(context, amountController, 
+                      '', 
                       colorController.textfieldColor, 
                       chargesFocus, (){},
                       fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73,
                       onChanged: (value) {
-                        if (value.isEmpty) {
-                        ref.read(amountProvider.notifier).state = null;
-                        reusabletextfieldcontroller.total.clear();
-                        return;
-                      }
+                      //   if (value.isEmpty) {
+                      //   ref.read(amountProvider.notifier).state = null;
+                      //   reusabletextfieldcontroller.total.clear();
+                      //   return;
+                      // }
 
-                      final parsed = double.tryParse(value);
-                      if (parsed != null) {
-                        ref.read(amountProvider.notifier).state = parsed;
-                      }
-                      },)),
+                      // final parsed = double.tryParse(value);
+                      // if (parsed != null) {
+                      //   ref.read(amountProvider.notifier).state = parsed;
+                      // }
+
+
+                      if (value.isEmpty) {
+    ref.read(amountProvider.notifier).state = null;
+    ref.read(vatAmountProvider.notifier).state = null;
+    ref.read(totalValueProvider.notifier).state = null;
+
+    reusabletextfieldcontroller.total.clear();
+    reusabletextfieldcontroller.perController.clear();
+    return;
+  }
+
+  final amount = double.tryParse(value);
+  if (amount == null) return;
+
+  ref.read(amountProvider.notifier).state = amount;
+
+  percentageAsync.whenData((percentage) {
+    final vatAmount = amount * (percentage / 100);
+    final total = amount + vatAmount;
+
+    ref.read(vatAmountProvider.notifier).state = vatAmount;
+    ref.read(totalValueProvider.notifier).state = total;
+
+    // ✅ VAT field shows AMOUNT, not %
+    reusabletextfieldcontroller.perController.text =
+        vatAmount.toStringAsFixed(2);
+
+    // ✅ Total field
+    reusabletextfieldcontroller.total.text =
+        total.toStringAsFixed(2);
+  });
+                      },),
+                      ),
+                      
+                      // percentageAsync.when(
+                      //           data: (percentage) {
+                      //             reusabletextfieldcontroller.perController.text = '$percentage%';
+                      //             return reusableTextField(
+                      //             context,
+                      //             reusabletextfieldcontroller.perController,
+                      //             'VAT',
+                      //             colorController.textfieldColor,
+                      //             FocusNode(),
+                      //             () {},
+                      //             fillColor: colorController.textColorLight,
+                      //             keyboardType: TextInputType.number,
+                      //             enabled: false, // ✅ important
+                      //           );
+                      //           },
+                      //           loading: () => const CircularProgressIndicator(),
+                      //           error: (e, _) => Text(
+                      //             'Error loading percentage',
+                      //             style: const TextStyle(color: Colors.red),
+                      //           ),
+                      //         ),
+                    ],
+                  ),
+                  reusablaSizaBox(context, 0.015),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      reusableText('VAT.',color: colorController.grayTextColor,),
                       SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
                       percentageAsync.when(
                                 data: (percentage) {
-                                  return reusableText('$percentage%',color: colorController.mainColor,fontsize: 14);
+                                  // reusabletextfieldcontroller.perController.text = '$percentage%';
+                                  return reusableTextField(
+                                  context,
+                                  reusabletextfieldcontroller.perController,
+                                  '',
+                                  colorController.textfieldColor,
+                                  FocusNode(),
+                                  () {},
+                                  fillColor: colorController.textColorLight,
+                                  keyboardType: TextInputType.number,
+                                  enabled: false, // ✅ important
+                                  width: 0.73
+                                );
                                 },
                                 loading: () => const CircularProgressIndicator(),
                                 error: (e, _) => Text(
@@ -265,14 +345,25 @@ late FocusNode chargesFocus;
                               ),
                     ],
                   ),
-                  reusablaSizaBox(context, 0.015),
+                   reusablaSizaBox(context, 0.015),
                   ],
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(child: reusableText('AED',color: colorController.blackColor,fontsize: 16)),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            reusableText('Total',color: colorController.grayTextColor),
+                            Image.asset('assets/images/dieham.png',height: 20,)
+                          ],
+                        ),
+                      ),
+                      // Expanded(child: reusableText('Total',color: colorController.grayTextColor)),
+                      // SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
+                      // Expanded(child: Image.asset('assets/images/dieham.png')),
                       SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
-                      reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: false,width: 0.73,),
+                      reusableTextField(context, reusabletextfieldcontroller.total, '', colorController.textfieldColor, FocusNode(), (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: false,width: 0.73,),
                     ],
                   ),
                   // reusableTextField(context, reusabletextfieldcontroller.requested, 'Bank Person Email', colorController.textfieldColor, FocusNode(), (){}),
@@ -281,7 +372,7 @@ late FocusNode chargesFocus;
                   // reusableTextField(context, reusabletextfieldcontroller.evaluationNo, 'Evaluation No', colorController.textfieldColor, FocusNode(), (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
                   reusablaSizaBox(context, 0.02),
-                  reusableBtn(context, 'Next', (){
+                  reusableBtn(context, 'Next', ()async{
 
                     // final amountText = amountController.text.trim();
                     // final amount = double.tryParse(amountText);
@@ -304,9 +395,35 @@ late FocusNode chargesFocus;
               final address = reusabletextfieldcontroller.address.text.trim();
               final evaluationNo =
                   reusabletextfieldcontroller.evaluationNo.text.trim();
-                  final totalText = editId != null
+    //               final totalText = editId != null
+    // ? reusabletextfieldcontroller.total.text.trim()
+    // : amountController.text.trim();
+
+      // 👇 IMPORTANT
+  final amountText = editId != null
     ? reusabletextfieldcontroller.total.text.trim()
     : amountController.text.trim();
+  final totalText = reusabletextfieldcontroller.total.text.trim();
+
+  // 1️⃣ agar Enter Amount empty hai
+  if (amountText.isEmpty) {
+    Utils.snakbar(context, "⚠️ Certificate Charges is required");
+    return;
+  }
+
+  // API se minimum charges
+  final minCharges = await ref.read(chargesProvider.future);
+
+  final totalValue = double.tryParse(totalText) ?? 0;
+
+  // 2️⃣ agar calculated certificate charges API se kam hain
+  if (totalValue < minCharges) {
+    Utils.snakbar(
+      context,
+      "⚠️ Certificate Charges must be greater than $minCharges",
+    );
+    return;
+  }
                   // final selectbank = selectedBanks?.id;
         
               // ✅ Validate
