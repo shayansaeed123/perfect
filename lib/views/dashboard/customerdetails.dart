@@ -152,7 +152,7 @@ late FocusNode chargesFocus;
                   reusableTextField(context, reusabletextfieldcontroller.customerName, 'Customer Name', colorController.textfieldColor, customerNameFocus, (){}),
                   // SizedBox(height: MediaQuery.sizeOf(context).height * 0.03,),
                   reusablaSizaBox(context, 0.015),
-                  reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Custormer Email', colorController.textfieldColor, customerEmailFocus, (){}),
+                  reusableTextField(context, reusabletextfieldcontroller.customerEmail, 'Customer Email', colorController.textfieldColor, customerEmailFocus, (){}),
                   reusablaSizaBox(context, 0.015),
                   reusableTodayDateField(
                     context,
@@ -238,9 +238,8 @@ late FocusNode chargesFocus;
                       // Expanded(child: reusableTextField(context, reusabletextfieldcontroller.total, 'Certificate Charges', colorController.textfieldColor, chargesFocus, (){},fillColor: colorController.textColorLight,keyboardType: TextInputType.number,enabled: editId == null,width: 0.73)),
                       
                       
-                      reusableText('Amount',color: colorController.grayTextColor,),
+                      Expanded(child: reusableText('Amount',color: colorController.grayTextColor,)),
                       SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
-                      Expanded(child: 
                       reusableTextField(context, amountController, 
                       '', 
                       colorController.textfieldColor, 
@@ -252,45 +251,44 @@ late FocusNode chargesFocus;
                       //   reusabletextfieldcontroller.total.clear();
                       //   return;
                       // }
-
+                      
                       // final parsed = double.tryParse(value);
                       // if (parsed != null) {
                       //   ref.read(amountProvider.notifier).state = parsed;
                       // }
-
-
+                      
+                      
                       if (value.isEmpty) {
-    ref.read(amountProvider.notifier).state = null;
-    ref.read(vatAmountProvider.notifier).state = null;
-    ref.read(totalValueProvider.notifier).state = null;
-
-    reusabletextfieldcontroller.total.clear();
-    reusabletextfieldcontroller.perController.clear();
-    return;
-  }
-
-  final amount = double.tryParse(value);
-  if (amount == null) return;
-
-  ref.read(amountProvider.notifier).state = amount;
-
-  percentageAsync.whenData((percentage) {
-    final vatAmount = amount * (percentage / 100);
-    final total = amount + vatAmount;
-
-    ref.read(vatAmountProvider.notifier).state = vatAmount;
-    ref.read(totalValueProvider.notifier).state = total;
-
-    // ✅ VAT field shows AMOUNT, not %
-    reusabletextfieldcontroller.perController.text =
-        vatAmount.toStringAsFixed(2);
-
-    // ✅ Total field
-    reusabletextfieldcontroller.total.text =
-        total.toStringAsFixed(2);
-  });
+                          ref.read(amountProvider.notifier).state = null;
+                          ref.read(vatAmountProvider.notifier).state = null;
+                          ref.read(totalValueProvider.notifier).state = null;
+                      
+                          reusabletextfieldcontroller.total.clear();
+                          reusabletextfieldcontroller.perController.clear();
+                          return;
+                        }
+                      
+                        final amount = double.tryParse(value);
+                        if (amount == null) return;
+                      
+                        ref.read(amountProvider.notifier).state = amount;
+                      
+                        percentageAsync.whenData((percentage) {
+                          final vatAmount = amount * (percentage / 100);
+                          final total = amount + vatAmount;
+                      
+                          ref.read(vatAmountProvider.notifier).state = vatAmount;
+                          ref.read(totalValueProvider.notifier).state = total;
+                      
+                          // ✅ VAT field shows AMOUNT, not %
+                          reusabletextfieldcontroller.perController.text =
+                              vatAmount.toStringAsFixed(2);
+                      
+                          // ✅ Total field
+                          reusabletextfieldcontroller.total.text =
+                              total.toStringAsFixed(2);
+                        });
                       },),
-                      ),
                       
                       // percentageAsync.when(
                       //           data: (percentage) {
@@ -319,7 +317,7 @@ late FocusNode chargesFocus;
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      reusableText('VAT.',color: colorController.grayTextColor,),
+                      Expanded(child: reusableText('VAT.',color: colorController.grayTextColor,)),
                       SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
                       percentageAsync.when(
                                 data: (percentage) {
