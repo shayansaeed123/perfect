@@ -12,6 +12,8 @@ class CarFormData {
   String? customerEmail;
   String? total;
   String? bankRef;
+  String? general_email;
+  String? amount_without_tax;
 
   // Car Details 1
   String? make;
@@ -59,6 +61,8 @@ class CarFormData {
     this.bankName,
     this.customerEmail,
     this.bankRef,
+    this.general_email,
+    this.amount_without_tax,
     this.make,
     this.model,
     this.year,
@@ -99,6 +103,8 @@ class CarFormData {
     String? bankName,
     String? customerEmail,
     String? bankRef,
+    String? general_email,
+    String? amount_without_tax,
     String? make,
     String? model,
     String? year,
@@ -138,6 +144,8 @@ class CarFormData {
       bankName: bankName ?? this.bankName,
       customerEmail: customerEmail ?? this.customerEmail,
       bankRef: bankRef ?? this.bankRef,
+      general_email: general_email ?? this.general_email,
+      amount_without_tax: amount_without_tax ?? this.amount_without_tax,
       make: make ?? this.make,
       model: model ?? this.model,
       year: year ?? this.year,
@@ -179,6 +187,8 @@ class CarFormData {
     "Invoice_Date": inspectionDate ?? "",
     "address": address ?? "",
     "bank_Reference": bankRef ?? "",
+    "general_email": general_email ?? "",
+    "amount_without_tax": amount_without_tax ?? "",
     // "ApplicationNo": evaluationNo ?? "",
     "Make": make ?? "",
     "Model": model ?? "",

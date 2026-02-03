@@ -157,6 +157,14 @@ final TextEditingController _title = TextEditingController();
   final TextEditingController _furtherInfo = TextEditingController();
   TextEditingController get furtherInfo => _furtherInfo;
 
+   final TextEditingController _general_email = TextEditingController();
+  TextEditingController get general_email => _general_email;
+
+  final TextEditingController _amount_without_tax = TextEditingController();
+  TextEditingController get amount_without_tax => _amount_without_tax;
+
+  
+
   void clearAll() {
     requested.clear();
     customerName.clear();
@@ -177,6 +185,8 @@ final TextEditingController _title = TextEditingController();
     totalValue.clear();
     carCondition.clear();
     bankRef.clear();
+    general_email.clear();
+    amount_without_tax.clear();
   }
 
 }

@@ -8,6 +8,8 @@ class Invoice {
   final String fuel;
   final String? requestedFor;
   final String? bankRef;
+  final String? general_email;
+  final String? amount_without_tax;
   final String make;
   final String makeImage;
   final String model;
@@ -35,6 +37,7 @@ class Invoice {
   final String? bankName;
   final String? customer_email;
   final String? comments;
+  final String? username;
   String? image1;
   String? image2;
   String? image3;
@@ -52,6 +55,9 @@ class Invoice {
     required this.fuel,
     this.requestedFor,
     this.bankRef,
+    this.general_email,
+    this.amount_without_tax,
+    this.username,
     required this.make,
     required this.makeImage,
     required this.model,
@@ -98,6 +104,9 @@ class Invoice {
       fuel: json['fuel'] ?? '',
       requestedFor: json['requested_for'],
       bankRef: json['bank_Reference'],
+      general_email: json['general_email'],
+      amount_without_tax: json['amount_without_tax'],
+      username: json['username'],
       make: json['Make'] ?? '',
       makeImage: json['Make_image'] ?? '',
       model: json['Model'] ?? '',
@@ -172,6 +181,9 @@ class Invoice {
       "BankName": bankName,
       "customer_email": customer_email,
       "comments": comments,
+      "general_email": general_email,
+      "amount_without_tax": amount_without_tax,
+      "username": username,
       "image1": image1,
     "image2": image2,
     "image3": image3,

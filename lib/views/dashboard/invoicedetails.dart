@@ -47,6 +47,7 @@ class Invoicedetails extends ConsumerWidget {
   final String statusAction;
   final String customerEmail;
   final String code;
+  final String username;
   final String image1;
   final String image2;
   final String image3;
@@ -59,7 +60,7 @@ class Invoicedetails extends ConsumerWidget {
   required this.address,required this.applicationNo,required this.carCondition,required this.color,
   required this.customerName,required this.cylinder,required this.engineNo,required this.fuel,
   required this.model,required this.odometer,required this.option,required this.platno,required this.make, required this.makeImage,
-  required this.requestfor,required this.specification,required this.total,required this.tranmissiontype,
+  required this.requestfor,required this.specification,required this.total,required this.tranmissiontype, required this.username,
   required this.trim,required this.type,required this.vin,required this.year,required this.invoiceDate, required this.customerEmail,
   required this.id, required this.totalValue, required this.bankName, required this.status_name, required this.code,required this.statusAction,
   required this.image1,required this.image2,required this.image3,required this.image4,required this.image5,required this.image6,required this.image7,required this.image8,
@@ -200,7 +201,7 @@ class Invoicedetails extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(child: reusableRichText('Application No: ', applicationNo, colorController.blackColor)),
-                      Expanded(child: reusableRichText('Enter By: ', customerName, colorController.blackColor)),
+                      Expanded(child: reusableRichText('Customer Name: ', customerName, colorController.blackColor)),
                     ],
                   ),
                   reusablaSizaBox(context, 0.015),

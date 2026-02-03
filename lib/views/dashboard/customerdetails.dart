@@ -23,7 +23,7 @@ import 'package:project/reuse/reusabletextfield.dart';
 final currencyFormatter = NumberFormat.currency(
   locale: 'en_AE',
   symbol: '',
-  decimalDigits: 0, 
+  decimalDigits: 2, 
 );
 
 class CustomerDetails extends ConsumerStatefulWidget {
@@ -43,6 +43,7 @@ late FocusNode customerEmailFocus;
 late FocusNode addressFocus;
 late FocusNode bankRefEmailFocus;
 late FocusNode bankRefFocus;
+late FocusNode bankGeneralFocus;
 late FocusNode chargesFocus;
  
   // DateTime? selectedDate;
@@ -60,6 +61,7 @@ late FocusNode chargesFocus;
   customerEmailFocus = FocusNode();
   addressFocus = FocusNode();
   bankRefFocus = FocusNode();
+  bankGeneralFocus = FocusNode();
   bankRefEmailFocus = FocusNode();
   chargesFocus = FocusNode();
 
@@ -227,6 +229,8 @@ late FocusNode chargesFocus;
                   reusablaSizaBox(context, 0.015),
                   reusableTextField(context, reusabletextfieldcontroller.bankRef, 'Bank Reference', colorController.textfieldColor, bankRefFocus, (){}),
                   reusablaSizaBox(context, 0.015),
+                  reusableTextField(context, reusabletextfieldcontroller.general_email, 'Bank General Email', colorController.textfieldColor, bankGeneralFocus, (){}),
+                  reusablaSizaBox(context, 0.015),
                   reusableText('Payment Details',color:colorController.textColorDark,fontsize: 18,),
                   reusablaSizaBox(context, 0.015),
                   if(editId == null)...[
@@ -240,7 +244,7 @@ late FocusNode chargesFocus;
                       
                       Expanded(child: reusableText('Amount',color: colorController.grayTextColor,)),
                       SizedBox(width: MediaQuery.sizeOf(context).height * 0.02,),
-                      reusableTextField(context, amountController, 
+                      reusableTextField(context, reusabletextfieldcontroller.amount_without_tax, 
                       '', 
                       colorController.textfieldColor, 
                       chargesFocus, (){},
@@ -400,7 +404,7 @@ late FocusNode chargesFocus;
       // 👇 IMPORTANT
   final amountText = editId != null
     ? reusabletextfieldcontroller.total.text.trim()
-    : amountController.text.trim();
+    : reusabletextfieldcontroller.amount_without_tax.text.trim();
   final totalText = reusabletextfieldcontroller.total.text.trim();
 
   // 1️⃣ agar Enter Amount empty hai
@@ -455,6 +459,9 @@ late FocusNode chargesFocus;
                     total: reusabletextfieldcontroller.total.text,
                     // total: amountText,
                     bankRef: reusabletextfieldcontroller.bankRef.text,
+                    general_email: reusabletextfieldcontroller.general_email.text,
+                    amount_without_tax: reusabletextfieldcontroller.amount_without_tax.text,
+                    
                     // evaluationNo: evaluationNo,
                   );
         
