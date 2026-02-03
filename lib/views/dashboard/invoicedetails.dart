@@ -491,7 +491,7 @@ class Invoicedetails extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                reusableText('$customerName',color: colorController.blackColor,fontsize: 16),
+                                reusableText('$username',color: colorController.blackColor,fontsize: 16),
                                 reusableText('$bankName',color: colorController.blackColor,fontsize: 16),
                                 reusableText('$invoiceDate',color: colorController.blackColor,fontsize: 16),
                               ],
