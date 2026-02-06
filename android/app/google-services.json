@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492799535959",
+    "project_id": "perfect-6aaf4",
+    "storage_bucket": "perfect-6aaf4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492799535959:android:1c0fae2084c8084efdac12",
+        "android_client_info": {
+          "package_name": "com.perfectcar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtQswGN_IObdPA4wOYd9iREhb-QETmUjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

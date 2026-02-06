@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,10 +19,11 @@ import 'package:project/views/dashboard/home.dart';
 class PerfectRepo {
   final Dio _dio = Dio();
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>> login(String email, String password, String cell_token) async {
     final response = await http.post(
       Uri.parse("${Utils.loginUrl}"),
       body: {
+        "cell_token": cell_token,
         "email": email,
         "password": password,
       },
@@ -153,4 +155,34 @@ static Future<int> fetchTotalCharges() async {
 }
 
 
+
+Future<void> get_Token() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    final cell_token = await messaging.getToken();
+    print('token $cell_token');
+    MySharedPrefrence().set_cell_token(cell_token!);
+  }
+
+
+  Future<int> checkSellToken({
+  required String adminId,
+  required String cellToken,
+}) async {
+  final response = await http.post(
+    Uri.parse("${Utils.baseUrl}${Utils.cellToken}"),
+    body: {
+      "admin_id": adminId,
+      "cell_token": cellToken,
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    return data['success'] ?? 0;
+  } else {
+    throw Exception("Token check failed");
+  }
+}
+
+  
 }

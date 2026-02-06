@@ -75,7 +75,6 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
         // 🔹 Stable params (no new Map every build)
     final yearsAsync = ref.watch(dropdownProvider(const DropdownParams("Year=1", "year_name")));
     final makeAsync = ref.watch(dropdownProvider(const DropdownParams("Make=1", "make_name")));
-    // final trimAsync = ref.watch(dropdownProvider(const DropdownParams("trim=1", "trim_name")));
     final specsAsync = ref.watch(dropdownProvider(const DropdownParams("specification=1", "specification_name")));
     final form = ref.watch(carFormProvider);
     final editId = ref.watch(editInvoiceIdProvider);

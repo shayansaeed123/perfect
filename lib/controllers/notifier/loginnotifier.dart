@@ -37,11 +37,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   /// ✅ Login API call
-  Future<void> login(String email, String password) async {
+  Future<void> login(String email, String password,String cell_token) async {
     state = state.copyWith(isLoading: true, error: null, success: null);
 
     try {
-      final result = await _service.login(email, password);
+      final result = await _service.login(email, password,cell_token);
       print("DEBUG Login Result: $result"); // ✅ keys check karo
 
       if (result["success"] == 1) {

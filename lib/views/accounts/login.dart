@@ -1,9 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project/controllers/color_controller.dart';
 import 'package:project/controllers/notifier/loginnotifier.dart';
+import 'package:project/database/my_shared.dart';
 import 'package:project/models/logincheck.dart';
 import 'package:project/repo/perfect_repo.dart';
 import 'package:project/repo/utils.dart';
@@ -37,6 +39,7 @@ class _LoginState extends ConsumerState<Login> {
     _passfocusNode = FocusNode();
     _passfocusNode.addListener(_onFocusChange);
     _buttonFocusNode = FocusNode();
+    repo.get_Token();
     
   }
 
@@ -138,8 +141,18 @@ class _LoginState extends ConsumerState<Login> {
                      ref.read(authProvider.notifier).login(
                               email.text.trim(),
                               password.text.trim(),
+                              MySharedPrefrence().get_cell_token(),
                             );
                   },width: 0.8,),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+                  InkWell(
+                        onTap: (){
+                          Clipboard.setData(ClipboardData(text: "${MySharedPrefrence().get_cell_token()}"));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Link copied to clipboard")),
+                            );
+                        },
+                        child: Image.asset('assets/images/copy.png',filterQuality: FilterQuality.medium,fit: BoxFit.contain,height: MediaQuery.of(context).size.height * 0.04,)),
                 ],
               ),
               ),

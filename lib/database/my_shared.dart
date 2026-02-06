@@ -86,6 +86,15 @@ class MySharedPrefrence {
     _box.write('email', email);
   }
 
+  
+
+  String get_cell_token() {
+    return _box.read<String>('cell_token') ?? '';
+  }
+
+  void set_cell_token(String cell_token) {
+    _box.write('cell_token', cell_token);
+  }
 
     String get_user_gender() {
     return _box.read<String>('gender') ?? '';

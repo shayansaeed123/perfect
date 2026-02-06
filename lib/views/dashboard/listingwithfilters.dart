@@ -19,21 +19,20 @@ import 'package:project/reuse/reusabletextfield.dart';
 import 'package:project/views/accounts/login.dart';
 import 'package:project/views/dashboard/carevalutiondetails.dart';
 import 'package:project/views/dashboard/invoicedetails.dart';
-import 'package:project/views/dashboard/listingwithfilters.dart';
 
 // 🔹 Provider to store selected date range
 final dateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
 final selectedTabProvider = StateProvider<int>((ref) => 0);
 
 
-class Home extends ConsumerStatefulWidget {
-  const Home({super.key});
+class Listingwithfilters extends ConsumerStatefulWidget {
+  const Listingwithfilters({super.key});
 
   @override
-  ConsumerState<Home> createState() => _HomeState();
+  ConsumerState<Listingwithfilters> createState() => _ListingwithfiltersState();
 }
 
-class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixin {
+class _ListingwithfiltersState extends ConsumerState<Listingwithfilters>  with SingleTickerProviderStateMixin {
   TabController? _tabController;
   late final ScrollController _innerController;
   PerfectRepo repo = PerfectRepo();
@@ -87,11 +86,11 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                   fontsize: 25,
                   fontweight: FontWeight.bold)
                   ),
-                  // actions: [
-                  //   IconButton(onPressed: (){
-                  //     Navigator.push(context, MaterialPageRoute(builder: (context) => Listingwithfilters(),));
-                  //   }, icon: Icon(Icons.list, color: colorController.whiteColor,size: 20,))
-                  // ]
+                  actions: [
+                    IconButton(onPressed: (){
+
+                    }, icon: Icon(Icons.list, color: colorController.whiteColor,size: 20,))
+                  ]
         ),
         body: Container(
           child: Stack(
@@ -109,53 +108,53 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
         ),
       ),
               Padding(
-                padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.00,),
+                padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.01,),
                 child: Column(
                   children: [
-              //       reusablaSizaBox(context, 0.005),
-              //       Row(
-              //         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              // Expanded(
-              //             child: GestureDetector(
-              //                             onTap: () => repo.selectDateRange(context,ref),
-              //                             child: Container(
-              //             padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.006,),
-              //             decoration: BoxDecoration(
-              //               border: Border.all(color: colorController.btnColor),
-              //               borderRadius: BorderRadius.circular(8),
-              //             ),
-              //             child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              // Expanded(
-              //   child: Text(
-              //     filter.dateRange.isEmpty
-              //         ? "Select Date Range"
-              //         : filter.dateRange, // 👈 default aj ki date show hogi
-              //     style: TextStyle(
-              //       fontSize: 12.5,
-              //       color: colorController.btnColor,
-              //     ),
-              //   ),
-              // ),
-              // Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
-              //       ],
-              //     ),
-              //                             ),
-              //                       ),
-              //           ),
-              //         SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
-              //         Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
-              //             ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
-              //           },))
-              //         ],
-              //       ),
+                    reusablaSizaBox(context, 0.005),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+              Expanded(
+                          child: GestureDetector(
+                                          onTap: () => repo.selectDateRange(context,ref),
+                                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.05,vertical: MediaQuery.sizeOf(context).height * 0.006,),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: colorController.btnColor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+              Expanded(
+                child: Text(
+                  filter.dateRange.isEmpty
+                      ? "Select Date Range"
+                      : filter.dateRange, // 👈 default aj ki date show hogi
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: colorController.btnColor,
+                  ),
+                ),
+              ),
+              Icon(Icons.date_range, color: colorController.btnColor, size: 12.5),
+                    ],
+                  ),
+                                          ),
+                                    ),
+                        ),
+                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.02,),
+                      Expanded(child: reusableTextField(context, reusabletextfieldcontroller.search, 'Search', colorController.btnColor, FocusNode(), (){},onChanged: (value) {
+                          ref.read(invoiceFilterProvider.notifier).state = ref.read(invoiceFilterProvider).copyWith(text: value);
+                        },))
+                      ],
+                    ),
 
 
 
 
-              //       reusablaSizaBox(context, 0.015),
+                    reusablaSizaBox(context, 0.015),
               //       Row(
               //         children: [
               //           Expanded(
@@ -195,54 +194,54 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
 
                     // reusablaSizaBox(context, 0.005),
                     /// 🔹 Dynamic Tabs (API based)
-                statusAsync.when(
-                  data: (statusList) {
-                    _tabController ??= TabController(
-                      length: statusList.length,
-                      vsync: this,
-                      initialIndex: ref.watch(selectedTabProvider),
-                    );
+  //               statusAsync.when(
+  //                 data: (statusList) {
+  //                   _tabController ??= TabController(
+  //                     length: statusList.length,
+  //                     vsync: this,
+  //                     initialIndex: ref.watch(selectedTabProvider),
+  //                   );
 
-                    _tabController!.addListener(() {
-                      if (_tabController!.indexIsChanging) {
-                        final status = statusList[_tabController!.index];
-                        ref.read(selectedTabProvider.notifier).state =
-                            _tabController!.index;
+  //                   _tabController!.addListener(() {
+  //                     if (_tabController!.indexIsChanging) {
+  //                       final status = statusList[_tabController!.index];
+  //                       ref.read(selectedTabProvider.notifier).state =
+  //                           _tabController!.index;
 
-                        /// 🔑 Update filter on tab change
-                        ref
-                            .read(invoiceFilterProvider.notifier)
-                            .state = filter.copyWith(
-                          actionStatus: status.id,
-                        );
+  //                       /// 🔑 Update filter on tab change
+  //                       ref
+  //                           .read(invoiceFilterProvider.notifier)
+  //                           .state = filter.copyWith(
+  //                         actionStatus: status.id,
+  //                       );
 
-                        setState(() => selectedStatus = status);
-                      }
-                    });
+  //                       setState(() => selectedStatus = status);
+  //                     }
+  //                   });
 
-                    return Container(
-                      decoration: BoxDecoration(
-    color: colorController.mainColor, // 👈 background
-    border: Border.all(color: colorController.whiteColor,width: BorderSide.strokeAlignOutside)
-  ),
-                      child: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        indicatorColor: colorController.whiteColor,
-                        indicatorPadding: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height *0.004),
-                        labelColor: colorController.whiteColor,
-                        unselectedLabelColor: colorController.whiteColor,
-                        splashBorderRadius: BorderRadius.circular(15),
-                        overlayColor: WidgetStatePropertyAll(colorController.mainColor),
-                        tabs: statusList
-                            .map((e) => Tab(text: e.name))
-                            .toList(),
-                      ),
-                    );
-                  },
-                  loading: () => const SizedBox(),
-                  error: (_, __) => const SizedBox(),
-                ),
+  //                   return Container(
+  //                     decoration: BoxDecoration(
+  //   color: colorController.mainColor, // 👈 background
+  //   border: Border.all(color: colorController.whiteColor,width: BorderSide.strokeAlignOutside)
+  // ),
+  //                     child: TabBar(
+  //                       controller: _tabController,
+  //                       isScrollable: true,
+  //                       indicatorColor: colorController.whiteColor,
+  //                       indicatorPadding: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height *0.004),
+  //                       labelColor: colorController.whiteColor,
+  //                       unselectedLabelColor: colorController.whiteColor,
+  //                       splashBorderRadius: BorderRadius.circular(15),
+  //                       overlayColor: WidgetStatePropertyAll(colorController.mainColor),
+  //                       tabs: statusList
+  //                           .map((e) => Tab(text: e.name))
+  //                           .toList(),
+  //                     ),
+  //                   );
+  //                 },
+  //                 loading: () => const SizedBox(),
+  //                 error: (_, __) => const SizedBox(),
+  //               ),
                     reusablaSizaBox(context, 0.015),
                     Expanded(
                       child: asyncInvoices.when(
@@ -263,11 +262,6 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                           child: CustomScrollView(
                             physics: AlwaysScrollableScrollPhysics(),
                             slivers: [
-                              //  SliverAppBar(
-                              //   floating: true,
-                              //   snap: true,
-                              //   title: Center(child: reusableText('Invoices',fontsize: 22,fontweight: FontWeight.bold)),
-                              // ),
                               
                               SliverPadding(
                                 padding:  EdgeInsets.all(MediaQuery.sizeOf(context).height * 0.015,),
@@ -301,43 +295,6 @@ class _HomeState extends ConsumerState<Home>  with SingleTickerProviderStateMixi
                                               image4: invoice.image4 ?? '',image5: invoice.image5 ?? '',image6: invoice.image6 ?? '',image7: invoice.image7 ?? '',image8: invoice.image8 ?? '',);
                                           },));
                                            })
-                                        // reusableCard(
-                                        // context, 
-                                        // invoice.applicationNo, 
-                                        // invoice.invoiceDate, 
-                                        // invoice.requestedFor ?? '',
-                                        // invoice.address ?? '',
-                                        // invoice.model, 
-                                        // invoice.year, 
-                                        // (){
-                                        //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                        //     return Invoicedetails(
-                                        //       address: invoice.address ?? '', applicationNo: invoice.applicationNo.toString(), 
-                                        //       carCondition: invoice.carCondition ?? '', color: invoice.color, invoiceDate: invoice.invoiceDate,
-                                        //       customerName: invoice.customerName ?? '', cylinder: invoice.cylindersNo??'', 
-                                        //       engineNo: invoice.engineNumber, fuel: invoice.fuel, model: invoice.model, 
-                                        //       odometer: invoice.odometer, option: invoice.options??'', platno: invoice.plateNumber, 
-                                        //       requestfor: invoice.requestedFor??'', specification: invoice.specification, 
-                                        //       total: invoice.total, tranmissiontype: invoice.transmissionType??'', make: invoice.make,
-                                        //       trim: invoice.trim, type: invoice.type, vin: invoice.vinNo??'', year: invoice.year,id: invoice.id,
-                                        //       totalValue: invoice.totalValue,);
-                                        //   },));
-                                        // },
-                                        // (){
-                                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Carevalutiondetails(
-                                        //     applicationNo: invoice.applicationNo, 
-                                        //     bank: invoice.bankName ?? '', 
-                                        //     statusName: invoice.status_name ?? '', 
-                                        //     customerName: invoice.customerName ?? '', 
-                                        //     make: invoice.make, 
-                                        //     model: invoice.model, 
-                                        //     year: invoice.year, 
-                                        //     total: invoice.total, 
-                                        //     paymentUrl: invoice.code,
-                                        //     totalValue: invoice.totalValue,
-                                        //     ),));
-                                        // }
-                                        // ),
                                         );
                                     },
                                     childCount: invoices.length,

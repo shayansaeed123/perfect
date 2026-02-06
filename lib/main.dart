@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,7 +9,8 @@ import 'package:project/views/splash.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init('values'); // 👈 ye zaroori hai
+  await Firebase.initializeApp(); 
+  await GetStorage.init('values'); 
   runApp(
     ProviderScope(child: 
   //   DevicePreview(
