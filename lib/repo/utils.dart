@@ -19,6 +19,7 @@ class Utils {
   static String editInvoice = '${baseUrl}edit_invoice.php';
   static String resendEmail = 'resend_email.php';
   static String cellToken = 'checksell_token.php';
+  static String changeStatus = 'update_invoice.php';
 
   static void fieldFocusChange(
       BuildContext context, FocusNode current, FocusNode nextFocus) {

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:project/database/my_shared.dart';
+import 'package:project/models/dropdownmodel.dart';
 import 'package:project/models/invoicemodel.dart';
 import 'package:project/repo/perfect_repo.dart';
 import 'package:http/http.dart' as http;
@@ -92,3 +93,18 @@ Future<void> onRefresh(WidgetRef ref) async {
   ref.read(isRefreshingProvider.notifier).state = false;
 }
 
+
+
+final statusListProvider = FutureProvider<List<StatusItem>>((ref) async {
+return ref.read(invoiceRepositoryProvider).fetchStatuses();
+});
+
+
+final updateStatusProvider = FutureProvider.family<bool, Map<String, String>>(
+(ref, params) async {
+return ref.read(invoiceRepositoryProvider).updateInvoiceStatus(
+code: params["code"]!,
+actionStatus: params["action_status"]!,
+);
+},
+);

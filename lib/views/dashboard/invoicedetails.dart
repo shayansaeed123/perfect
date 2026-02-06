@@ -5,12 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:project/controllers/color_controller.dart';
+import 'package:project/controllers/notifier/carfoamnotifier.dart';
+import 'package:project/controllers/notifier/dropdownlistingnotifier.dart';
+import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/database/my_shared.dart';
+import 'package:project/models/dropdownmodel.dart';
 import 'package:project/repo/utils.dart';
 import 'package:project/reuse/reusablaimage.dart';
 import 'package:project/reuse/reusablebottomsheet.dart';
 import 'package:project/reuse/reusablebtn.dart';
 import 'package:project/reuse/reusabledialog.dart';
+import 'package:project/reuse/reusabledropdown.dart';
 import 'package:project/reuse/reusabletext.dart';
 import 'package:project/views/dashboard/addCars.dart';
 import 'package:project/views/dashboard/carevalutiondetails.dart';
@@ -56,7 +61,7 @@ class Invoicedetails extends ConsumerWidget {
   final String image6;
   final String image7;
   final String image8;
-  const Invoicedetails({super.key,
+   Invoicedetails({super.key,
   required this.address,required this.applicationNo,required this.carCondition,required this.color,
   required this.customerName,required this.cylinder,required this.engineNo,required this.fuel,
   required this.model,required this.odometer,required this.option,required this.platno,required this.make, required this.makeImage,
@@ -70,8 +75,13 @@ class Invoicedetails extends ConsumerWidget {
   final number = int.tryParse(value) ?? 0;
   return NumberFormat('#,##0', 'en_US').format(number);
 }
+
+StatusItem? selectedStatus;
+String? selectedStatusId;
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final statusAsync = ref.watch(statusListProvider);
+    final editId = ref.watch(editInvoiceIdProvider);
     return Scaffold(
       backgroundColor: colorController.whiteColor,
         appBar: AppBar(
@@ -238,6 +248,71 @@ class Invoicedetails extends ConsumerWidget {
                       // Expanded(child: reusableRichText('Date : ', invoiceDate, colorController.blackColor)),
                     ],
                   ),
+                  if(statusAction != "3")...[
+                    reusablaSizaBox(context, 0.015),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: statusAsync.when(
+data: (list) {
+/// set initial value once
+selectedStatus ??= list.isNotEmpty ? list.first : null;
+
+
+return DropdownButtonFormField<StatusItem>(
+value: selectedStatus,
+decoration: const InputDecoration(
+labelText: "Change Status",
+border: OutlineInputBorder(),
+),
+items: list
+.map(
+(e) => DropdownMenuItem(
+value: e,
+child: Text(e.name),
+),
+)
+.toList(),
+onChanged: (val) {
+selectedStatus = val;
+print(selectedStatus);
+},
+);
+},
+loading: () => const CircularProgressIndicator(),
+error: (e, _) => Text("Error: $e"),
+),
+                        ),
+                        SizedBox(width: MediaQuery.sizeOf(context).width * 0.03,),
+                  reusableBtn(context, 'Change', selectedStatus == null
+? null
+: () async {
+final result = await ref.read(
+updateStatusProvider({
+"code": code.toString(),
+"action_status": selectedStatus!.id,
+}).future,
+);
+
+
+// if (!mounted) return;
+
+
+ScaffoldMessenger.of(context).showSnackBar(
+SnackBar(
+content: Text(
+result
+? "Status updated successfully"
+: "Failed to update status",
+),
+),
+);
+},
+      width: 0.2)
+                      ],
+                    )
+                  ],
                   if(statusAction == '2')...[
                     reusablaSizaBox(context, 0.015),
                   Row(

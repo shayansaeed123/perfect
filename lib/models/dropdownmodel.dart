@@ -13,3 +13,19 @@ class DropdownItem {
     );
   }
 }
+
+class StatusItem {
+final String id;
+final String name;
+
+
+StatusItem({required this.id, required this.name});
+
+
+factory StatusItem.fromJson(Map<String, dynamic> json) {
+return StatusItem(
+id: json['id'].toString(),
+name: json['status_name'].toString(),
+);
+}
+}

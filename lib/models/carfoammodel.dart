@@ -7,6 +7,7 @@ class CarFormData {
   String? customerName;
   String? inspectionDate;
   String? address;
+  String? status;
   // String? evaluationNo;
   String? bankName;
   String? customerEmail;
@@ -57,6 +58,7 @@ class CarFormData {
     this.customerName,
     this.inspectionDate,
     this.address,
+    this.status,
     // this.evaluationNo,
     this.bankName,
     this.customerEmail,
@@ -99,6 +101,7 @@ class CarFormData {
     String? customerName,
     String? inspectionDate,
     String? address,
+    String? status,
     // String? evaluationNo,
     String? bankName,
     String? customerEmail,
@@ -140,6 +143,7 @@ class CarFormData {
       customerName: customerName ?? this.customerName,
       inspectionDate: inspectionDate ?? this.inspectionDate,
       address: address ?? this.address,
+      status: status ?? this.status,
       // evaluationNo: evaluationNo ?? this.evaluationNo,
       bankName: bankName ?? this.bankName,
       customerEmail: customerEmail ?? this.customerEmail,

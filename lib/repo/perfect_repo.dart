@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:project/controllers/notifier/invoicenotifier.dart';
 import 'package:project/database/my_shared.dart';
+import 'package:project/models/dropdownmodel.dart';
 import 'package:project/models/invoicemodel.dart';
 import 'package:project/repo/utils.dart';
 import 'package:http/http.dart' as http;
@@ -183,6 +184,48 @@ Future<void> get_Token() async {
     throw Exception("Token check failed");
   }
 }
+
+
+Future<List<StatusItem>> fetchStatuses() async {
+final response = await http.get(Uri.parse("${Utils.baseUrl}/status.php?getStatus=1"));
+
+
+if (response.statusCode != 200) {
+throw Exception("Failed to load status list");
+}
+
+
+final data = jsonDecode(response.body);
+final key = data.keys.first;
+final List list = data[key];
+
+
+return list.map((e) => StatusItem.fromJson(e)).toList();
+}
+
+Future<bool> updateInvoiceStatus({
+    required String code,
+    required String actionStatus,
+  }) async {
+    final response = await http.post(
+      Uri.parse("${Utils.baseUrl}${Utils.changeStatus}"),
+      body: {
+        "code": code,
+        "action_status": actionStatus,
+      },
+    );
+
+    print("STATUS CODE: ${response.statusCode}");
+  print("BODY: ${response.body}");
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      return data["success"] == true;
+    } else {
+      throw Exception("Failed to update invoice");
+    }
+  }
 
   
 }

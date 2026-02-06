@@ -88,20 +88,3 @@ final bankEmailProvider = FutureProvider.family<List<DropdownItem>, String>((ref
   }
 });
 
-
-final dropdownStatusProvider =
-    FutureProvider.family<List<DropdownItem>, DropdownParams>((ref, params) async {
-  final response = await http.get(Uri.parse('${Utils.baseUrl}status.php?${params.url}'));
-  await Future.delayed(const Duration(seconds: 1)); // simulate network delay
-
-  if (response.statusCode == 200) {
-    final data = jsonDecode(response.body);
-    // print(data);
-    final rootKey = data.keys.first; // dynamic key: "specification", "Year", etc.
-    final List items = data[rootKey];
-
-    return items.map((e) => DropdownItem.fromJson(e, params.key)).toList();
-  } else {
-    throw Exception("Failed to load data");
-  }
-});
