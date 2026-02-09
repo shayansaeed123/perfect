@@ -204,7 +204,7 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                   //   children: [
                       reusableTextField(context, reusabletextfieldcontroller.plateNo, 'Plate No', colorController.textfieldColor, plateNoFocus, (){},),
                       // reusableIconBtn(context, (){
-                      // openBottomSheet(context,
+                      // openBottomSheet(context,ref,
                       // (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.plateNo,ImageSource.camera);},
                       // (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.plateNo,ImageSource.gallery);},
                       //   );
@@ -252,13 +252,13 @@ class _CarDetails1State extends ConsumerState<CarDetails1> {
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                         LengthLimitingTextInputFormatter(20),
                       ]),
-                  //     reusableIconBtn(context, (){
-                  //       // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context, OcrTarget.vin);
-                  //       openBottomSheet(context,ref,
-                  //     (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.camera);},
-                  //     (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.gallery);},
-                  //       );
-                  //     })
+                      // reusableIconBtn(context, (){
+                      //   // ref.read(imageTextProvider.notifier).pickImageAndExtractText(context, OcrTarget.vin);
+                      //   openBottomSheet(context,ref,
+                      // (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.camera);},
+                      // (){ref.read(imageTextProvider.notifier).pickImageAndExtractText(context,OcrTarget.vin,ImageSource.gallery);},
+                      //   );
+                      // })
                   //   ],
                   // ),
                   reusablaSizaBox(context, 0.015),

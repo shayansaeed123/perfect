@@ -149,9 +149,14 @@ class ImageTextNotifier extends StateNotifier<ImageTextState> {
 
       await textRecognizer.close();
 
-      final extractedText = recognizedText.text.trim().isNotEmpty
-          ? recognizedText.text.trim()
-          : "No text found in cropped area";
+      // final extractedText = recognizedText.text.trim().isNotEmpty
+      //     ? recognizedText.text.trim()
+      //     : "No text found in cropped area";
+
+      final extractedText = extractTargetText(
+        recognizedText.text,
+        target,
+      );
 
       /// 🎯 Assign to correct field
       if (target == OcrTarget.plateNo) {
@@ -187,6 +192,27 @@ final imageTextProvider =
   (ref) => ImageTextNotifier(),
 );
 
+
+String extractTargetText(String fullText, OcrTarget target) {
+  final text = fullText.toUpperCase();
+
+  if (target == OcrTarget.plateNo) {
+    final match = RegExp(r'\b[A-Z]{1,3}[- ]?\d{2,4}\b').firstMatch(text);
+    return match?.group(0) ?? "Plate number not found";
+  }
+
+  if (target == OcrTarget.vin) {
+    final match = RegExp(r'\b[A-HJ-NPR-Z0-9]{17}\b').firstMatch(text);
+    return match?.group(0) ?? "VIN not found";
+  }
+
+  if (target == OcrTarget.engineNo) {
+    final match = RegExp(r'\b[A-Z0-9]{6,15}\b').firstMatch(text);
+    return match?.group(0) ?? "Engine number not found";
+  }
+
+  return "No valid text found";
+}
 
 
 
