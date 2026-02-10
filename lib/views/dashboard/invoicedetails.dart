@@ -318,7 +318,7 @@ result
                   Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(child: reusableRichText('Payment Link: ', 'https://car.greenzoneliving.org/paynow.php?invoiceids=$code', colorController.blackColor)),
+                      Expanded(child: reusableRichText('Payment Link: ', 'https://car.perfectcar.ae/paynow.php?invoiceids=$code', colorController.blackColor)),
                       InkWell(
                         onTap: (){
                           Clipboard.setData(ClipboardData(text: "${Utils.baseUrlImages}paynow.php?invoiceids=$code"));

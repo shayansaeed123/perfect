@@ -76,7 +76,7 @@ class Carevalutiondetails extends StatelessWidget {
                   ReadOnlyField("Year:", year),
                   ReadOnlyField("Certificate Charges:", total),
                   ReadOnlyField("Total Value:", totalValue),
-                  ReadOnlyField("Payment Url:", "https://car.greenzoneliving.org/paynow.php?invoiceids=$paymentUrl"),
+                  ReadOnlyField("Payment Url:", "https://car.perfectcar.ae/paynow.php?invoiceids=$paymentUrl"),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

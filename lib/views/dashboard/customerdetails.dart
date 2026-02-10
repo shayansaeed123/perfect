@@ -416,7 +416,8 @@ late FocusNode chargesFocus;
   // API se minimum charges
   final minCharges = await ref.read(chargesProvider.future);
 
-  final totalValue = double.tryParse(totalText) ?? 0;
+  final cleanTotal = totalText.replaceAll(',', '');
+  final totalValue = double.tryParse(cleanTotal) ?? 0;
 
   // 2️⃣ agar calculated certificate charges API se kam hain
   if (totalValue < minCharges) {
@@ -439,7 +440,7 @@ late FocusNode chargesFocus;
                     inspectionDate: inspectionDateStr,
                     address: address,
                     customerEmail: customerEmail,
-                    total: totalText,
+                    total: totalValue.toString(),
                     // evaluationNo: evaluationNo,
                   );
         
